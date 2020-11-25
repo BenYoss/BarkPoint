@@ -1,0 +1,65 @@
+{
+  "name": "BarkPoint",
+  "version": "1.0.0",
+  "description": "Entertain your pet by either finding a toy or park to play.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "mocha test/sample.test.js",
+    "prod": "webpack --watch",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenYoss/BarkPoint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenYoss/BarkPoint/issues"
+  },
+  "homepage": "https://github.com/BenYoss/BarkPoint#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.11.1",
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "faker": "^5.1.0",
+    "google-maps-react": "^2.0.6",
+    "mongoose": "^5.10.16",
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-google-login": "^5.1.25",
+    "react-hook-form": "^6.11.5",
+    "react-router-dom": "^5.2.0",
+    "react-tinder-card": "^1.3.1",
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "style-loader": "^2.0.0"
+  }
+}
