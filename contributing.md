@@ -5,3 +5,4 @@
 (relocate) : Signifies if a file/component is moving into a different directory.
 (documentation) : When documentation is added into the scope of a file.
 (clean) : Cleans the file from spaghetti blocks.
+(refactor) : Refactors content within a file.
