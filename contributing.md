@@ -93,10 +93,10 @@ Once you get back here, make a comment requesting further review and someone wil
 **Guidelines**
 
 Uphold the current code standard:
-Keep your code [DRY][].
-Apply the [boy scout rule][].
-Follow STYLE-GUIDE.md
-Run the [tests][] before submitting a pull request.
+- [ ] Keep your code [DRY][].
+- [ ] Apply the [boy scout rule][].
+- [ ] Follow STYLE-GUIDE.md
+- [ ] Run the [tests][] before submitting a pull request.
 Tests are very, very important. Submit tests if your pull request contains new, testable behavior.
 Your pull request is comprised of a single ([squashed][]) commit.
 
