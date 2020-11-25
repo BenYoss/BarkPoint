@@ -6,3 +6,4 @@
 (documentation) : When documentation is added into the scope of a file.
 (clean) : Cleans the file from spaghetti blocks.
 (refactor) : Refactors content within a file.
+(fix) : For fixing bugs in file scope.
