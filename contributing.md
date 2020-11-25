@@ -1,0 +1,1 @@
+(create) : Indicates if a new file/component is being created in the project scope.
