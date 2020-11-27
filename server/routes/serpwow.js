@@ -10,8 +10,8 @@ const params = {
 
 serpwow.json(params)
   .then((result) => {
-    console.log(JSON.stringify(result.amazon_results, 0, 2));
+    Response.Send(JSON.stringify(result.amazon_results, 0, 2));
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
