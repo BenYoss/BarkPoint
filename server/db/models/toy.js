@@ -12,7 +12,6 @@ const toySchema = new Schema({
 
 const Toy = model('Toy', toySchema);
 
-module.exports = {
-  Toy
-}
+module.exports = Toy;
+
 

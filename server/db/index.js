@@ -8,6 +8,4 @@ db.once('open', () => {
   console.log('we are connected');
 });
 
-module.exports = {
-  db
-}
+module.exports = db;
