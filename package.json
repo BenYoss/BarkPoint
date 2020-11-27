@@ -35,6 +35,7 @@
     "express": "^4.17.1",
     "faker": "^5.1.0",
     "google-maps-react": "^2.0.6",
+    "google-search-results-serpwow": "0.0.14",
     "mocha": "^8.2.1",
     "mongoose": "^5.10.16",
     "nodemon": "^2.0.6",

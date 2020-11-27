@@ -5,8 +5,7 @@ const toySchema = new Schema({
   price: String,
   image: String,
   url: String,
-  description: String,
-  category: String,
+  rating: String,
   dogs: [{ type: Schema.Types.ObjectId, ref: 'Dog' }]
 });
 
