@@ -7,9 +7,9 @@ const dogSchema = new Schema({
   image: String,
   id_user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
-  toys: [{ type: Schema.Types.ObjectId, ref: 'Toy' }]
+  toys: [{ type: Schema.Types.ObjectId, ref: 'Toy' }],
 });
 
 const Dog = model('Dog', dogSchema);

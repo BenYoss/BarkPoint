@@ -7,11 +7,9 @@ const toySchema = new Schema({
   url: String,
   description: String,
   category: String,
-  dogs: [{ type: Schema.Types.ObjectId, ref: 'Dog' }]
+  dogs: [{ type: Schema.Types.ObjectId, ref: 'Dog' }],
 });
 
 const Toy = model('Toy', toySchema);
 
 module.exports = Toy;
-
-
