@@ -1,7 +1,10 @@
 import React from 'react';
+import PersonalityAssessment from './PersonalityAssessment';
 
-export default () => (
-  <div>
-    <h1>This will work please</h1>
-  </div>
+const App = () => (
+
+  <PersonalityAssessment />
+
 );
+
+export default App;
