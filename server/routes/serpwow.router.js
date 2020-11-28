@@ -1,7 +1,9 @@
-const axios = require('axios');
+const { Router } = require('express');
 const serpwow = require('../api/serpwow.api.js');
 
-axios.get('/get/toys', (res) => {
+const serpwowRouter = Router();
+
+serpwowRouter.get('/get/toys', (res) => {
   const params = {
     q: 'dog toy',
     engine: 'amazon',
@@ -16,3 +18,5 @@ axios.get('/get/toys', (res) => {
       console.error(error);
     });
 });
+
+module.exports = serpwowRouter;
