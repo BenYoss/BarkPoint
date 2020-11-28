@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const serpwow = require('../api/serpwow.api.js');
+const sendMessage = require('../api/twilio.api.js');
 
-const serpwowRouter = Router();
+const apiRouter = Router();
 
-serpwowRouter.get('/get/toys', (res) => {
+apiRouter.get('/get/toys', (res) => {
   const params = {
     q: 'dog toy',
     engine: 'amazon',
@@ -19,4 +20,10 @@ serpwowRouter.get('/get/toys', (res) => {
     });
 });
 
-module.exports = serpwowRouter;
+apiRouter.post('/api/twilio', (req, res) => {
+  const { phoneNumber } = req.body;
+  sendMessage(phoneNumber);
+  res.sendStatus(201);
+});
+
+module.exports = apiRouter;
