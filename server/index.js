@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./googleStrategy');
+require('./db/index');
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
