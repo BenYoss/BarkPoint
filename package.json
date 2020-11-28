@@ -1,5 +1,5 @@
 {
-  "name": "BarkPoint",
+  "name": "barkpoint",
   "version": "1.0.0",
   "description": "Entertain your pet by either finding a toy or park to play.",
   "main": "webpack.config.js",
@@ -21,8 +21,15 @@
   "homepage": "https://github.com/BenYoss/BarkPoint#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "lint-staged && npm test",
+      "pre-push": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,css}": [
+      "eslint",
+      "git add"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
@@ -30,6 +37,7 @@
     "@material-ui/styles": "^4.11.1",
     "axios": "^0.21.0",
     "chai": "^4.2.0",
+    "clsx": "^1.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -41,6 +49,7 @@
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-google-button": "^0.7.1",
