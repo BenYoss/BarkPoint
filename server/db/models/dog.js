@@ -14,15 +14,14 @@ const dogSchema = new Schema({
 
 const Dog = model('Dog', dogSchema);
 
-const addDog = (body) => {
-  Dog.create({
-    name: body.name,
-    breed: body.breed,
-    size: body.size,
-    image: body.image,
-    toys: [],
-  });
-};
+const addDog = (name, breed, size, image) => Dog.create({
+  name,
+  breed,
+  size,
+  image,
+  toys: [],
+})
+  .then((data) => data);
 
 const deleteDog = (dogName) => {
   Dog.deleteOne({ name: dogName });

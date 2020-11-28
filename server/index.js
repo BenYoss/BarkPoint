@@ -5,7 +5,11 @@ const passport = require('passport');
 const session = require('express-session');
 const path = require('path');
 const { authRouter } = require('./routes/auth.router');
+<<<<<<< HEAD
 const apiRouter = require('./routes/api.router');
+=======
+const dbRouter = require('./routes/db.router');
+>>>>>>> (update) server/db, server/routes, and server/index.js
 
 const app = express();
 const PORT = process.env.PORT || '8080';
@@ -23,7 +27,11 @@ app.use(passport.session());
 
 app.use(express.static(distPath));
 app.use('/', authRouter);
+<<<<<<< HEAD
 app.use(apiRouter);
+=======
+app.use('/', dbRouter);
+>>>>>>> (update) server/db, server/routes, and server/index.js
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
