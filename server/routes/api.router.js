@@ -4,7 +4,7 @@ const sendMessage = require('../api/twilio.api.js');
 
 const apiRouter = Router();
 
-apiRouter.get('/get/toys', (res) => {
+apiRouter.get('/get/toys', (req, res) => {
   const params = {
     q: 'dog toy',
     engine: 'amazon',
@@ -13,10 +13,10 @@ apiRouter.get('/get/toys', (res) => {
   };
   serpwow.json(params)
     .then((result) => {
-      res.send(JSON.stringify(result.amazon_results, 0, 2));
+      res.status(200).send(result.amazon_results);
     })
     .catch((error) => {
-      console.error(error);
+      res.end(error);
     });
 });
 
