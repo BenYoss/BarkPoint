@@ -14,7 +14,7 @@ authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profil
 
 authRouter.get('/auth/google/callback', passport.authenticate('google'),
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/form');
   });
 
 authRouter.get('/', isLoggedIn, (req, res) => {

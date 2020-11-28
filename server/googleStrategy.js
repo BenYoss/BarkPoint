@@ -19,6 +19,6 @@ passport.use(
     clientSecret: secret,
   }, (accessToken, refreshToken, profile, done) => {
     console.warn(profile);
-    done();
+    done(null, profile);
   }),
 );
