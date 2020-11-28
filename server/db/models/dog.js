@@ -9,11 +9,16 @@ const dogSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+<<<<<<< HEAD
   toys: [],
+=======
+  toys: [{ type: Schema.Types.ObjectId, ref: 'Toy' }],
+>>>>>>> (fix) format in model files
 });
 
 const Dog = model('Dog', dogSchema);
 
+<<<<<<< HEAD
 const addDog = (body) => {
   Dog.create({
     name: body.name,
@@ -55,3 +60,6 @@ module.exports = {
   addToy,
   removeToy,
 };
+=======
+module.exports = Dog;
+>>>>>>> (fix) format in model files
