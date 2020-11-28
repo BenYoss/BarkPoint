@@ -3,15 +3,15 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema({
   name: String,
   email: String,
-<<<<<<< HEAD
-=======
   image: String,
->>>>>>> 8efb8a937b9af03df9793198d7fe642f8b4d7389
+<<<<<<< HEAD
+>>>>>>> (fix) format in model files
+=======
+>>>>>>> (fix) merge conflict
 });
 
 const User = model('User', userSchema);
 
-<<<<<<< HEAD
 const createUser = (body) => {
   User.create({
     name: body.name,
@@ -20,6 +20,9 @@ const createUser = (body) => {
 };
 
 module.exports = createUser;
+<<<<<<< HEAD
 =======
 module.exports = User;
->>>>>>> 8efb8a937b9af03df9793198d7fe642f8b4d7389
+>>>>>>> (fix) format in model files
+=======
+>>>>>>> (fix) merge conflict
