@@ -56,9 +56,9 @@ export default function Form() {
           Tell us about your pup🐾
         </Typography>
         <form
-          onSubmit={async(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            console.log(form)
+            console.warn(form);
             await axios.post('/data/dog', form);
             window.location.href = '/assessment';
           }}
