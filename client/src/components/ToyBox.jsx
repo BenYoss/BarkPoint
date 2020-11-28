@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import ToyList from './ToyList';
+const axios = require('axios');
 
 const ToyBox = () => {
-  const hi = 'hi';
 
-  const getDummyData = async => {
-    
+  const getToy = () => {
+    return axios.get('/get/toys')
+    .then((response) => {
+      console.warn(response.data)
+    })
+    .catch((error) => {
+      console.warn(error)
+    })
   };
 
   return (
     <div>
-      {hi}
+      <button onClick={() => getToy()}>This is a button</button>
     </div>
   );
 };
