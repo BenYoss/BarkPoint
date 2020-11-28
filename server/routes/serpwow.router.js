@@ -1,7 +1,5 @@
-const SerpWow = require('google-search-results-serpwow');
 const axios = require('axios');
-
-const serpwow = new SerpWow('A1634A2611604869A067E266E3F32325');
+const serpwow = require('../api/serpwow.api.js');
 
 axios.get('/get/toys', (res) => {
   const params = {
