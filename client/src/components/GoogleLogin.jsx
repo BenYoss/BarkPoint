@@ -1,11 +1,22 @@
 import React from 'react';
-import axios from 'axios';
+import './GoogleLogin.css';
+import GoogleButton from 'react-google-button';
 
 const GoogleLogin = () => (
   <div>
-    <h1>BarkPoint</h1>
-    <img src="https://i.ibb.co/zRR5Nd4/barkpoint.png" alt="" />
-    <button type="submit" onClick={ () => { window.location.href = 'http://localhost:8080/auth/google' }}> click me</button>
+    <h1 className="logo">
+      BarkPoint🐾
+    </h1>
+    <div className="image-container">
+      <img src="https://i.ibb.co/zRR5Nd4/barkpoint.png" alt="" />
+    </div>
+    <div className="google-button">
+      <GoogleButton
+        onClick={() => { window.location.href = '/auth/google/'; }}
+        type="light"
+        label="SignUp / SignIn"
+      />
+    </div>
   </div>
 );
 
