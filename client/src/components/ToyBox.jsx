@@ -4,13 +4,14 @@ const axios = require('axios');
 
 const ToyBox = () => {
 
+  
   const getToy = () => {
     return axios.get('/get/toys')
     .then((response) => {
-      console.warn(response.data)
+      console.log(response.data)
     })
     .catch((error) => {
-      console.warn(error)
+      console.log(error)
     })
   };
 
