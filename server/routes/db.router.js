@@ -32,10 +32,10 @@ dbRouter.get('/data/dog', (req, res) => {
 
 dbRouter.post('/data/dog', (req, res) => {
   const {
-    name, breed, size, image,
+    dogname, breed, size, image,
   } = req.body;
 
-  Dog.addDog(name, breed, size, image)
+  Dog.addDog(dogname, breed, size, image)
     .then(() => {
       res.sendStatus(201);
     })
@@ -82,3 +82,5 @@ dbRouter.delete('/data/dog', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+module.exports = dbRouter
