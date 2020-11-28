@@ -1,5 +1,5 @@
 {
-  "name": "BarkPoint",
+  "name": "barkpoint",
   "version": "1.0.0",
   "description": "Entertain your pet by either finding a toy or park to play.",
   "main": "webpack.config.js",
@@ -19,16 +19,17 @@
     "url": "https://github.com/BenYoss/BarkPoint/issues"
   },
   "homepage": "https://github.com/BenYoss/BarkPoint#readme",
-  "lint-staged": {
-    "*.js": [
-      "eslint — fix",
-      "git add"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm test",
+      "pre-push": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*": [
+      "eslint",
+      "git add"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
