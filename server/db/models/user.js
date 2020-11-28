@@ -15,4 +15,3 @@ const createUser = (body) => {
 };
 
 module.exports = createUser;
-
