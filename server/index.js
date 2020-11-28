@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(distPath));
-app.use(authRouter);
+app.use('/', authRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));

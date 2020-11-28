@@ -1,9 +1,9 @@
 import React from 'react';
-import PersonalityAssessment from './PersonalityAssessment';
+import GoogleLogin from './GoogleLogin';
 
 const App = () => (
 
-  <PersonalityAssessment />
+  <GoogleLogin />
 
 );
 
