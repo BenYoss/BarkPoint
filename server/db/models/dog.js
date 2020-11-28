@@ -28,7 +28,7 @@ const deleteDog = (dogName) => {
   Dog.deleteOne({ name: dogName });
 };
 
-const addToy = ({ dogId, body }) => {
+const addToy = (dogId, body) => {
   const newToy = {
     name: body.title,
     price: body.prices.raw,
@@ -37,14 +37,14 @@ const addToy = ({ dogId, body }) => {
     rating: body.rating,
   };
   Dog.findByIdAndUpdate(
-    { dogId },
+    { _id: dogId },
     { $addToSet: { toys: newToy } },
   );
 };
 
-const removeToy = ({ dogId, body }) => {
+const removeToy = (dogId, body) => {
   Dog.findByIdAndUpdate(
-    { dogId },
+    { _id: dogId },
     { $pull: { toys: { name: body.title } } },
   );
 };
