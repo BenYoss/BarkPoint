@@ -152,7 +152,7 @@ const PersonalityAssessment = () => {
         }}
       >
         {lastDirection ? (
-          <h2 style={{ color: '#2CDA9D' }} key={lastDirection} className="infoText">
+          <h2 style={{ color: '#0E4749' }} key={lastDirection} className="infoText">
             {`You swiped ${lastDirection}`}
           </h2>
         ) : <h2 style={{ color: '#0E4749' }} className="infoText">Swipe a card or press a button to get started!</h2> }
