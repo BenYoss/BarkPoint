@@ -6,6 +6,7 @@ const session = require('express-session');
 const path = require('path');
 const { authRouter } = require('./routes/auth.router');
 const dbRouter = require('./routes/db.router');
+const apiRouter = require('./routes/api.router');
 
 const app = express();
 const PORT = process.env.PORT || '8080';
@@ -24,6 +25,7 @@ app.use(passport.session());
 app.use(express.static(distPath));
 app.use('/', authRouter);
 app.use('/', dbRouter);
+app.use(apiRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
