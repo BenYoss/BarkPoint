@@ -20,7 +20,6 @@ passport.use(
     clientSecret: secret,
   }, (accessToken, refreshToken, profile, done) => {
     const { _json } = profile;
-    console.warn(profile);
     User.findUser(_json.email)
       .then((result) => {
         if (!result) {

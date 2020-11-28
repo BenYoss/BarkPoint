@@ -19,15 +19,9 @@
     "url": "https://github.com/BenYoss/BarkPoint/issues"
   },
   "homepage": "https://github.com/BenYoss/BarkPoint#readme",
-  "lint-staged": {
-    "*.js": [
-      "eslint — fix",
-      "git add"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm test"
     }
   },
   "dependencies": {

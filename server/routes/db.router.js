@@ -83,4 +83,4 @@ dbRouter.delete('/data/dog', (req, res) => {
     });
 });
 
-module.exports = dbRouter
+module.exports = dbRouter;

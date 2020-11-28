@@ -27,6 +27,4 @@ authRouter.get('/logout', (req, res) => {
   res.redirect('/auth/google/callback');
 });
 
-module.exports = {
-  authRouter,
-};
+module.exports = authRouter;
