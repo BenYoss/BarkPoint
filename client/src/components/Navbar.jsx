@@ -10,6 +10,8 @@ import {
   Avatar,
 } from '@material-ui/core';
 
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -53,11 +55,11 @@ const Navbar = () => {
             className={classes.navDisplayFlex}
           >
             {navLinks.map(({ title, path }) => (
-              <a href={path} key={title} className={classes.linkText}>
+              <Link to={path} key={title} className={classes.linkText}>
                 <ListItem button>
                   <ListItemText primary={title} />
                 </ListItem>
-              </a>
+              </Link>
             ))}
           </List>
         </Container>
