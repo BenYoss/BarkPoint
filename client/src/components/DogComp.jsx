@@ -14,6 +14,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+/**
+ * @useStyles should be elaborated on. I was not aware about makeStyles
+ * in material UI so it would help giving a brief synopsis on what this
+ * block of code does to a laymen.
+ */
+
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
