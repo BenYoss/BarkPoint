@@ -8,7 +8,6 @@ import Park from './Park';
 import Form from './Form';
 
 const App = () => (
-
   <Router>
     <Switch>
       <Route exact path="/">

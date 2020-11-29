@@ -1,5 +1,5 @@
 import React from 'react';
-// import ToyList from './ToyList';
+import Navbar from './Navbar';
 
 const axios = require('axios');
 
@@ -9,12 +9,20 @@ const ToyBox = () => {
       console.warn(response.data);
     })
     .catch((error) => {
-      console.error(error);
+      console.warn(error);
     });
 
   return (
     <div>
-      <button type="submit" onClick={() => getToy()}>This is a button</button>
+      <Navbar />
+      <button
+        type="submit"
+        onClick={
+        () => getToy()
+      }
+      >
+        This is a button
+      </button>
     </div>
   );
 };
