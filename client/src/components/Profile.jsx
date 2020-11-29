@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import './Profile.css';
 import { makeStyles, styled } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
-
 import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -15,12 +13,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-// import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import DogComp from './DogComp';
+import Navbar from './Navbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const [dogs] = React.useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
+  // eslint-disable-next-line no-unused-vars
+  const [dogs, setDogs] = useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
     { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]);
   const [expanded, setExpanded] = React.useState(false);
 
@@ -57,16 +53,6 @@ const Profile = () => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
-
-  const styles = {
-    root: {
-      flexGrow: 1,
-    },
-    typography: {
-      flexGrow: 1,
-      align: 'center',
-    },
   };
 
   const MyButton = styled(Button)({
@@ -82,15 +68,7 @@ const Profile = () => {
 
   return (
     <div className="Profile">
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="#FEFDFF" style={styles.typography} className="myDogs">
-              NAV BAR WILL GO HERE
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
+      <Navbar />
       <div className="dogs" style={{ width: '100%', height: '100%' }}>
         {dogs.map((dog) => (
           <div className="header" style={{ paddingBottom: '10px' }}>
