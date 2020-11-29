@@ -64,6 +64,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
         textAlign: 'center',
         color: '#2CDA9D',
         fontFamily: 'Arvo',
+        fontSize: '40px',
       }}
       >
         My Dog is...
@@ -87,7 +88,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
               style={{
                 backgroundImage: `url(${imgUrl})`,
                 position: 'relative',
-                width: '300px',
+                width: '500px',
                 padding: '20px',
                 maxWidth: '85vw',
                 height: '50vh',
@@ -104,6 +105,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
                 textShadow: '1px 1px #002626',
                 fontFamily: 'Lobster Two',
                 letterSpacing: '2px',
+                fontSize: '50px',
               }}
               >
                 { trait }
@@ -128,7 +130,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
       </div>
       <div style={{
         position: 'fixed',
-        bottom: '8vh',
+        bottom: '18vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -141,7 +143,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
         >
           <CancelIcon
             fontSize="large"
-            style={{ color: '#e55812' }}
+            style={{ color: '#e55812', width: '60', height: '60' }}
           />
         </IconButton>
         <IconButton
@@ -149,7 +151,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
         >
           <CheckCircleIcon
             fontSize="large"
-            style={{ color: '#2CDA9D' }}
+            style={{ color: '#2CDA9D', width: '60', height: '60' }}
           />
         </IconButton>
 
@@ -157,7 +159,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
       <div
         style={{
           position: 'fixed',
-          bottom: '1vh',
+          bottom: '12vh',
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
@@ -167,7 +169,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
           <h2 style={{ color: '#0E4749' }} key={lastDirection} className="infoText">
             {`You swiped ${lastDirection}`}
           </h2>
-        ) : <h2 style={{ color: '#0E4749' }} className="infoText">Swipe a card or press a button to get started!</h2> }
+        ) : <h1 style={{ color: '#0E4749' }} className="infoText">Swipe a card or press a button to get started!</h1> }
       </div>
     </div>
   );

@@ -13,31 +13,28 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  navbarDisplayFlex: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
+
   navDisplayFlex: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   linkText: {
     textDecoration: 'none',
     textTransform: 'uppercase',
-    fontWeight: 'bold',
     color: 'white',
-    fontFamily: 'Nerko One',
+    textAlign: 'right',
   },
   avatar: {
-    height: '15vh',
-    width: '15vh',
+    height: '10vh',
+    width: '10vh',
+    alignSelf: 'left',
   },
 });
 
 const navLinks = [
   { title: 'Profile', path: '/profile' },
   { title: 'ToyBox', path: '/toybox' },
-  { title: 'Park', path: '/park' },
+  { title: 'ParkMap', path: '/park' },
 ];
 
 const Navbar = () => {
@@ -46,10 +43,10 @@ const Navbar = () => {
   return (
     <AppBar style={{ background: '#0e4749' }} position="static">
       <Toolbar>
-        <Container maxWidth="md" className={classes.navbarDisplayFlex}>
-          <Avatar edge="start" className={classes.avatar}>
-            <img className="avatar-logo" src="https://i.ibb.co/zRR5Nd4/barkpoint.png" alt="" />
-          </Avatar>
+        <Avatar className={classes.avatar}>
+          <img className="avatar-logo" src="https://i.ibb.co/zRR5Nd4/barkpoint.png" alt="" />
+        </Avatar>
+        <Container maxWidth="md">
           <List
             component="nav"
             aria-labelledby="main navigation"

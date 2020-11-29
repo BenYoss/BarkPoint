@@ -11,6 +11,7 @@ const App = () => {
   const [active, setActive] = useState(false);
   const [aggressive, setAggressive] = useState(false);
   const [outgoing, setOutgoing] = useState(false);
+  const [name, setName] = useState('');
 
   return (
 
@@ -24,6 +25,7 @@ const App = () => {
             setActive={setActive}
             setAggressive={setAggressive}
             setOutgoing={setOutgoing}
+            name={name}
 
           />
         </Route>
@@ -41,7 +43,9 @@ const App = () => {
           <Park />
         </Route>
         <Route path="/form">
-          <Form />
+          <Form
+            setName={setName}
+          />
         </Route>
       </Switch>
     </Router>
