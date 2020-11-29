@@ -27,7 +27,6 @@ app.use(express.static(distPath));
 app.use('/', authRouter);
 app.use('/', dbRouter);
 app.use(apiRouter);
-app.use(dbRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
