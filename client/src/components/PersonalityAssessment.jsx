@@ -4,6 +4,8 @@ import './PersonalityAssessment.css';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import PetsIcon from '@material-ui/icons/Pets';
 
 const data = [
   {
@@ -113,7 +115,19 @@ const PersonalityAssessment = () => {
           </TinderCard>
         )) }
       </div>
-
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        { !dogs.length && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          startIcon={<PetsIcon />}
+          onClick={() => { window.location.href = '/toybox'; }}
+        >
+          Get My Results!
+        </Button>
+        ) }
+      </div>
       <div style={{
         position: 'fixed',
         bottom: '8vh',
