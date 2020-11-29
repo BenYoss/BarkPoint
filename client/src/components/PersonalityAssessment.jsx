@@ -120,7 +120,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
         <Button
           variant="contained"
           color="primary"
-          size="large"
+          style={{ width: '250px', height: '60px', fontSize: '20px' }}
           startIcon={<PetsIcon />}
           onClick={() => { window.location.href = '/toybox'; }}
         >
