@@ -12,7 +12,6 @@ const dbRouter = require('./routes/db.router');
 const app = express();
 const PORT = process.env.PORT || '8080';
 const distPath = path.join(__dirname, '../client/dist');
-
 app.use(express.json());
 app.use(session({
   secret: 'dog',
@@ -22,16 +21,13 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(express.static(distPath));
 app.use('/', authRouter);
 app.use('/', dbRouter);
 app.use(apiRouter);
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
-
 app.listen(PORT, () => {
   console.error(`http://localhost:${PORT}`);
 });
