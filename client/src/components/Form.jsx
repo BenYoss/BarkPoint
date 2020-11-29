@@ -65,6 +65,7 @@ export default function Form() {
           className={classes.form}
           noValidate
         >
+          {/* What are these textfields for? */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -102,7 +103,7 @@ export default function Form() {
             autoFocus
             onChange={handleChange}
           />
-
+          {/* What does this block of code used for? Maybe add some class names? */}
           <FormControl component="fieldset">
             <FormLabel component="legend">Size</FormLabel>
             <RadioGroup aria-label="size" name="size" value={form.size} onChange={handleChange}>
