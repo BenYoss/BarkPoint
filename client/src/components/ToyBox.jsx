@@ -49,8 +49,6 @@ const ToyBox = ({ dogs }) => {
 
   useEffect(() => {
     getToy();
-    console.log(toys);
-    console.log(dogs);
   }, []);
 
   const getToy = () => axios.get('/get/toys')
@@ -60,22 +58,19 @@ const ToyBox = ({ dogs }) => {
           return newToy;
         }
       });
-      console.log(array);
       setToys(response.data);
     })
     .catch((error) => {
-      console.log(error);
+      console.warn(error);
     });
 
   const refresh = () => {
     if (toys.length > 10) {
       setToys(toys.slice(10));
-      console.log(toys);
     }
 
     if (toys.length < 10) {
       getToy();
-      console.log(toys);
     }
   };
 
@@ -93,10 +88,10 @@ const ToyBox = ({ dogs }) => {
 
     axios.put('/data/dog', dogToy)
       .then((response) => {
-        console.log(response);
+        console.info(response);
       })
       .catch((error) => {
-        console.log(error);
+        console.warn(error);
       });
   };
 
