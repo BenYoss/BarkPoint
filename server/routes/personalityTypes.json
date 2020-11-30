@@ -1,0 +1,12 @@
+[
+    {
+        "outgoingY": [ "playful", "ball", "outdoor"],
+        "agressiveY": [ "rough", "chew", "tough", "extreme" ],
+        "activeY": [ "fitness", "hyper", "squeaky" ]
+    },
+    {
+        "outgoingN": [ "treat", "indoor", "fuzzy" ],
+        "agressiveN": [ "plush", "soft", "IQ" ],
+        "activeN": [ "fur", "fluffy", "bone" ]
+    }
+]
