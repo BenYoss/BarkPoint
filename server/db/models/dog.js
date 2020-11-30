@@ -45,7 +45,7 @@ const addToy = (dogId, body) => {
 
 const removeToy = (dogId, body) => Dog.findByIdAndUpdate(
   { _id: dogId },
-  { $pull: { toys: { name: body.title } } },
+  { $pull: { toys: body.title } },
 );
 
 module.exports = {
