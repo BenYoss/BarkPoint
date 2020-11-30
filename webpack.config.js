@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 
 const distPath = path.join(__dirname, './client/dist');
 const srcPath = path.join(__dirname, './client/src/Index.jsx');
@@ -29,5 +31,14 @@ module.exports = {
   devtool: 'eval-source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+      fs: false,
+    },
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed),
+    }),
+  ],
 };

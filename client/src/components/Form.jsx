@@ -12,6 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import './Form.css';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 require('regenerator-runtime');
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Form() {
+export default function Form({ setName }) {
   const [form, setForm] = useState({
     size: 'medium', breed: '', number: '', dogname: '',
   });
@@ -59,6 +60,7 @@ export default function Form() {
           onSubmit={async (e) => {
             e.preventDefault();
             console.warn(form);
+            setName(form.dogname);
             await axios.post('/data/dog', form);
             window.location.href = '/assessment';
           }}
@@ -127,3 +129,8 @@ export default function Form() {
     </Container>
   );
 }
+
+Form.propTypes = {
+  setName: PropTypes.func.isRequired,
+
+};
