@@ -31,6 +31,10 @@ module.exports = {
   devtool: 'eval-source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+      fs: false,
+    },
   },
   plugins: [
     new webpack.DefinePlugin({

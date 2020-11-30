@@ -12,6 +12,9 @@ const App = () => {
   const [aggressive, setAggressive] = useState(false);
   const [outgoing, setOutgoing] = useState(false);
   const [name, setName] = useState('');
+  const [data, setData] = useState({
+    size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [false, false, false],
+  });
 
   return (
 
