@@ -10,6 +10,7 @@ const dogSchema = new Schema({
     ref: 'User',
   },
   toys: [],
+  image: String,
 });
 
 const Dog = model('Dog', dogSchema);
@@ -20,6 +21,7 @@ const addDog = (name, breed, size, number) => Dog.create({
   size,
   number,
   toys: [],
+  image: '',
 })
   .then((data) => data);
 
