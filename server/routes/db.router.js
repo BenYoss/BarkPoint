@@ -31,6 +31,7 @@ dbRouter.get('/data/dog', (req, res) => {
 });
 
 dbRouter.post('/data/dog', (req, res) => {
+  console.log("inside db.routes", req.body);
   const {
     dogname, breed, size, image,
   } = req.body;
