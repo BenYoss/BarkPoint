@@ -37,4 +37,15 @@ authRouter.get('/logout', (req, res) => {
   res.redirect('/auth/google/callback');
 });
 
+/**
+ * Once a session is registered, a user is then recorded as an instance.
+ * sends the user session data from request.
+ */
+authRouter.get('/session', (req, res) => {
+  if (req.user) {
+    res.status(200).send(req.user);
+  }
+  res.sendStatus(500);
+});
+
 module.exports = authRouter;
