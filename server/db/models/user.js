@@ -4,6 +4,7 @@ const userSchema = new Schema({
   name: String,
   email: String,
   thumbnail: String,
+  parks: [],
 });
 
 const User = model('User', userSchema);
@@ -13,6 +14,7 @@ const createUser = (body) => {
     name: body.name,
     email: body.email,
     thumbnail: body.picture,
+    parks: [],
   });
   const { _id } = user;
   return User.findOne({ _id }).then((result) => {
@@ -25,7 +27,19 @@ const createUser = (body) => {
 
 const findUser = (username) => User.findOne({ name: username }).exec();
 
+const favPark = (userId, park) => User.findByIdAndUpdate(
+  { _id: userId },
+  { $addToSet: { parks: park } },
+);
+
+const unFavPark = (userId, park) => User.findByIdAndUpdate(
+  { _id: userId },
+  { $pull: { parks: park } },
+);
+
 module.exports = {
   createUser,
   findUser,
+  favPark,
+  unFavPark,
 };
