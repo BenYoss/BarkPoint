@@ -23,6 +23,8 @@ const addDog = (name, breed, size, image) => Dog.create({
 })
   .then((data) => data);
 
+const findDogs = (idUser) => Dog.find({ id_user: idUser }).sort().exec();
+
 const deleteDog = (dogName) => {
   Dog.deleteOne({ name: dogName });
 };
@@ -53,4 +55,5 @@ module.exports = {
   deleteDog,
   addToy,
   removeToy,
+  findDogs,
 };
