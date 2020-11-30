@@ -25,9 +25,7 @@ const addDog = (name, breed, size, number) => Dog.create({
 
 const findDogs = (idUser) => Dog.find({ id_user: idUser }).sort().exec();
 
-const deleteDog = (dogName) => {
-  Dog.deleteOne({ name: dogName });
-};
+const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
 
 const addToy = (dogId, body) => {
   const newToy = {
