@@ -4,28 +4,30 @@ const dogSchema = new Schema({
   name: String,
   breed: String,
   size: String,
-  image: String,
+  number: String,
   id_user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
   toys: [],
+  image: String,
 });
 
 const Dog = model('Dog', dogSchema);
 
-const addDog = (name, breed, size, image) => Dog.create({
+const addDog = (name, breed, size, number) => Dog.create({
   name,
   breed,
   size,
-  image,
+  number,
   toys: [],
+  image: '',
 })
   .then((data) => data);
 
-const deleteDog = (dogName) => {
-  Dog.deleteOne({ name: dogName });
-};
+const findDogs = (idUser) => Dog.find({ id_user: idUser }).sort().exec();
+
+const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
 
 const addToy = (dogId, body) => {
   const newToy = {
@@ -35,22 +37,21 @@ const addToy = (dogId, body) => {
     url: body.link,
     rating: body.rating,
   };
-  Dog.findByIdAndUpdate(
+  return Dog.findByIdAndUpdate(
     { _id: dogId },
     { $addToSet: { toys: newToy } },
   );
 };
 
-const removeToy = (dogId, body) => {
-  Dog.findByIdAndUpdate(
-    { _id: dogId },
-    { $pull: { toys: { name: body.title } } },
-  );
-};
+const removeToy = (dogId, body) => Dog.findByIdAndUpdate(
+  { _id: dogId },
+  { $pull: { toys: body.title } },
+);
 
 module.exports = {
   addDog,
   deleteDog,
   addToy,
   removeToy,
+  findDogs,
 };

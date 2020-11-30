@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useMemo } from 'react';
 import TinderCard from 'react-tinder-card';
 import './PersonalityAssessment.css';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import PetsIcon from '@material-ui/icons/Pets';
 
 const data = [
   {
@@ -30,7 +33,7 @@ const PersonalityAssessment = () => {
   const [aggressive, setAggressive] = useState(false);
   const [outgoing, setOutgoing] = useState(false);
 
-  const childRefs = useMemo(() => Array(data.length).fill(0).map((i) => React.createRef()), []);
+  const childRefs = useMemo(() => Array(data.length).fill(0).map(() => React.createRef()), []);
 
   const swiped = (direction, trait) => {
     if (trait === 'Active' && direction === 'right') {
@@ -113,7 +116,19 @@ const PersonalityAssessment = () => {
           </TinderCard>
         )) }
       </div>
-
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        { !dogs.length && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          startIcon={<PetsIcon />}
+          onClick={() => { window.location.href = '/toybox'; }}
+        >
+          Get My Results!
+        </Button>
+        ) }
+      </div>
       <div style={{
         position: 'fixed',
         bottom: '8vh',

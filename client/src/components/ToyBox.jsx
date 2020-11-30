@@ -14,6 +14,9 @@ import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import Navbar from './Navbar';
+
 
 const axios = require('axios');
 
