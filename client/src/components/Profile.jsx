@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './Profile.css';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -21,6 +23,7 @@ import { red } from '@material-ui/core/colors';
 // import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import DogComp from './DogComp';
+import ToyBox from './ToyBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const [dogs] = React.useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
+  const [dogs, setDogs] = React.useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
     { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]);
   const [expanded, setExpanded] = React.useState(false);
 
@@ -133,8 +136,13 @@ const Profile = () => {
       >
         <MyButton>Add Dog</MyButton>
       </div>
+      <div style={{ display: 'none' }}>
+        <ToyBox dogs={dogs} />
+      </div>
     </div>
   );
 };
+
+
 
 export default Profile;
