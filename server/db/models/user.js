@@ -17,8 +17,8 @@ const createUser = (body) => {
     email: body.email,
     parks: [],
   });
-  const { _id } = user;
-  return User.findOne({ _id }).then((result) => {
+  const { email } = user;
+  return User.findOne({ email }).then((result) => {
     if (!result) {
       return User.create(user);
     }
