@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-const data = [
+const dogData = [
   {
     trait: 'Active',
     imgUrl: 'https://azure.wgp-cdn.co.uk/app-yourdog/posts/jumptrainingmain.jpg',
@@ -26,17 +26,17 @@ const data = [
   },
 ];
 
-let dogsState = data;
+let dogsState = dogData;
 const alreadySwiped = [];
 
 const PersonalityAssessment = ({
   setActive, setAggressive, setOutgoing, name, form, setForm, active, outgoing, aggressive,
 }) => {
   const history = useHistory();
-  const [dogs, setDogs] = useState(data);
+  const [dogs, setDogs] = useState(dogData);
   const [lastDirection, setLastDirection] = useState();
 
-  const childRefs = useMemo(() => Array(data.length).fill(0).map(() => React.createRef()), []);
+  const childRefs = useMemo(() => Array(dogData.length).fill(0).map(() => React.createRef()), []);
 
   const swiped = (direction, trait) => {
     if (trait === 'Active' && direction === 'right') {
@@ -63,7 +63,7 @@ const PersonalityAssessment = ({
     const cardsLeft = dogs.filter((dog) => !alreadySwiped.includes(dog.trait));
     if (cardsLeft.length) {
       const toBeRemoved = cardsLeft[cardsLeft.length - 1].trait;
-      const index = data.map((dog) => dog.trait).indexOf(toBeRemoved);
+      const index = dogData.map((dog) => dog.trait).indexOf(toBeRemoved);
       alreadySwiped.push(toBeRemoved);
       childRefs[index].current.swipe(dir);
     }
@@ -134,7 +134,8 @@ const PersonalityAssessment = ({
           startIcon={<PetsIcon />}
           onClick={async () => {
             console.warn(form);
-            await axios.post('/data/dog', form);
+            const { data } = await axios.get('/session');
+            await axios.post('/data/dog', { ...form, data });
             history.push('/toybox');
           }}
         >

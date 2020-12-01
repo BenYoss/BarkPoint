@@ -10,3 +10,32 @@
   height: 7vh;
 }
 
+.search{
+  position: absolute;
+  top:  1rem;
+  left: 50%;
+  transform: translatex(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+}
+
+.search input{
+  padding: 0.5 rem;
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.locate{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+
+.locate img{
+  width: 10vh;
+  cursor: pointer;
+}

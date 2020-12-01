@@ -16,7 +16,7 @@
   text-align: center;
   font-family: 'Piedra', cursive;
   letter-spacing: 5px;
-   background: linear-gradient(to right, #2CDA9D 50.5%, #0e4749 50.5%);
+   background: linear-gradient(to right, #2CDA9D 50%, #0e4749 50%);
    -webkit-text-stroke: 0.5px #e55812;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
