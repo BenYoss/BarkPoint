@@ -24,7 +24,7 @@ passport.deserializeUser((user, done) => {
 /**
  * Below is the @GoogleStrategy which retrieves user information from the google authentication.
  * If user information exists, the user is then created as a database instance.
- * inputs include the @param {clientID} process.env and @param {clientSecret} process.env
+ * inputs include the @param {clientID} process.env and @param {clientSecret} process.env .
  */
 passport.use(
   new GoogleStrategy({
