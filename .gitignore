@@ -93,7 +93,7 @@ client/dist/dundle.js
 
 # Serverless directories
 .serverless/
-
+app.yaml
 # FuseBox cache
 .fusebox/
 
