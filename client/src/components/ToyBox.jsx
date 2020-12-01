@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 
 // Styling import
-// import './ToyBox.css';
+import './ToyBox.css';
 
 // Button Import
 import Button from '@material-ui/core/Button';
@@ -53,18 +53,16 @@ const useStyles = makeStyles((theme) => ({
 const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
+  const [hide, setHide] = useState(true);
 
   const getToy = () => axios.get('/get/toys')
     .then((response) => {
       setToys(response.data.filter((newToy) => newToy.price));
+      setHide(false);
     })
     .catch((error) => {
       console.warn(error);
     });
-
-  useEffect(() => {
-    getToy();
-  }, []);
 
   const refresh = () => {
     if (toys.length > 10) {
@@ -109,78 +107,89 @@ const ToyBox = () => {
   });
 
   useEffect(() => {
-    getToy();
+    // getToy();
   }, []);
 
   return (
     <div>
-      <Navbar />
-      <div style={{
-        display: 'flex', alignItems: 'center', margin: '0 auto', width: '20%',
-      }}
-      >
-        <div
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <img
+          src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F238583%2Fscreenshots%2F3630870%2Flagif-grande.gif"
+          alt="loading"
           style={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px 0 10px 0', marginLeft: 'auto',
+            display: hide ? 'block' : 'none',
           }}
+        />
+      </div>
+      <div style={{ display: hide ? 'none' : 'block' }}>
+        <Navbar />
+        <div style={{
+          display: 'flex', alignItems: 'center', margin: '0 auto', width: '20%',
+        }}
         >
-          <MyButton onClick={() => { refresh(); }}>Refresh Toys</MyButton>
-        </div>
-        <div
-          className="select"
-          style={{
-            flex: 1, marginRight: 'auto', height: '48', width: '200',
-          }}
-        >
-          <select
-            name="select"
-            className="filter"
+          <div
             style={{
-              height: '48', width: '200',
+              display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px 0 10px 0', marginLeft: 'auto',
             }}
           >
-            <option value="all">will cycle through dogs prop/array here</option>
-          </select>
-        </div>
-      </div>
-      <div
-        className="dogs"
-        style={{
-          width: '100%', height: '100%', paddingBottom: '10px', columnCount: '3',
-        }}
-      >
-        {toys.slice(0, 9).map((toy) => (
-          <Card
-            className={classes.root}
+            <MyButton onClick={() => { refresh(); }}>Refresh Toys</MyButton>
+          </div>
+          <div
+            className="select"
+            style={{
+              flex: 1, marginRight: 'auto', height: '48', width: '200',
+            }}
           >
-            <CardMedia
-              className={classes.media}
-              image={toy.image}
-              onClick={() => { window.open(`${toy.link}`); }}
-            />
-            <CardContent>
-              <small>
-                {toy.title}
-              </small>
-              <p>
-                $
-                {toy.price.value}
-              </p>
-            </CardContent>
-            <CardActions disableSpacing>
-              <div>
-                <IconButton aria-label="add to favorites" onClick={() => saveToy(toy.title, toy.link, toy.price.value, toy.image, toy.rating)}>
-                  <FavoriteIcon />
-                </IconButton>
-              </div>
-              <p>
-                {toy.rating}
-                {' '}
-                Rating
-              </p>
-            </CardActions>
-          </Card>
-        ))}
+            <select
+              name="select"
+              className="filter"
+              style={{
+                height: '48', width: '200',
+              }}
+            >
+              <option value="all">will cycle through dogs prop/array here</option>
+            </select>
+          </div>
+        </div>
+        <div
+          className="dogs"
+          style={{
+            width: '100%', height: '100%', paddingBottom: '10px', columnCount: '3',
+          }}
+        >
+          {toys.slice(0, 9).map((toy) => (
+            <Card
+              className={classes.root}
+            >
+              <CardMedia
+                className={classes.media}
+                image={toy.image}
+                onClick={() => { window.open(`${toy.link}`); }}
+              />
+              <CardContent>
+                <small>
+                  {toy.title}
+                </small>
+                <p>
+                  $
+                  {toy.price.value}
+                </p>
+              </CardContent>
+              <CardActions disableSpacing>
+                <div>
+                  <IconButton aria-label="add to favorites" onClick={() => saveToy(toy.title, toy.link, toy.price.value, toy.image, toy.rating)}>
+                    <FavoriteIcon />
+                  </IconButton>
+                </div>
+                <p>
+                  {toy.rating}
+                  {' '}
+                  Rating
+                </p>
+              </CardActions>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
