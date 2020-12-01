@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import './Profile.css';
+// Import materialui info
 import { makeStyles, styled } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -16,9 +15,13 @@ import Collapse from '@material-ui/core/Collapse';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// Import components & css
 import ToyBox from './ToyBox';
-
 import Navbar from './Navbar';
+import './Profile.css';
+
+// Import axios
+// const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const [dogs] = useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
-    { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]);
-  const [expanded, setExpanded] = React.useState(false);
+    { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]); const [expanded, setExpanded] = React.useState(false);
 
   const classes = useStyles();
 
@@ -67,6 +69,14 @@ const Profile = () => {
     width: 300,
     padding: '0 30px',
   });
+
+  const getDogs = () => {
+    // Awaiting auth.Router function that pulls all dogs
+  };
+
+  useEffect(() => {
+    getDogs();
+  }, []);
 
   return (
     <div className="Profile">
@@ -107,11 +117,12 @@ const Profile = () => {
           </div>
         ))}
       </div>
-      <div style={{
-        display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh',
-      }}
+      <div
+        style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh',
+        }}
       >
-        <MyButton>Add Dog</MyButton>
+        <MyButton onClick={() => { window.location.href = '/form'; }}>Add Dog</MyButton>
       </div>
       <div style={{ display: 'none' }}>
         <ToyBox dogs={dogs} />
