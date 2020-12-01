@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,14 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
-import Button from '@material-ui/core/Button';
-import CardHeader from '@material-ui/core/CardHeader';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
-import Navbar from './Navbar';
-
 
 const axios = require('axios');
 
@@ -43,26 +35,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToyBox = ({ dogs }) => {
+const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
 
-  useEffect(() => {
-    getToy();
-  }, []);
-
   const getToy = () => axios.get('/get/toys')
     .then((response) => {
-      const array = response.data.filter((newToy) => {
-        if (newToy.price.value) {
-          return newToy;
-        }
-      });
+      // const array = response.data.filter((newToy) => {
+      //   if (newToy.price.value) {
+      //     return newToy;
+      //   }
+      //   return '';
+      // });
       setToys(response.data);
     })
     .catch((error) => {
       console.warn(error);
     });
+
+  useEffect(() => {
+    getToy();
+  }, []);
 
   const refresh = () => {
     if (toys.length > 10) {
@@ -109,7 +102,7 @@ const ToyBox = ({ dogs }) => {
   return (
     <div>
       <div>
-        <button onClick={() => refresh()}>Refresh</button>
+        <button type="submit" onClick={() => refresh()}>Refresh</button>
       </div>
       <div className="select">
         <select name="select" className="filter">
@@ -158,13 +151,13 @@ const ToyBox = ({ dogs }) => {
 };
 
 ToyBox.propTypes = {
-  dogs: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    breed: PropTypes.string,
-    image: PropTypes.string,
-    size: PropTypes.string,
-    toys: PropTypes.arrayOf,
-  })).isRequired,
+  // dogs: PropTypes.arrayOf(PropTypes.shape({
+  //   name: PropTypes.string,
+  //   breed: PropTypes.string,
+  //   image: PropTypes.string,
+  //   size: PropTypes.string,
+  //   toys: PropTypes.arrayOf,
+  // })).isRequired,
 };
 
 export default ToyBox;
