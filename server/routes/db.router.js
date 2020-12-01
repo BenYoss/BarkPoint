@@ -16,12 +16,13 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
 // get dog's info from database
 dbRouter.get('/data/dog', (req, res) => {
   const { options } = req.query;
-  return Dog.findDogs(options)
+  Dog.findDogs(options)
     .then((dogs) => {
       if (dogs.length) {
         res.status(200).send(dogs);
+      } else {
+        res.sendStatus(404);
       }
-      res.sendStatus(404);
     })
     .catch((err) => {
       console.error(err);
