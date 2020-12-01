@@ -7,18 +7,12 @@ import {
   GoogleMap, useLoadScript, Marker, InfoWindow,
 } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
-import usePlacesAutoComplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from '@reach/combobox';
-import '@reach/combobox/styles.css';
+
 import './Park.css';
 import PropTypes from 'prop-types';
 import mapStyles from './ParkStyles';
+
+import Search from './Search';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -63,7 +57,7 @@ const Park = () => {
   const mapRef = useRef();
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(10);
+    mapRef.current.setZoom(12);
     setLocation(`${lat}, ${lng}`);
   });
   const onMapClick = useCallback((e) => {
@@ -200,42 +194,6 @@ const Locate = ({ panTo }) => (
     <img src="https://cdn.shopify.com/s/files/1/0082/3142/0009/products/Dog_Paw_Compass_SKU-02949-L_Black_800x.png?v=1549382505" alt="compass" />
   </button>
 );
-
-const Search = ({ panTo }) => {
-  const {
-    ready, value, suggestions: { status, data }, setValue, clearSuggestions,
-  } = usePlacesAutoComplete({
-    requestOptions: {
-      location: { lat: () => 29.951065, lng: () => -90.071533 },
-      radius: 200 * 1000,
-    },
-  });
-
-  return (
-    <div className="search">
-      <Combobox
-        onSelect={async (address) => {
-          setValue(address, false);
-          clearSuggestions();
-          const results = await getGeocode({ address });
-          const { lat, lng } = await getLatLng(results[0]);
-          panTo({ lat, lng });
-        }}
-      >
-        <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} placeholder="Where are you going?" />
-        <ComboboxPopover>
-          <ComboboxList>
-            { status === 'OK' && data.map(({ id, description }) => <ComboboxOption key={id} value={description} />) }
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
-  );
-};
-
-Search.propTypes = {
-  panTo: PropTypes.func.isRequired,
-};
 
 Locate.propTypes = {
   panTo: PropTypes.func.isRequired,

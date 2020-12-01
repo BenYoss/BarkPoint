@@ -14,7 +14,7 @@ const App = () => {
   const [outgoing, setOutgoing] = useState(false);
   const [name, setName] = useState('');
   const [form, setForm] = useState({
-    size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [outgoing, aggressive, active],
+    size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [outgoing, aggressive, active], image: '',
   });
 
   return (

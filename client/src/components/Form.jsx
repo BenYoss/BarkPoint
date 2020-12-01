@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +15,8 @@ import FormControl from '@material-ui/core/FormControl';
 import './Form.css';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
 
 require('regenerator-runtime');
 
@@ -44,6 +47,33 @@ export default function Form({ setName, form, setForm }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const classes = useStyles();
+  const [uploadedFile, setUploadedFile] = useState(null);
+
+  const preset = process.env.CLOUDINARY_UPLOAD_PRESET;
+  const URL = process.env.CLOUDINARY_UPLOAD_URL;
+  console.warn(process.env.CLOUDINARY_UPLOAD_URL);
+
+  const handleImageUpload = (file) => {
+    const upload = request.post(URL)
+      .field('upload_preset', preset)
+      .field('file', file);
+
+    // eslint-disable-next-line consistent-return
+    upload.end((err, response) => {
+      if (err) {
+        return err;
+      }
+
+      if (response.body.secure_url !== '') {
+        setForm({ ...form, image: response.body.secure_url });
+      }
+    });
+  };
+
+  const onImageDrop = (files) => {
+    setUploadedFile(files[0]);
+    handleImageUpload(files[0]);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,6 +141,32 @@ export default function Form({ setName, form, setForm }) {
               <FormControlLabel value="large" control={<Radio color="primary" />} label="large" />
             </RadioGroup>
           </FormControl>
+
+          <Dropzone
+            onDrop={onImageDrop}
+            accept="image/*"
+            multiple={false}
+          >
+            { ({ getRootProps, getInputProps }) => (
+              <div
+                {...getRootProps()}
+              >
+                <div>
+                  <input {...getInputProps()} />
+                  <p style={{ cursor: 'pointer' }}>Drop an image or click to select a file to upload</p>
+                </div>
+                <div>
+                  {form.image === '' ? null : (
+                    <div>
+                      <p>{uploadedFile.name}</p>
+                      <img style={{ height: '15vh', width: '10vw' }} src={form.image} alt="dogImage" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+          </Dropzone>
 
           <Button
             type="submit"
