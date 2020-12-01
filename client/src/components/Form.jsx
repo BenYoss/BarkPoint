@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +12,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import './Form.css';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 require('regenerator-runtime');
@@ -37,11 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Form({ setName }) {
-  const [form, setForm] = useState({
-    size: 'medium', breed: '', number: '', dogname: '',
-  });
-
+export default function Form({ setName, form, setForm }) {
+  const history = useHistory();
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -57,12 +55,11 @@ export default function Form({ setName }) {
           Tell us about your pup🐾
         </Typography>
         <form
-          onSubmit={async (e) => {
+          onSubmit={(e) => {
             e.preventDefault();
             console.warn(form);
             setName(form.dogname);
-            await axios.post('/data/dog', form);
-            window.location.href = '/assessment';
+            history.push('/assessment');
           }}
           className={classes.form}
           noValidate

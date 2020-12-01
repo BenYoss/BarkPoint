@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useMemo } from 'react';
 import TinderCard from 'react-tinder-card';
 import './PersonalityAssessment.css';
@@ -7,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import PetsIcon from '@material-ui/icons/Pets';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const data = [
   {
@@ -26,7 +29,10 @@ const data = [
 let dogsState = data;
 const alreadySwiped = [];
 
-const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
+const PersonalityAssessment = ({
+  setActive, setAggressive, setOutgoing, name, form, setForm, active, outgoing, aggressive,
+}) => {
+  const history = useHistory();
   const [dogs, setDogs] = useState(data);
   const [lastDirection, setLastDirection] = useState();
 
@@ -35,13 +41,17 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
   const swiped = (direction, trait) => {
     if (trait === 'Active' && direction === 'right') {
       setActive(true);
+      setForm({ ...form, personalitytypes: [outgoing, aggressive, active] });
     } else if (trait === 'Outgoing' && direction === 'right') {
       setOutgoing(true);
+      setForm({ ...form, personalitytypes: [outgoing, aggressive, active] });
     } else if (trait === 'Aggressive' && direction === 'right') {
       setAggressive(true);
+      setForm({ ...form, personalitytypes: [outgoing, aggressive, active] });
     }
     setLastDirection(direction);
     alreadySwiped.push(trait);
+    setForm({ ...form, personalitytypes: [outgoing, aggressive, active] });
   };
 
   const outOfFrame = (trait) => {
@@ -67,7 +77,7 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
         fontSize: '40px',
       }}
       >
-        My Dog is...
+        {`${name} is...`}
       </h1>
       <div style={{
         display: 'flex',
@@ -122,7 +132,11 @@ const PersonalityAssessment = ({ setActive, setAggressive, setOutgoing }) => {
           color="primary"
           style={{ width: '250px', height: '60px', fontSize: '20px' }}
           startIcon={<PetsIcon />}
-          onClick={() => { window.location.href = '/toybox'; }}
+          onClick={async () => {
+            console.warn(form);
+            await axios.post('/data/dog', form);
+            history.push('/toybox');
+          }}
         >
           Get My Results!
         </Button>
