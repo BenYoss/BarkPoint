@@ -59,20 +59,22 @@ const ToyBox = ({ dogs }) => {
     let dogSearch;
     let user;
 
-    // axios.get('session')
-    //   .then((response) => {
-    //     user = response.data;
-    //     axios.get('/data/dog', user)
-    //       .then((res) => {
-    //         console.log(res.data);
-    //         dogSearch = res.data.slice(res.data.length - 1);
-    //         console.log(dogSearch);
-    //       }).catch((error) => {
-    //         console.warn(error);
-    //       });
-    //   }).catch((error) => {
-    //     console.warn(error);
-    //   });
+    axios.get('session')
+      .then((response) => {
+        user = response.data;
+        axios.get('/data/dog', { params: { user } })
+          .then((res) => {
+            console.log('res', res.data);
+            dogSearch = res.data.slice(res.data.length - 1);
+            console.log('dogsearch', dogSearch);
+          }).catch((error) => {
+            console.warn(error);
+          });
+      }).catch((error) => {
+        console.warn(error);
+      });
+
+    console.log('outsidedog', dogSearch);
 
     // axios.get('/get/toys', dogSearch.personalitytypes)
     //   .then((response) => {
