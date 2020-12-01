@@ -1,4 +1,3 @@
-import React from 'react';
 import React, { useState } from 'react';
 
 import './Profile.css';
@@ -20,7 +19,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ToyBox from './ToyBox';
 
 import Navbar from './Navbar';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const [dogs, setDogs] = useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
+  const [dogs] = useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
     { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]);
   const [expanded, setExpanded] = React.useState(false);
 
@@ -121,7 +119,5 @@ const Profile = () => {
     </div>
   );
 };
-
-
 
 export default Profile;
