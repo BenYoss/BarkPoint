@@ -20,7 +20,7 @@ import Navbar from './Navbar';
 import './Profile.css';
 
 // Import axios
-// const axios = require('axios');
+const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const [dogs] = useState([{ name: 'Fido', image: 'https://i.pinimg.com/originals/d1/8c/ac/d18cacc593eff679f63fa49e265a7ade.jpg' },
-    { name: 'Mickey', image: 'https://i.insider.com/5c005d9bac00e20fe169f725?width=1100&format=jpeg&auto=webp' }, { name: 'Marc Anthony', image: 'https://www.rover.com/blog/wp-content/uploads/2020/01/White-Dog-in-Vest-and-Sun-Goggles-960x540.jpg' }]); const [expanded, setExpanded] = React.useState(false);
+  const [dogs, setDogs] = React.useState([]);
+  const [expanded, setExpanded] = React.useState(false);
 
   const classes = useStyles();
 
@@ -71,11 +71,26 @@ const Profile = () => {
   });
 
   const getDogs = () => {
-    // Awaiting auth.Router function that pulls all dogs
+    let user;
+
+    axios.get('session')
+      .then((response) => {
+        user = (response.data);
+      }).catch((error) => {
+        console.warn(error);
+      });
+
+    axios.get('/data/dog', user)
+      .then((response) => {
+        setDogs(response.data);
+      }).catch((error) => {
+        console.warn(error);
+      });
   };
 
   useEffect(() => {
     getDogs();
+    // console.log('useEffect', dogs);
   }, []);
 
   return (
