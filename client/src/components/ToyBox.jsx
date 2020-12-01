@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+// Styling import
+// import './ToyBox.css';
+
+// Button Import
+import Button from '@material-ui/core/Button';
+import { makeStyles, styled } from '@material-ui/core/styles';
+
+// Card Import
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,16 +16,24 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Navbar from './Navbar';
 
 const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '50%',
+    height: 'auto',
+    flexDirection: 'row',
+    backgroundColor: '#FEFDFF',
+    breakInside: 'avoid',
+    fontFamily: 'Roboto',
     maxWidth: 345,
+    marginBottom: '20px',
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    height: '20px',
+    paddingTop: '60px',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -41,13 +56,7 @@ const ToyBox = () => {
 
   const getToy = () => axios.get('/get/toys')
     .then((response) => {
-      // const array = response.data.filter((newToy) => {
-      //   if (newToy.price.value) {
-      //     return newToy;
-      //   }
-      //   return '';
-      // });
-      setToys(response.data);
+      setToys(response.data.filter((newToy) => newToy.price));
     })
     .catch((error) => {
       console.warn(error);
@@ -88,34 +97,61 @@ const ToyBox = () => {
       });
   };
 
-  // const MyButton = styled(Button)({
-  //   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  //   border: 0,
-  //   borderRadius: 3,
-  //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  //   color: 'white',
-  //   height: 48,
-  //   width: 300,
-  //   padding: '0 30px',
-  // });
+  const MyButton = styled(Button)({
+    background: 'linear-gradient(45deg, #2CDA9D 30%, #0E4749 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    width: 200,
+    padding: '0 30px',
+  });
+
+  useEffect(() => {
+    getToy();
+  }, []);
 
   return (
     <div>
-      <div>
-        <button type="submit" onClick={() => refresh()}>Refresh</button>
+      <Navbar />
+      <div style={{
+        display: 'flex', alignItems: 'center', margin: '0 auto', width: '20%',
+      }}
+      >
+        <div
+          style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px 0 10px 0', marginLeft: 'auto',
+          }}
+        >
+          <MyButton onClick={() => { refresh(); }}>Refresh Toys</MyButton>
+        </div>
+        <div
+          className="select"
+          style={{
+            flex: 1, marginRight: 'auto', height: '48', width: '200',
+          }}
+        >
+          <select
+            name="select"
+            className="filter"
+            style={{
+              height: '48', width: '200',
+            }}
+          >
+            <option value="all">will cycle through dogs prop/array here</option>
+          </select>
+        </div>
       </div>
-      <div className="select">
-        <select name="select" className="filter">
-          <option value="all">test</option>
-        </select>
-      </div>
-      <div className="dogs" style={{ width: '100%', height: '100%', paddingBottom: '10px' }}>
-        {toys.slice(0, 10).map((toy) => (
+      <div
+        className="dogs"
+        style={{
+          width: '100%', height: '100%', paddingBottom: '10px', columnCount: '3',
+        }}
+      >
+        {toys.slice(0, 9).map((toy) => (
           <Card
             className={classes.root}
-            style={{
-              Width: '50%', height: 'auto', flexDirection: 'row', backgroundColor: '#FEFDFF', breakInside: 'avoid', fontFamily: 'Roboto',
-            }}
           >
             <CardMedia
               className={classes.media}
@@ -150,14 +186,14 @@ const ToyBox = () => {
   );
 };
 
-ToyBox.propTypes = {
-  // dogs: PropTypes.arrayOf(PropTypes.shape({
-  //   name: PropTypes.string,
-  //   breed: PropTypes.string,
-  //   image: PropTypes.string,
-  //   size: PropTypes.string,
-  //   toys: PropTypes.arrayOf,
-  // })).isRequired,
-};
+// ToyBox.propTypes = {
+//   dogs: PropTypes.arrayOf(PropTypes.shape({
+//     name: PropTypes.string,
+//     breed: PropTypes.string,
+//     image: PropTypes.string,
+//     size: PropTypes.string,
+//     toys: PropTypes.arrayOf,
+//   })).isRequired,
+// };
 
 export default ToyBox;
