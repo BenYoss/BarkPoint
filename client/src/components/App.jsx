@@ -4,6 +4,7 @@ import GoogleLogin from './GoogleLogin';
 import PersonalityAssessment from './PersonalityAssessment';
 import Profile from './Profile';
 import ToyBox from './ToyBox';
+
 import Park from './Park';
 import Form from './Form';
 
@@ -12,8 +13,8 @@ const App = () => {
   const [aggressive, setAggressive] = useState(false);
   const [outgoing, setOutgoing] = useState(false);
   const [name, setName] = useState('');
-  const [data, setData] = useState({
-    size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [false, false, false],
+  const [form, setForm] = useState({
+    size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [outgoing, aggressive, active],
   });
 
   return (
@@ -29,6 +30,11 @@ const App = () => {
             setAggressive={setAggressive}
             setOutgoing={setOutgoing}
             name={name}
+            form={form}
+            setForm={setForm}
+            active={active}
+            outgoing={outgoing}
+            aggressive={aggressive}
 
           />
         </Route>
@@ -48,6 +54,8 @@ const App = () => {
         <Route path="/form">
           <Form
             setName={setName}
+            form={form}
+            setForm={setForm}
           />
         </Route>
       </Switch>
