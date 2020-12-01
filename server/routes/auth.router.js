@@ -41,9 +41,10 @@ authRouter.get('/logout', (req, res) => {
  * Once a session is registered, a user is then recorded as an instance.
  * sends the user session data from request.
  */
-authRouter.get('/session', (req, res) => {
-  if (req.user) {
-    res.status(200).send(req.user);
+authRouter.get('/session', ({ user }, res) => {
+  const { _json } = user;
+  if (user) {
+    res.status(200).send(_json.email);
   }
   res.sendStatus(500);
 });
