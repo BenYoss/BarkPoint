@@ -13,7 +13,7 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
     res.sendStatus(500);
   }));
 
-// get one dog's info from database
+// get dog's info from database
 dbRouter.get('/data/dog', (req, res) => {
   const { options } = req.query;
   return Dog.findDogs(options)
