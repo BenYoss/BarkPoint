@@ -3,7 +3,9 @@ const { Dog, User, Park } = require('../db/models/models');
 
 const dbRouter = Router();
 
-// add a new user to database
+/**
+ * Adds a new user into the barkPoint database
+ */
 dbRouter.post('/data/user', (req, res) => User(req.body)
   .then(() => {
     res.sendStatus(201);
@@ -13,7 +15,9 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
     res.sendStatus(500);
   }));
 
-// get one dog's info from database
+/**
+ * Finds all dogs whose user_email field matches the current sessions user's email
+ */
 dbRouter.get('/data/dog', (req, res) => {
   const { options } = req.query;
   Dog.findDogs(options)
@@ -30,12 +34,20 @@ dbRouter.get('/data/dog', (req, res) => {
     });
 });
 
-// add a new dog to database
+/**
+ * Adds a new dog into the barkPoint database.
+ *
+ * @data is equal to the current sessions user's email
+ *
+ * @personalitytypes is an array of length 3. It's values are booleans with
+ * each value correlating to a personality type. Swiping left equaling false
+ * and swiping right equaling false.
+ */
 dbRouter.post('/data/dog', (req, res) => {
   const {
-    size, breed, number, dogname, personalitytypes, emailUser,
+    size, breed, number, dogname, personalitytypes, data,
   } = req.body;
-  return Dog.addDog(dogname, breed, size, number, emailUser, personalitytypes)
+  return Dog.addDog(dogname, breed, size, number, data, personalitytypes)
     .then(() => {
       res.sendStatus(201);
     })
@@ -45,7 +57,12 @@ dbRouter.post('/data/dog', (req, res) => {
     });
 });
 
-// add toy to dog's toy-box
+/**
+ * Adds a new toy into a the currently selected dog's toy field (an array)
+ *
+ * @id is equal to the current dog's mongo-provided ObjectId
+ * @body is equal to an object with the to be added toy's info (see dog.js in models)
+ */
 dbRouter.put('/data/dog', (req, res) => {
   const { id, body } = req.body;
   return Dog.addToy(id, body)
@@ -58,10 +75,15 @@ dbRouter.put('/data/dog', (req, res) => {
     });
 });
 
-// delete toy from dog's toy-box
+/**
+ * Removes a toy from the currently selected dog's toy field (an array)
+ *
+ * @id is equal to the current dog's mongo-provided ObjectId
+ * @body is equal to an object with the to be deleted toy's info (see dog.js in models)
+ */
 dbRouter.delete('/data/toy', (req, res) => {
   const { id } = req.query;
-  return Dog.removeToy(id)
+  return Dog.removeToy(id, req.body)
     .then(() => {
       res.sendStatus(200);
     })
@@ -71,7 +93,11 @@ dbRouter.delete('/data/toy', (req, res) => {
     });
 });
 
-// delete dog from database
+/**
+ * Removes a dog from the barkPoint database
+ *
+ * @id is equal to the current dog's mongo-provided ObjectId
+ */
 dbRouter.delete('/data/dog', (req, res) => {
   const { id } = req.query;
   return Dog.removeDog(id)
@@ -84,7 +110,9 @@ dbRouter.delete('/data/dog', (req, res) => {
     });
 });
 
-// add a new park to database
+/**
+ * Adds a park into the barkPoint database
+ */
 dbRouter.post('/data/park', (req, res) => {
   const {
     name, address, comment,
@@ -99,7 +127,11 @@ dbRouter.post('/data/park', (req, res) => {
     });
 });
 
-// update a comment on a park
+/**
+ * Updates the comment field of the selected park
+ *
+ * @name is equal to the name field of the park whose comment you wish to update
+ */
 dbRouter.put('/data/park', (req, res) => {
   const { name, comment } = req.body;
   return Park.updatePark(name, comment)
@@ -112,7 +144,9 @@ dbRouter.put('/data/park', (req, res) => {
     });
 });
 
-// delete park from database
+/**
+ * Removes a specific park from the barkPoint database
+ */
 dbRouter.delete('/data/park', (req, res) => {
   const { name } = req.query;
   return Park.deletePark(name)
