@@ -5,10 +5,7 @@ const dogSchema = new Schema({
   breed: String,
   size: String,
   number: String,
-  id_user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  email_user: String,
   toys: [],
   image: String,
   /**
@@ -26,11 +23,12 @@ const Dog = model('Dog', dogSchema);
  * Adds a new dog instance depending on what options a user sets in the form.
  */
 
-const addDog = (name, breed, size, number, personalitytypes) => Dog.create({
+const addDog = (name, breed, size, number, emailUser, personalitytypes) => Dog.create({
   name,
   breed,
   size,
   number,
+  email_user: emailUser,
   toys: [],
   image: '',
   personalitytypes,
@@ -38,10 +36,10 @@ const addDog = (name, breed, size, number, personalitytypes) => Dog.create({
   .then((data) => data);
 
 /**
- * Takes in @param {*} idUser which is the Id of the recorded user session.
+ * Takes in @param {*} emailUser which is the Id of the recorded user session.
  */
 
-const findDogs = (idUser) => Dog.find({ id_user: idUser }).sort().exec();
+const findDogs = (emailUser) => Dog.find({ email_user: emailUser }).sort().exec();
 
 const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
 
