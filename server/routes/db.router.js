@@ -32,7 +32,7 @@ dbRouter.get('/data/dog', (req, res) => {
 // add a new dog to database
 dbRouter.post('/data/dog', (req, res) => {
   const {
-    size, breed, number, dogname, emailUser, personalitytypes,
+    size, breed, number, dogname, personalitytypes, emailUser,
   } = req.body;
   return Dog.addDog(dogname, breed, size, number, emailUser, personalitytypes)
     .then(() => {

@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Import components & css
@@ -24,15 +23,11 @@ import './Profile.css';
 // const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '81.25%',
+    borderRadius: '50%',
+    margin: '28px',
+
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -44,8 +39,13 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
+  card: {
+    Width: '50%',
+    height: 'auto',
+    flexDirection: 'row',
+    backgroundColor: '#FEFDFF',
+    breakInside: 'avoid',
+    fontFamily: 'Roboto',
   },
 }));
 
@@ -81,13 +81,10 @@ const Profile = () => {
   return (
     <div className="Profile">
       <Navbar />
-      <div className="dogs" style={{ width: '100%', height: '100%' }}>
+      <div className="dogs">
         {dogs.map((dog) => (
-          <div className="header" style={{ paddingBottom: '10px' }}>
-            <Card style={{
-              Width: '50%', height: 'auto', flexDirection: 'row', backgroundColor: '#FEFDFF', breakInside: 'avoid', fontFamily: 'Roboto',
-            }}
-            >
+          <div className="header">
+            <Card className={classes.card}>
               <CardHeader
                 title={dog.name}
               />
