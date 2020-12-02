@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
-  const [hide] = useState(true);
+  const [hide, setHide] = useState(true);
 
   const getToy = () => {
     axios.get('session')
@@ -85,27 +85,6 @@ const ToyBox = () => {
     if (toys.length < 10) {
       getToy();
     }
-  };
-
-  const saveToy = (toyName, toyCost, toyRating, toyLink, toyImage) => {
-    const dogToy = {
-      id: 123,
-      body: {
-        name: toyName,
-        price: toyCost,
-        image: toyImage,
-        url: toyLink,
-        rating: toyRating,
-      },
-    };
-
-    axios.put('/data/dog', dogToy)
-      .then((response) => {
-        //console.info(response);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
   };
 
   const MyButton = styled(Button)({
@@ -190,7 +169,7 @@ const ToyBox = () => {
               </CardContent>
               <CardActions disableSpacing>
                 <div>
-                  <IconButton aria-label="add to favorites" onClick={() => saveToy(toy.title, toy.link, toy.price.value, toy.image, toy.rating)}>
+                  <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                   </IconButton>
                 </div>
