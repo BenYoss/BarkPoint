@@ -6,6 +6,7 @@ import Profile from './Profile';
 import ToyBox from './ToyBox';
 import LogOut from './LogOut';
 import './App.css';
+import NotFound from './FourOhFour';
 
 import Park from './Park';
 import Form from './Form';
@@ -63,6 +64,7 @@ const App = () => {
         <Route path="/logout">
           <LogOut />
         </Route>
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );
