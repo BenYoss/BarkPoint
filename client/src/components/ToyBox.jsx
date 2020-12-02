@@ -50,31 +50,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToyBox = ({ dogs }) => {
+const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
-  const [hide, setHide] = useState(true);
+  const [hide] = useState(true);
 
   const getToy = () => {
-    let dogSearch;
-    let user;
+    // let dogSearch;
+    // let user;
 
-    axios.get('session')
-      .then((response) => {
-        user = response.data;
-        axios.get('/data/dog', { params: { user } })
-          .then((res) => {
-            console.log('res', res.data);
-            dogSearch = res.data.slice(res.data.length - 1);
-            console.log('dogsearch', dogSearch);
-          }).catch((error) => {
-            console.warn(error);
-          });
-      }).catch((error) => {
-        console.warn(error);
-      });
-
-    console.log('outsidedog', dogSearch);
+    // axios.get('session')
+    //   .then((response) => {
+    //     user = response.data;
+    //     axios.get('/data/dog', user)
+    //       .then((res) => {
+    //         console.log(res.data);
+    //         dogSearch = res.data.slice(res.data.length - 1);
+    //         console.log(dogSearch);
+    //       }).catch((error) => {
+    //         console.warn(error);
+    //       });
+    //   }).catch((error) => {
+    //     console.warn(error);
+    //   });
 
     // axios.get('/get/toys', dogSearch.personalitytypes)
     //   .then((response) => {

@@ -34,7 +34,7 @@ authRouter.get('/', isLoggedIn, (req, res) => {
 authRouter.get('/logout', (req, res) => {
   req.session.destroy();
   req.logOut();
-  res.redirect('/auth/google/callback');
+  res.redirect('/logout');
 });
 
 /**

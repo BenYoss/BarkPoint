@@ -37,6 +37,7 @@ const navLinks = [
   { title: 'Profile', path: '/profile' },
   { title: 'ToyBox', path: '/toybox' },
   { title: 'ParkMap', path: '/park' },
+  { title: 'LogOut', path: '/logout' },
 ];
 
 const Navbar = () => {
