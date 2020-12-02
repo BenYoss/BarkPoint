@@ -12,14 +12,12 @@ apiRouter.get('/get/toys', (req, res) => {
    * @verbs is an algorithm that finds dog personality types and outputs key verbs pertaining to
    * the type.
    */
-  console.log('this is the req', req);
   const verbs = Object.values(req.query).map((personalityType, i) => {
     if (personalityType) {
       return personalityVerbs[0][i];
     }
     return personalityVerbs[1][i];
   });
-  console.log('These are the verbs', verbs);
 
   /**
    * The function @filterToys searches for toy verbs and filters toys retrieved
@@ -29,12 +27,10 @@ apiRouter.get('/get/toys', (req, res) => {
    */
   const filterToys = () => {
     const toyFilter = [];
-    console.log('inside filtertoys toysbyverb', toysByVerb);
     toysByVerb.forEach((toy) => verbs.forEach((verb) => {
       if (toy.title.includes(verb)) {
         toyFilter.push(toy);
       }
-      console.log('inside filterToys', toyFilter);
     }));
     res.status(200).send(toyFilter);
   };

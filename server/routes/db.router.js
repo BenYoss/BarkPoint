@@ -18,10 +18,9 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
 /**
  * Finds all dogs whose user_email field matches the current sessions user's email
  */
-dbRouter.get('/data/dog', (req, res) => {
-  const { options } = req.query;
-  console.log('options in db router', options);
-  Dog.findDogs(options)
+dbRouter.get('/data/dog', ({ user }, res) => {
+  const { _json } = user;
+  Dog.findDogs(_json.email)
     .then((dogs) => {
       if (dogs.length) {
         res.status(200).send(dogs);
