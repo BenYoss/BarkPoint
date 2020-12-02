@@ -1,25 +1,31 @@
-// import React from 'react';
-// import './SideBar.css';
-// // import { useHistory } from 'react-router-dom';
-// import sideBarData from './SideBarData';
+import React from 'react';
+import './SideBar.css';
 
-// const history = useHistory();
-// const SideBar = () => (
-//   <div className="Sidebar">
-//     <ul>
-//       { sideBarData.map(({
-//         icon, title, link, id,
-//       }) => (
-//         <li
-//           key={id}
-//           onClick={() => { history.push(link); }}
-//         >
-//           <div>{ icon }</div>
-//           <div>{ title }</div>
-//         </li>
-//       )) }
-//     </ul>
-//   </div>
-// );
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-// export default SideBar;
+import sideBarData from './SideBarData';
+
+const SideBar = () => (
+  <div className="Sidebar">
+
+    <List
+      component="nav"
+      aria-labelledby="side navigation"
+      className="sideBarList"
+    >
+      {sideBarData.map(({
+        title, icon, link, id,
+      }) => (
+        <Link className="sideBarRow" to={link} key={id}>
+          <ListItem button>
+            {icon}
+            <ListItemText primary={title} />
+          </ListItem>
+        </Link>
+      ))}
+    </List>
+  </div>
+);
+
+export default SideBar;
