@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // Import components & css
 import ToyBox from './ToyBox';
 import Navbar from './Navbar';
+// import Toast from './Snackbar';
 import './Profile.css';
 
 // Import axios
