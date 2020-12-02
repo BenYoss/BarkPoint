@@ -23,14 +23,14 @@ const Dog = model('Dog', dogSchema);
  * Adds a new dog instance depending on what options a user sets in the form.
  */
 
-const addDog = (name, breed, size, number, emailUser, personalitytypes) => Dog.create({
+const addDog = (name, breed, size, number, emailUser, image, personalitytypes) => Dog.create({
   name,
   breed,
   size,
   number,
   email_user: emailUser,
   toys: [],
-  image: '',
+  image,
   personalitytypes,
 })
   .then((data) => data);
