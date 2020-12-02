@@ -61,7 +61,12 @@ const ToyBox = () => {
         axios.get('/data/dog', { params: response.data })
           .then(({ data }) => {
             const currentDog = data.slice(data.length - 1);
-            axios.get('/get/toys', { params: { personalitytypes: currentDog.personalitytypes } })
+            const obj = {
+              type1: currentDog[0].personalitytypes[0],
+              type2: currentDog[0].personalitytypes[1],
+              type3: currentDog[0].personalitytypes[2],
+            };
+            axios.get('/get/toys', { params: obj })
               .then((resp) => {
                 setToys(resp.filter((newToy) => newToy.price));
                 setHide(false);
