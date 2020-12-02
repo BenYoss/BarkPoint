@@ -64,26 +64,22 @@ const ToyBox = ({ dogs }) => {
         user = response.data;
         axios.get('/data/dog', { params: { user } })
           .then((res) => {
-            console.log('res', res.data);
-            dogSearch = res.data.slice(res.data.length - 1);
-            console.log('dogsearch', dogSearch);
+            dogSearch = res.data;
+            console.log('this is in the client', dogSearch);
+            axios.get('/get/toys', { params: { personalitytypes: dogSearch.personalitytypes } })
+              .then((resp) => {
+                setToys(resp.filter((newToy) => newToy.price));
+                setHide(false);
+              })
+              .catch((error) => {
+                console.warn(error);
+              });
           }).catch((error) => {
             console.warn(error);
           });
       }).catch((error) => {
         console.warn(error);
       });
-
-    console.log('outsidedog', dogSearch);
-
-    // axios.get('/get/toys', dogSearch.personalitytypes)
-    //   .then((response) => {
-    //     setToys(response.data.filter((newToy) => newToy.price));
-    //     setHide(false);
-    //   })
-    //   .catch((error) => {
-    //     console.warn(error);
-    //   });
   };
 
   const refresh = () => {
@@ -110,7 +106,7 @@ const ToyBox = ({ dogs }) => {
 
     axios.put('/data/dog', dogToy)
       .then((response) => {
-        console.info(response);
+        //console.info(response);
       })
       .catch((error) => {
         console.warn(error);

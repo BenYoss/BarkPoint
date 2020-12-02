@@ -43,6 +43,7 @@ authRouter.get('/logout', (req, res) => {
  */
 authRouter.get('/session', ({ user }, res) => {
   const { _json } = user;
+  console.log('in session get in auth router', _json);
   if (user) {
     res.status(200).send(_json.email);
   } else {

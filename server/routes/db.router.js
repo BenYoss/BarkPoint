@@ -20,6 +20,7 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
  */
 dbRouter.get('/data/dog', (req, res) => {
   const { options } = req.query;
+  console.log('options in db router', options);
   Dog.findDogs(options)
     .then((dogs) => {
       if (dogs.length) {

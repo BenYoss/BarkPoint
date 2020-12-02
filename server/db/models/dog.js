@@ -39,7 +39,7 @@ const addDog = (name, breed, size, number, emailUser, personalitytypes) => Dog.c
  * Takes in @param {*} emailUser which is the Id of the recorded user session.
  */
 
-const findDogs = (emailUser) => Dog.find({ email_user: emailUser }).sort().exec();
+const findDogs = (emailUser) => Dog.find({ email_user: emailUser });
 
 const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
 
