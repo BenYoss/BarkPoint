@@ -5,3 +5,12 @@
   position: absolute;
   right: 0rem;
 }
+
+.sideBarList{
+  height: auto;
+  width: auto;
+}
+
+.sideBarList .sideBarRow{
+  
+}

@@ -92,27 +92,6 @@ const ToyBox = () => {
     }
   };
 
-  const saveToy = (toyName, toyCost, toyRating, toyLink, toyImage) => {
-    const dogToy = {
-      id: 123,
-      body: {
-        name: toyName,
-        price: toyCost,
-        image: toyImage,
-        url: toyLink,
-        rating: toyRating,
-      },
-    };
-
-    axios.put('/data/dog', dogToy)
-      .then((response) => {
-        console.info(response);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
-  };
-
   const MyButton = styled(Button)({
     background: 'linear-gradient(45deg, #2CDA9D 30%, #0E4749 90%)',
     border: 0,
@@ -195,7 +174,7 @@ const ToyBox = () => {
               </CardContent>
               <CardActions disableSpacing>
                 <div>
-                  <IconButton aria-label="add to favorites" onClick={() => saveToy(toy.title, toy.link, toy.price.value, toy.image, toy.rating)}>
+                  <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                   </IconButton>
                 </div>
