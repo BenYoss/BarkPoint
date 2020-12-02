@@ -67,8 +67,8 @@ const ToyBox = () => {
               type3: currentDog[0].personalitytypes[2],
             };
             axios.get('/get/toys', { params: obj })
-              .then((resp) => {
-                setToys(resp.filter((newToy) => newToy.price));
+              .then(({ data: toyData }) => {
+                setToys(toyData.filter((newToy) => newToy.price));
                 setHide(false);
               })
               .catch((error) => {
