@@ -90,7 +90,6 @@ const Profile = () => {
 
   useEffect(() => {
     getDogs();
-    // console.log('useEffect', dogs);
   }, []);
 
   return (

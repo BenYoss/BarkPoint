@@ -56,32 +56,25 @@ const ToyBox = () => {
   const [hide] = useState(true);
 
   const getToy = () => {
-    // let dogSearch;
-    // let user;
-
-    // axios.get('session')
-    //   .then((response) => {
-    //     user = response.data;
-    //     axios.get('/data/dog', user)
-    //       .then((res) => {
-    //         console.log(res.data);
-    //         dogSearch = res.data.slice(res.data.length - 1);
-    //         console.log(dogSearch);
-    //       }).catch((error) => {
-    //         console.warn(error);
-    //       });
-    //   }).catch((error) => {
-    //     console.warn(error);
-    //   });
-
-    // axios.get('/get/toys', dogSearch.personalitytypes)
-    //   .then((response) => {
-    //     setToys(response.data.filter((newToy) => newToy.price));
-    //     setHide(false);
-    //   })
-    //   .catch((error) => {
-    //     console.warn(error);
-    //   });
+    axios.get('session')
+      .then((response) => {
+        axios.get('/data/dog', { params: response.data })
+          .then(({ data }) => {
+            const currentDog = data.slice(data.length - 1);
+            axios.get('/get/toys', { params: { personalitytypes: currentDog.personalitytypes } })
+              .then((resp) => {
+                setToys(resp.filter((newToy) => newToy.price));
+                setHide(false);
+              })
+              .catch((error) => {
+                console.warn(error);
+              });
+          }).catch((error) => {
+            console.warn(error);
+          });
+      }).catch((error) => {
+        console.warn(error);
+      });
   };
 
   const refresh = () => {
@@ -108,7 +101,7 @@ const ToyBox = () => {
 
     axios.put('/data/dog', dogToy)
       .then((response) => {
-        console.info(response);
+        //console.info(response);
       })
       .catch((error) => {
         console.warn(error);

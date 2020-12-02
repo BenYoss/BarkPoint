@@ -32,7 +32,7 @@ apiRouter.get('/get/toys', (req, res) => {
         toyFilter.push(toy);
       }
     }));
-    res.status(200).end();
+    res.status(200).send(toyFilter);
   };
 
   const params = {
@@ -51,7 +51,6 @@ apiRouter.get('/get/toys', (req, res) => {
   if (!toysByVerb.length) {
     serpwow.json(params)
       .then((result) => {
-        console.warn(result);
         toysByVerb.push(result.amazon_results);
         filterToys();
       })
