@@ -51,7 +51,6 @@ export default function Form({ setName, form, setForm }) {
 
   const preset = process.env.CLOUDINARY_UPLOAD_PRESET;
   const URL = process.env.CLOUDINARY_UPLOAD_URL;
-  console.warn(process.env.CLOUDINARY_UPLOAD_URL);
 
   const handleImageUpload = (file) => {
     const upload = request.post(URL)

@@ -51,7 +51,6 @@ const PersonalityAssessment = ({
     }
     setLastDirection(direction);
     alreadySwiped.push(trait);
-    setForm({ ...form, personalitytypes: [outgoing, aggressive, active] });
   };
 
   const outOfFrame = (trait) => {
