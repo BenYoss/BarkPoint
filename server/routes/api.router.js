@@ -20,9 +20,10 @@ apiRouter.get('/get/toys', (req, res) => {
     if (JSON.parse(personalityType)) {
       verbs.push(pverbsTrue);
       antiVerbs.push(pverbsFalse);
+    } else {
+      verbs.push(pverbsFalse);
+      antiVerbs.push(pverbsTrue);
     }
-    verbs.push(pverbsFalse);
-    antiVerbs.push(pverbsTrue);
   });
   /**
    * The function @filterToys searches for toy verbs and filters toys retrieved
@@ -38,7 +39,7 @@ apiRouter.get('/get/toys', (req, res) => {
         .forEach((antiVerb) => {
           if (toy.title.includes(verb) && !toy.title.includes(antiVerb)
           && !toyFilter.includes(toy)) {
-            console.warn();
+            console.warn(toy);
           } else {
             isInvalid = true;
           }
