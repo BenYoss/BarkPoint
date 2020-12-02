@@ -5,20 +5,25 @@ const personalityVerbs = require('./personalityTypes.json');
 
 const apiRouter = Router();
 
-const toysByVerb = [];
+let toysByVerb;
 
 apiRouter.get('/get/toys', (req, res) => {
   /**
    * @verbs is an algorithm that finds dog personality types and outputs key verbs pertaining to
    * the type.
    */
-  const verbs = Object.values(req.query).map((personalityType, i) => {
-    if (personalityType) {
-      return personalityVerbs[0][i];
+  const verbs = [];
+  const antiVerbs = [];
+  Object.values(req.query).forEach((personalityType, i) => {
+    const pverbsTrue = Object.values(personalityVerbs[0])[i];
+    const pverbsFalse = Object.values(personalityVerbs[1])[i];
+    if (JSON.parse(personalityType)) {
+      verbs.push(pverbsTrue);
+      antiVerbs.push(pverbsFalse);
     }
-    return personalityVerbs[1][i];
+    verbs.push(pverbsFalse);
+    antiVerbs.push(pverbsTrue);
   });
-
   /**
    * The function @filterToys searches for toy verbs and filters toys retrieved
    * from the serpwow API by verb contents in title.
@@ -27,12 +32,22 @@ apiRouter.get('/get/toys', (req, res) => {
    */
   const filterToys = () => {
     const toyFilter = [];
-    toysByVerb.forEach((toy) => verbs.forEach((verb) => {
-      if (toy.title.includes(verb)) {
+    toysByVerb.forEach((toy) => verbs.flat().forEach((verb) => {
+      let isInvalid = false;
+      antiVerbs.flat()
+        .forEach((antiVerb) => {
+          if (toy.title.includes(verb) && !toy.title.includes(antiVerb)
+          && !toyFilter.includes(toy)) {
+            console.warn();
+          } else {
+            isInvalid = true;
+          }
+        });
+      if (!isInvalid) {
         toyFilter.push(toy);
       }
     }));
-    res.status(200).end();
+    res.status(200).send(toyFilter);
   };
 
   const params = {
@@ -48,11 +63,10 @@ apiRouter.get('/get/toys', (req, res) => {
    * If data does exist, then the block of code executes the previously
    * mentioned @filterToys method.
    */
-  if (!toysByVerb.length) {
+  if (!toysByVerb) {
     serpwow.json(params)
       .then((result) => {
-        console.warn(result);
-        toysByVerb.push(result.amazon_results);
+        toysByVerb = result.amazon_results;
         filterToys();
       })
       .catch((error) => {
