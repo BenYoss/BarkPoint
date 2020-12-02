@@ -1,12 +1,12 @@
 [
     {
-        "outgoingY": [ "playful", "ball", "outdoor"],
-        "agressiveY": [ "rough", "chew", "tough", "extreme" ],
-        "activeY": [ "fitness", "hyper", "squeaky" ]
+        "outgoingY": [ "Playful", "Outdoor", "Outgoing"],
+        "agressiveY": [ "Rough", "Tough", "Extreme", "Agressive" ],
+        "activeY": [ "Fitness", "Hyper", "Fast", "Active" ]
     },
     {
-        "outgoingN": [ "treat", "indoor", "fuzzy" ],
-        "agressiveN": [ "plush", "soft", "IQ" ],
-        "activeN": [ "fur", "fluffy", "bone" ]
+        "outgoingN": [ "Indoor", "Fuzzy", "Fur" ],
+        "agressiveN": [ "Plush", "Soft", "IQ", "Fluffy" ],
+        "activeN": [ "Fur", "Fluffy", "Slow", "Fuzzy" ]
     }
 ]
