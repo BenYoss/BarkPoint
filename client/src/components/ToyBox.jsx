@@ -50,14 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToyBox = ({ dogs }) => {
+const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
-  const [hide, setHide] = useState(true);
+  const [hide] = useState(true);
 
   const getToy = () => {
-    let dogSearch;
-    let user;
+    // let dogSearch;
+    // let user;
 
     // axios.get('session')
     //   .then((response) => {
@@ -107,8 +107,8 @@ const ToyBox = ({ dogs }) => {
     };
 
     axios.put('/data/dog', dogToy)
-      .then((response) => {
-        console.info(response);
+      .then(() => {
+        // console.info(response);
       })
       .catch((error) => {
         console.warn(error);
