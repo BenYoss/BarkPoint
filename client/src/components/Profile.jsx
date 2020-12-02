@@ -13,6 +13,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import { borders } from '@material-ui/system';
 
 // Import components & css
 import ToyBox from './ToyBox';
@@ -40,18 +41,19 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   card: {
-    Width: '50%',
     height: 'auto',
+    maxWidth: '345px',
     flexDirection: 'row',
     backgroundColor: '#FEFDFF',
     breakInside: 'avoid',
     fontFamily: 'Roboto',
+    marginBottom: '20px',
   },
 }));
 
 const Profile = () => {
-  const [dogs, setDogs] = React.useState([]);
-  const [expanded, setExpanded] = React.useState(false);
+  const [dogs, setDogs] = useState([]);
+  const [expanded, setExpanded] = useState(false);
 
   const classes = useStyles();
 
@@ -71,18 +73,14 @@ const Profile = () => {
   });
 
   const getDogs = () => {
-    let user;
-
     axios.get('session')
       .then((response) => {
-        user = (response.data);
-      }).catch((error) => {
-        console.warn(error);
-      });
-
-    axios.get('/data/dog', user)
-      .then((response) => {
-        setDogs(response.data);
+        axios.get('/data/dog', { params: response.data })
+          .then(({ data }) => {
+            setDogs(data);
+          }).catch((error) => {
+            console.warn(error);
+          });
       }).catch((error) => {
         console.warn(error);
       });
@@ -98,7 +96,9 @@ const Profile = () => {
       <div className="dogs">
         {dogs.map((dog) => (
           <div className="header">
-            <Card className={classes.card}>
+            <Card
+              className={classes.card}
+            >
               <CardHeader
                 title={dog.name}
               />
