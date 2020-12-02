@@ -79,8 +79,8 @@ apiRouter.get('/get/toys', (req, res) => {
 
 apiRouter.post('/api/twilio', (req, res) => {
   const { phoneNumber } = req.body;
-  sendMessage(phoneNumber);
   res.sendStatus(201);
+  sendMessage(phoneNumber);
 });
 
 module.exports = apiRouter;

@@ -34,7 +34,7 @@ authRouter.get('/', isLoggedIn, (req, res) => {
 authRouter.get('/logout', (req, res) => {
   req.session.destroy();
   req.logOut();
-  res.redirect('/auth/google/callback');
+  res.redirect('/logout');
 });
 
 /**
@@ -45,8 +45,9 @@ authRouter.get('/session', ({ user }, res) => {
   const { _json } = user;
   if (user) {
     res.status(200).send(_json.email);
+  } else {
+    res.sendStatus(500);
   }
-  res.sendStatus(500);
 });
 
 module.exports = authRouter;

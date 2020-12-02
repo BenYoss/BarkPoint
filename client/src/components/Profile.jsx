@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const [dogs, setDogs] = React.useState([]);
-  const [expanded, setExpanded] = React.useState(false);
+  const [dogs, setDogs] = useState([]);
+  const [expanded, setExpanded] = useState(false);
 
   const classes = useStyles();
 
@@ -90,7 +90,6 @@ const Profile = () => {
 
   useEffect(() => {
     getDogs();
-    // console.log('useEffect', dogs);
   }, []);
 
   return (

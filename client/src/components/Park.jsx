@@ -8,16 +8,17 @@ import {
 } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 
-import './Park.css';
 import PropTypes from 'prop-types';
 import mapStyles from './ParkStyles';
+import SideBar from './SideBar';
 
 import Search from './Search';
 
 const libraries = ['places'];
+
 const mapContainerStyle = {
-  width: '99vw',
-  height: '98vh',
+  width: '85vw',
+  height: '100vh',
 };
 const center = {
   lat: 29.951065,
@@ -26,7 +27,6 @@ const center = {
 
 const options = {
   styles: mapStyles,
-  disableDefaultUI: true,
   zoomControl: true,
 };
 
@@ -86,6 +86,7 @@ const Park = () => {
 
   return (
     <div>
+      <SideBar />
 
       <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
 
@@ -98,6 +99,7 @@ const Park = () => {
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
+        streetViewControl
       >
         { markers.map((marker) => (
           <Marker
