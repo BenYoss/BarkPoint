@@ -50,15 +50,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToyBox = ({ dogs }) => {
+const ToyBox = () => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
-  const [hide, setHide] = useState(true);
+  const [hide] = useState(true);
 
   const getToy = () => {
-    let dogSearch;
-    let user;
+    // let dogSearch;
+    // let user;
 
+<<<<<<< HEAD
     axios.get('session')
       .then((response) => {
         user = response.data;
@@ -80,6 +81,31 @@ const ToyBox = ({ dogs }) => {
       }).catch((error) => {
         console.warn(error);
       });
+=======
+    // axios.get('session')
+    //   .then((response) => {
+    //     user = response.data;
+    //     axios.get('/data/dog', user)
+    //       .then((res) => {
+    //         console.log(res.data);
+    //         dogSearch = res.data.slice(res.data.length - 1);
+    //         console.log(dogSearch);
+    //       }).catch((error) => {
+    //         console.warn(error);
+    //       });
+    //   }).catch((error) => {
+    //     console.warn(error);
+    //   });
+
+    // axios.get('/get/toys', dogSearch.personalitytypes)
+    //   .then((response) => {
+    //     setToys(response.data.filter((newToy) => newToy.price));
+    //     setHide(false);
+    //   })
+    //   .catch((error) => {
+    //     console.warn(error);
+    //   });
+>>>>>>> 2990be39dd7e27ffef9b36245d5a7eb00f5afb3d
   };
 
   const refresh = () => {

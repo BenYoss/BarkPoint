@@ -4,6 +4,8 @@ import GoogleLogin from './GoogleLogin';
 import PersonalityAssessment from './PersonalityAssessment';
 import Profile from './Profile';
 import ToyBox from './ToyBox';
+import LogOut from './LogOut';
+import './App.css';
 
 import Park from './Park';
 import Form from './Form';
@@ -57,6 +59,9 @@ const App = () => {
             form={form}
             setForm={setForm}
           />
+        </Route>
+        <Route path="/logout">
+          <LogOut />
         </Route>
       </Switch>
     </Router>
