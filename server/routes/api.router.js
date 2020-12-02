@@ -10,7 +10,7 @@ let toysByVerb;
 apiRouter.get('/get/toys', (req, res) => {
   /**
    * @verbs is an algorithm that finds dog personality types and outputs key verbs pertaining to
-   * the type.
+   * the type
    */
   const verbs = [];
   const antiVerbs = [];
@@ -61,7 +61,7 @@ apiRouter.get('/get/toys', (req, res) => {
    * Below is the conditional that indicates whether the serpwow API
    * has been called during the instance. If data exists in @toysByVerb .
    * If data does exist, then the block of code executes the previously
-   * mentioned @filterToys method.
+   * mentioned @filterToys method
    */
   if (!toysByVerb) {
     serpwow.json(params)
