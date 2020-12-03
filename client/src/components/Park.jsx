@@ -140,33 +140,25 @@ const Park = () => {
             onCloseClick={() => setSelected(null)}
           >
             <div>
-              { selected.venue
+              { selected.venue || selected.name
                 ? (
                   <div>
-                    <h1>{ selected.venue.name }</h1>
+                    <h1>{ selected.venue.name || selected.name }</h1>
                     <br />
                     <p>
                       {' '}
-                      { selected.venue.location.formattedAddress[0] }
+                      { selected.venue.location.formattedAddress[0] || selected.comments }
                       {' '}
                     </p>
                   </div>
                 )
                 : (
                   <div>
-                    <form action="" style={{ marginRight: '0.5rem', width: '100%' }}>
-                      <label htmlFor="title">Title</label>
-                      <br />
-                      <input type="text" id="title" name="title" placeholder="Title" />
-                      <br />
-                      <label htmlFor="comments">Comments</label>
-                      <br />
-                      <textarea type="text" rows={3} id="text" name="text" placeholder="Comments" />
-                    </form>
+                    <h3>{ `lat: ${selected.lat}` }</h3>
+                    <br />
+                    <h3>{ `long: ${selected.lng}` }</h3>
                     {' '}
                     {selected.time && <small>{formatRelative(selected.time, new Date())}</small> }
-                    <br />
-                    <button type="submit">Submit</button>
                   </div>
                 )}
 
