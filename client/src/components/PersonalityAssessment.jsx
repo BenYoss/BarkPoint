@@ -133,8 +133,8 @@ const PersonalityAssessment = ({
           startIcon={<PetsIcon />}
           onClick={async () => {
             console.warn(form);
-            const { data } = await axios.get('/session');
-            await axios.post('/data/dog', { ...form, data });
+            const { data: { email } } = await axios.get('/session');
+            await axios.post('/data/dog', { ...form, email });
             history.push('/toybox');
           }}
         >

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Sansita+Swashed:wght@300&display=swap');
+
 .logo-container{
   bottom: 0rem;
   left: -0.5rem;
@@ -44,4 +46,22 @@
 background-color: rgba(207, 255, 204, 1);
  width: auto;
  height: auto;
+}
+
+.popup{
+ background-color: #FEFDFF;
+ max-width: 15vw;
+ max-height: 20vh;
+}
+
+.popup-text{
+  font-family: 'Sansita Swashed', cursive;
+  color: #2CDA9D;
+  font-size: 20px;
+}
+
+.popup-comment{
+  font-family: 'Montserrat', sans-serif;
+  color: #E55812;
+  font-size: 12px;
 }
