@@ -169,7 +169,6 @@ const Park = () => {
               : { lat: selected.lat, lng: selected.lng }}
             onCloseClick={() => {
               setSelected(null);
-              getVenues();
             }}
           >
             <div>
@@ -216,6 +215,7 @@ const Park = () => {
                           console.warn(form);
                           await axios.post('/data/park', form);
                           await getVenues();
+                          setSelected(null);
                         }}
                       >
                         Submit
