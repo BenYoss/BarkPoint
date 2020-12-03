@@ -66,7 +66,7 @@ dbRouter.post('/data/dog', (req, res) => {
 dbRouter.put('/data/dog/:id', (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  console.log('AHHHH or somethign', id);
+  console.warn('AHHHH or somethign', id);
   return Dog.addToy(id, body)
     .then(() => {
       res.sendStatus(200);
@@ -112,14 +112,20 @@ dbRouter.delete('/data/dog', (req, res) => {
     });
 });
 
+dbRouter.get('/data/park', async (req, res) => {
+  const allDogs = await Park.getParks();
+  console.warn(allDogs);
+  res.status(200).send(allDogs);
+});
+
 /**
  * Adds a park into the barkPoint database
  */
 dbRouter.post('/data/park', (req, res) => {
   const {
-    name, lat, long, comment,
+    name, lat, long, comments,
   } = req.body;
-  return Park.addPark(name, lat, long, comment)
+  return Park.addPark(name, lat, long, comments)
     .then(() => {
       res.sendStatus(201);
     })

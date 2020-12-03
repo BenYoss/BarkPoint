@@ -40,6 +40,8 @@ const Park = () => {
     name: '', lat: 1, long: 1, comments: '',
   });
 
+  const [parkData, setParkData] = useState([]);
+
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const getVenues = async () => {
@@ -54,7 +56,9 @@ const Park = () => {
         radius: 100000,
       },
     });
+    const { data: parks } = await axios.get('/data/park');
     setVenues(data.response.groups[0].items);
+    setParkData(parks);
   };
   useEffect(() => {
     getVenues();
@@ -138,23 +142,45 @@ const Park = () => {
             }}
           />
         ))}
+        { parkData.map((marker) => (
+          <Marker
+            // eslint-disable-next-line no-underscore-dangle
+            key={marker._id}
+            position={{ lat: Number(marker.lat), lng: Number(marker.long) }}
+            icon={{
+              url: 'https://i.imgur.com/T1JV3Qy.png',
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+            }}
+            onClick={() => {
+              setSelected(marker);
+            }}
+          />
+        ))}
         { selected && (
           <InfoWindow
-            position={{
-              lat: selected.lat || selected.venue.location.lat,
-              lng: selected.lng || selected.venue.location.lng,
+            // eslint-disable-next-line no-nested-ternary
+            position={selected.venue ? {
+              lat: selected.venue.location.lat,
+              lng: selected.venue.location.lng,
+            } : selected.long
+              ? { lat: selected.lat, lng: selected.long }
+              : { lat: selected.lat, lng: selected.lng }}
+            onCloseClick={() => {
+              setSelected(null);
+              getVenues();
             }}
-            onCloseClick={() => setSelected(null)}
           >
             <div>
               { selected.venue || selected.name
                 ? (
                   <div>
-                    <h1>{ selected.venue.name || selected.name }</h1>
+                    <h1>{selected.venue ? selected.venue.name : selected.name }</h1>
                     <br />
                     <p>
                       {' '}
-                      { selected.venue.location.formattedAddress[0] || selected.comments }
+                      {/* { selected.venue.location.formattedAddress[0] || selected.comments } */}
                       {' '}
                     </p>
                   </div>
