@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { User } = require('../db/models/models');
 
 const authRouter = Router();
 
@@ -18,7 +19,21 @@ authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profil
  */
 authRouter.get('/auth/google/callback', passport.authenticate('google'),
   (req, res) => {
-    res.redirect('/form');
+    const { _json } = req.user;
+
+    User.findUser(_json.email)
+      .then((result) => {
+        if (result) {
+          res.redirect('/profile');
+        }
+        User.createUser(_json)
+          .then(() => {
+            res.redirect('/form');
+          });
+      }).catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
   });
 
 /**
