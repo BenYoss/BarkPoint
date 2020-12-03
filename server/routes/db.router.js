@@ -64,12 +64,14 @@ dbRouter.put('/data/dog/:id', (req, res) => {
   const { body } = req;
   return Dog.addToy(id, body)
     .then(() => {
+      // console.log('aanythinh');
       res.sendStatus(200);
     })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
     });
+  // return dog.then(console.log('inside dog', dog));
 });
 /**
  * Removes a toy from the currently selected dog's toy field (an array)
@@ -77,10 +79,13 @@ dbRouter.put('/data/dog/:id', (req, res) => {
  * @id is equal to the current dog's mongo-provided ObjectId
  * @body is equal to an object with the to be deleted toy's info (see dog.js in models)
  */
-dbRouter.delete('/data/toy', (req, res) => {
-  const { id } = req.query;
-  return Dog.removeToy(id, req.body)
+dbRouter.delete('/data/toy:id', (req, res) => {
+  const { id } = req.params;
+  const { data } = req;
+  // console.log('in delete', id, data);
+  return Dog.removeToy(id, data)
     .then(() => {
+      // console.log('wo');
       res.sendStatus(200);
     })
     .catch((err) => {
