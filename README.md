@@ -13,14 +13,117 @@ Users can also access a **park** page which renders a map of their surrounding a
 
 Users can access their dog's profiles and add/remove toys on the **profile** page. Users can add another dog on the **profile** or **park** page.
 
+## Dependencies
+========
+```javascript
+"dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.11.1",
+    "@reach/combobox": "^0.12.1",
+    "@react-google-maps/api": "^1.13.0",
+    "@types/express": "^4.17.9",
+    "@types/qs": "^6.9.4",
+    "axios": "^0.21.0",
+    "browserify": "^17.0.0",
+    "chai": "^4.2.0",
+    "clsx": "^1.1.1",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "faker": "^5.1.0",
+    "google-maps-react": "^2.0.6",
+    "google-search-results-serpwow": "0.0.14",
+    "mocha": "^8.2.1",
+    "mongoose": "^5.10.16",
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-dropzone": "^11.2.4",
+    "react-google-button": "^0.7.1",
+    "react-google-login": "^5.1.25",
+    "react-hook-form": "^6.11.5",
+    "react-router-dom": "^5.2.0",
+    "react-tinder-card": "^1.3.1",
+    "regenerator-runtime": "^0.13.7",
+    "session": "^0.1.0",
+    "superagent": "^6.1.0",
+    "twilio": "^3.52.0",
+    "use-places-autocomplete": "^1.6.0",
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.2",
+    "style-loader": "^2.0.0"
+  },
+```
 ## Installation and Startup
 
 1. Fork the **Bajamen/BarkPoint** repo
+
 2. Clone your **forked repo** into your file system
+
 3. Run **npm install** to install dependencies
-4. Use **npm run prod** to run webpack
-5. Use **mongod** to start mongodb server
+
+```bash
+  npm install
+```
+
+4. Create a **.env** file in your main directory and install the dotenv package
+
+```bash
+  npm install dotenv
+```
+The **.env** file will house all of your keys and other sensitive information
+
+Variable | Description
+--------------|--------------
+CLIENT_ID | key from google Oauth
+CLIENT_SECRET | secret generated from google Oauth
+SERPWOW_KEY | key to use serpwow api (more on serpwow below)
+GOOGLE_MAPS_KEY | key to use google maps api
+TWILIO_SID |
+TWILIO_TOKEN |
+FOUR_SQUARE_CLIENT_ID | key from four square
+FOUR_SQUARE_CLIENT_SECRET | secret generated from four square
+CLOUDINARY_UPLOAD_PRESET |
+CLOUDINARY_UPLOAD_URL |
+DB_USER |
+DB_PASS |
+DB_HOST |
+DB_DB |
+
+4. Use **npm run prod** to build webpack and render the client side
+5. If mongo is installed, start mongodb server
+
+```bash
+  sudo service mongodb start
+```
+
+  If mongo is not installed follow the steps on the official website:
+  https://docs.mongodb.com/manual/installation/
+
 6. Use **npm run start** to start local server
+
+## Serpwow
+
 
 ## Deployment
 

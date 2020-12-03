@@ -115,9 +115,9 @@ dbRouter.delete('/data/dog', (req, res) => {
  */
 dbRouter.post('/data/park', (req, res) => {
   const {
-    name, address, comment,
+    name, lat, long, comment,
   } = req.body;
-  return Park.addPark(name, address, comment)
+  return Park.addPark(name, lat, long, comment)
     .then(() => {
       res.sendStatus(201);
     })
