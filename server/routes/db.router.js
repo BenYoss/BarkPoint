@@ -141,6 +141,26 @@ dbRouter.put('/data/park', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+/**
+ * Wipes the existing favorite park from the user's history.
+ * The params include an @id for the user and an @body for the
+ * specified park.
+ */
+
+dbRouter.put('/data/unfavpark', (req, res) => {
+  const { id } = req.query;
+  const { body } = req; // you only need the park name
+  console.warn('id in db router for park', id);
+  return User.unfavPark(id, body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 /**
  * Adds a park into a the current users parks field (an array)
  *
