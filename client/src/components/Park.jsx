@@ -98,8 +98,9 @@ const Park = () => {
   return (
     <div>
       <SideBar />
-
-      <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
+      <div className="container">
+        <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
+      </div>
 
       <Search panTo={panTo} setLocation={setLocation} />
       <Locate panTo={panTo} setLocation={setLocation} />
