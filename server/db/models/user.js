@@ -4,9 +4,7 @@ const userSchema = new Schema({
   email: String,
   parks: [],
 });
-
 const User = model('User', userSchema);
-
 /**
  * The parks [] is an array of names of parks that this user has liked
  *
@@ -25,9 +23,7 @@ const createUser = (body) => {
     return '';
   });
 };
-
 const findUser = (email) => User.findOne({ email }).exec();
-
 /**
  * @param {ObjectId} userId -- the mongo-provided ObjectId
  * @param {string} park -- the name value of the park a user wishes to favorite
@@ -37,19 +33,22 @@ const findUser = (email) => User.findOne({ email }).exec();
  * $addToSet will add the value provided into an array if it doesn't already exist there.
  * $pull will remove the value provided from an array if it exists there.
  */
-const favPark = (userId, park) => User.findByIdAndUpdate(
-  { _id: userId },
+const favPark = (id, park) => User.findByIdAndUpdate(
+  id,
   { $addToSet: { parks: park } },
 );
-
-const unFavPark = (userId, park) => User.findByIdAndUpdate(
-  { _id: userId },
+const unFavPark = (id, park) => User.findByIdAndUpdate(
+  id,
   { $pull: { parks: park } },
 );
+const getFavParks = (id) => User.findById(id)
+  .then((userData) => userData.parks)
+  .catch((err) => console.error(err));
 
 module.exports = {
   createUser,
   findUser,
   favPark,
   unFavPark,
+  getFavParks,
 };
