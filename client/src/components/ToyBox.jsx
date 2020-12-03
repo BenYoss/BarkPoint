@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
 
 // Styling import
 import './ToyBox.css';
+import PropTypes from 'prop-types';
 
 // Button Import
 import Button from '@material-ui/core/Button';
@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Navbar from './Navbar';
+// import Profile from './Profile';
 
 const axios = require('axios');
 
@@ -50,25 +51,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToyBox = () => {
+const ToyBox = ({ dogs, getDogs }) => {
   const classes = useStyles();
-  const [dogs, setDogs] = useState([]);
   const [toys, setToys] = useState([]);
   const [hide, setHide] = useState(true);
-
-  const getDogs = () => {
-    axios.get('session')
-      .then((response) => {
-        axios.get('/data/dog', { params: response.data })
-          .then(({ data }) => {
-            setDogs(data);
-          }).catch((error) => {
-            console.warn(error);
-          });
-      }).catch((error) => {
-        console.warn(error);
-      });
-  };
 
   const getToy = () => {
     axios.get('session')
@@ -223,7 +209,7 @@ const ToyBox = () => {
             width: '100%', height: '100%', paddingBottom: '10px', columnCount: '3',
           }}
         >
-          {toys.slice(0, 3).map((toy) => (
+          {toys.slice(0, 6).map((toy) => (
             <Card
               className={classes.root}
             >
@@ -264,14 +250,15 @@ const ToyBox = () => {
   );
 };
 
-// ToyBox.propTypes = {
-//   dogs: PropTypes.arrayOf(PropTypes.shape({
-//     name: PropTypes.string,
-//     breed: PropTypes.string,
-//     image: PropTypes.string,
-//     size: PropTypes.string,
-//     toys: PropTypes.arrayOf,
-//   })).isRequired,
-// };
+ToyBox.propTypes = {
+  dogs: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    breed: PropTypes.string,
+    image: PropTypes.string,
+    size: PropTypes.string,
+    toys: PropTypes.arrayOf,
+  })).isRequired,
+  getDogs: PropTypes.func.isRequired,
+};
 
 export default ToyBox;

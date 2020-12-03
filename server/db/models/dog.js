@@ -58,6 +58,7 @@ const addToy = (id, body) => {
     url: body.link,
     rating: body.rating,
   };
+  // console.log(newToy);
   return Dog.findByIdAndUpdate(
     id,
     { $addToSet: { toys: newToy } },
@@ -68,10 +69,13 @@ const addToy = (id, body) => {
  * Takes in a @param {*} dogId and @param {*} body.
  * should remove a toy from a specific dog depending on id.
  */
-const removeToy = (dogId, body) => Dog.findByIdAndUpdate(
-  { _id: dogId },
-  { $pull: { toys: body.title } },
-);
+const removeToy = (id, body) => {
+  // console.log('inside removeToy', id, body);
+  Dog.findByIdAndUpdate(
+    id,
+    { $pull: { toys: body.title } },
+  );
+};
 
 module.exports = {
   addDog,
