@@ -68,25 +68,20 @@ const Profile = ({ dogs, getDogs }) => {
   const deleteDog = (dog) => {
     // eslint-disable-next-line no-underscore-dangle
     const dogID = dog._id;
-    axios.delete('data/dog', dogID)
+    axios.delete(`data/dog${dogID}`)
       .then((response) => {
         console.info(response);
         getDogs();
-        // console.log(dogs);
       }).catch((err) => {
         console.warn(err);
       });
   };
 
   const deleteToy = (dog, toy) => {
-    // console.log(dog._id, toy);
-
     // eslint-disable-next-line no-underscore-dangle
-    axios.delete(`data/toy:${dog._id}`, { data: { data: toy } })
-      .then((response) => {
-        console.info(response);
+    axios.delete(`data/toy${dog._id}`, { data: { data: toy } })
+      .then(() => {
         getDogs();
-        // console.log(dogs);
       }).catch((err) => {
         console.warn(err);
       });

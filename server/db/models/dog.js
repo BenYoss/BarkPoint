@@ -41,7 +41,7 @@ const addDog = (name, breed, size, number, emailUser, image, personalitytypes) =
 
 const findDogs = (emailUser) => Dog.find({ email_user: emailUser });
 
-const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
+const deleteDog = (id) => Dog.deleteOne({ _id: id });
 
 /**
  *
@@ -69,13 +69,10 @@ const addToy = (id, body) => {
  * Takes in a @param {*} dogId and @param {*} body.
  * should remove a toy from a specific dog depending on id.
  */
-const removeToy = (id, body) => {
-  // console.log('inside removeToy', id, body);
-  Dog.findByIdAndUpdate(
-    id,
-    { $pull: { toys: body.title } },
-  );
-};
+const removeToy = (id, body) => Dog.findByIdAndUpdate(
+  { _id: id },
+  { $pull: { toys: { title: body.title } } },
+);
 
 module.exports = {
   addDog,
