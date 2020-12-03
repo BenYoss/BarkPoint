@@ -1,9 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-/**
- * address is written as a street address
- * ex: "420 Vape St, New Orleans, LA 70119"
- */
 const parkSchema = new Schema({
   name: String,
   lat: Number,
