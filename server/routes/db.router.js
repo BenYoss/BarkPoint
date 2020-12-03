@@ -63,8 +63,10 @@ dbRouter.post('/data/dog', (req, res) => {
  * @id is equal to the current dog's mongo-provided ObjectId
  * @body is equal to an object with the to be added toy's info (see dog.js in models)
  */
-dbRouter.put('/data/dog', (req, res) => {
-  const { id, body } = req.body;
+dbRouter.put('/data/dog/:id', (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  console.log('AHHHH or somethign', id);
   return Dog.addToy(id, body)
     .then(() => {
       res.sendStatus(200);

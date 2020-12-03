@@ -50,16 +50,17 @@ const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
  * based on Id properties. The @param {*} body is the toy data in which
  * serpwow's API generates.
  */
-const addToy = (dogId, body) => {
+const addToy = (id, body) => {
+  console.log('this is in addtoy', id);
   const newToy = {
     name: body.title,
-    price: body.prices.raw,
+    price: body.price,
     image: body.image,
     url: body.link,
     rating: body.rating,
   };
   return Dog.findByIdAndUpdate(
-    { _id: dogId },
+    id,
     { $addToSet: { toys: newToy } },
   );
 };
