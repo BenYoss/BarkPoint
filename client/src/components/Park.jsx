@@ -6,7 +6,8 @@ import axios from 'axios';
 import {
   GoogleMap, useLoadScript, Marker, InfoWindow,
 } from '@react-google-maps/api';
-import { formatRelative } from 'date-fns';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import PropTypes from 'prop-types';
 import mapStyles from './ParkStyles';
@@ -35,22 +36,27 @@ const Park = () => {
   const [selected, setSelected] = useState(null);
   const [venues, setVenues] = useState([]);
   const [location, setLocation] = useState('29.951065, -90.071533');
+  const [form, setForm] = useState({
+    name: '', lat: 1, long: 1, comments: '',
+  });
 
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const getVenues = async () => {
+    const { data } = await axios.get('https://api.foursquare.com/v2/venues/explore', {
+      params: {
+        client_id: process.env.FOUR_SQUARE_CLIENT_ID,
+        client_secret: process.env.FOUR_SQUARE_CLIENT_SECRET,
+        query: 'dog park',
+        ll: location,
+        v: '20180323',
+        limit: 100,
+        radius: 100000,
+      },
+    });
+    setVenues(data.response.groups[0].items);
+  };
   useEffect(() => {
-    const getVenues = async () => {
-      const { data } = await axios.get('https://api.foursquare.com/v2/venues/explore', {
-        params: {
-          client_id: process.env.FOUR_SQUARE_CLIENT_ID,
-          client_secret: process.env.FOUR_SQUARE_CLIENT_SECRET,
-          query: 'dog park',
-          ll: location,
-          v: '20180323',
-          limit: 100,
-          radius: 100000,
-        },
-      });
-      setVenues(data.response.groups[0].items);
-    };
     getVenues();
   }, [location]);
 
@@ -67,6 +73,7 @@ const Park = () => {
       time: new Date(),
     },
     ]);
+    setForm({ ...form, lat: e.latLng.lat(), long: e.latLng.lng() });
   }, []);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
@@ -153,12 +160,41 @@ const Park = () => {
                   </div>
                 )
                 : (
-                  <div>
-                    <h3>{ `lat: ${selected.lat}` }</h3>
-                    <br />
-                    <h3>{ `long: ${selected.lng}` }</h3>
-                    {' '}
-                    {selected.time && <small>{formatRelative(selected.time, new Date())}</small> }
+                  <div className="form">
+                    <form>
+                      <TextField
+                        label="Park Name"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginTop: '10px' }}
+                        onChange={handleChange}
+                        name="name"
+                      />
+                      <br />
+                      <TextField
+                        label="Comments"
+                        multiline
+                        rows={4}
+                        variant="outlined"
+                        style={{ marginTop: '5px' }}
+                        onChange={handleChange}
+                        name="comments"
+                      />
+                      <br />
+                      <Button
+                        variant="contained"
+                        style={{
+                          backgroundColor: '#e55812', color: '#002626', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px',
+                        }}
+                        onClick={async () => {
+                          console.warn(form);
+                          await axios.post('/data/park', form);
+                          await getVenues();
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </form>
                   </div>
                 )}
 
