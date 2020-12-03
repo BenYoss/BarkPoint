@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import GoogleLogin from './GoogleLogin';
 import PersonalityAssessment from './PersonalityAssessment';
 import Profile from './Profile';
@@ -16,9 +17,24 @@ const App = () => {
   const [aggressive, setAggressive] = useState(false);
   const [outgoing, setOutgoing] = useState(false);
   const [name, setName] = useState('');
+  const [dogs, setDogs] = useState([]);
   const [form, setForm] = useState({
     size: 'medium', breed: '', number: '', dogname: '', personalitytypes: [outgoing, aggressive, active], image: '',
   });
+
+  const getDogs = () => {
+    axios.get('session')
+      .then((response) => {
+        axios.get('/data/dog', { params: response.data })
+          .then(({ data }) => {
+            setDogs(data);
+          }).catch((error) => {
+            console.warn(error);
+          });
+      }).catch((error) => {
+        console.warn(error);
+      });
+  };
 
   return (
 
@@ -42,13 +58,17 @@ const App = () => {
           />
         </Route>
         <Route path="/profile">
-          <Profile />
+          <Profile
+            dogs={dogs}
+            setDogs={setDogs}
+            getDogs={getDogs}
+          />
         </Route>
         <Route path="/toybox">
           <ToyBox
-            active={active}
-            outgoing={outgoing}
-            aggressive={aggressive}
+            dogs={dogs}
+            setDogs={setDogs}
+            getDogs={getDogs}
           />
         </Route>
         <Route path="/park">
