@@ -1,7 +1,6 @@
 require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { User } = require('./db/models/models');
 
 const clientId = process.env.CLIENT_ID;
 const secret = process.env.CLIENT_SECRET;
@@ -32,12 +31,6 @@ passport.use(
     clientID: clientId,
     clientSecret: secret,
   }, (accessToken, refreshToken, profile, done) => {
-    const { _json } = profile;
-    User.createUser(_json)
-      .then(() => {
-        done(null, profile);
-      }).catch(() => {
-        done(null);
-      });
+    done(null, profile);
   }),
 );
