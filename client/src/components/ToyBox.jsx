@@ -52,8 +52,23 @@ const useStyles = makeStyles((theme) => ({
 
 const ToyBox = () => {
   const classes = useStyles();
+  const [dogs, setDogs] = useState([]);
   const [toys, setToys] = useState([]);
   const [hide, setHide] = useState(true);
+
+  const getDogs = () => {
+    axios.get('session')
+      .then((response) => {
+        axios.get('/data/dog', { params: response.data })
+          .then(({ data }) => {
+            setDogs(data);
+          }).catch((error) => {
+            console.warn(error);
+          });
+      }).catch((error) => {
+        console.warn(error);
+      });
+  };
 
   const getToy = () => {
     axios.get('session')
@@ -92,6 +107,56 @@ const ToyBox = () => {
     }
   };
 
+  const saveToy = (image, title, link, rating, price) => {
+    const toy = {
+      image,
+      title,
+      link,
+      rating,
+      price,
+    };
+
+    axios.get('session')
+      .then((response) => {
+        axios.get('/data/dog', { params: response.data })
+          .then(({ data }) => {
+            // eslint-disable-next-line no-underscore-dangle
+            const id = data.slice(data.length - 1)[0]._id;
+            axios.put(`/data/dog/${id}`, toy)
+              .then((resp) => {
+                console.info(resp);
+              }).catch((error) => {
+                console.warn(error);
+              });
+          }).catch((error) => {
+            console.warn(error);
+          });
+      }).catch((error) => {
+        console.warn(error);
+      });
+  };
+
+  const getDogToy = (searchDog) => {
+    const ourDog = dogs.find((dogFind) => dogFind.name === searchDog);
+
+    const obj = {
+      type1: ourDog.personalitytypes[0],
+      type2: ourDog.personalitytypes[1],
+      type3: ourDog.personalitytypes[2],
+    };
+
+    setHide(true);
+
+    axios.get('/get/toys', { params: obj })
+      .then(({ data: toyData }) => {
+        setToys(toyData.filter((newToy) => newToy.price));
+        setHide(false);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  };
+
   const MyButton = styled(Button)({
     background: 'linear-gradient(45deg, #2CDA9D 30%, #0E4749 90%)',
     border: 0,
@@ -104,6 +169,7 @@ const ToyBox = () => {
   });
 
   useEffect(() => {
+    getDogs();
     getToy();
   }, []);
 
@@ -143,8 +209,11 @@ const ToyBox = () => {
               style={{
                 height: '48', width: '200',
               }}
+              onChange={(event) => { getDogToy(event.target.value); }}
             >
-              <option value="all">will cycle through dogs prop/array here</option>
+              {dogs && dogs.map((dog) => (
+                <option value={dog.name}>{dog.name}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -154,7 +223,7 @@ const ToyBox = () => {
             width: '100%', height: '100%', paddingBottom: '10px', columnCount: '3',
           }}
         >
-          {toys.slice(0, 9).map((toy) => (
+          {toys.slice(0, 3).map((toy) => (
             <Card
               className={classes.root}
             >
@@ -175,7 +244,10 @@ const ToyBox = () => {
               <CardActions disableSpacing>
                 <div>
                   <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                    <FavoriteIcon onClick={() => {
+                      saveToy(toy.image, toy.title, toy.link, toy.rating, toy.price.value);
+                    }}
+                    />
                   </IconButton>
                 </div>
                 <p>
