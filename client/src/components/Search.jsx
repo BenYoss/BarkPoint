@@ -30,6 +30,7 @@ const Search = ({ panTo }) => {
           const results = await getGeocode({ address });
           const { lat, lng } = await getLatLng(results[0]);
           panTo({ lat, lng });
+          setValue('');
         }}
       >
         <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} placeholder="Where are you going?" />
