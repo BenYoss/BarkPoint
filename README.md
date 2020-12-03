@@ -127,5 +127,62 @@ DB_DB |
 
 ## Deployment
 
+Once the application is configured with the appropriate environmental variables and installations, a
+deployment strategy will now be implemented.
+
+This application has utilized google cloud for deployment, to begin setting up a personal google cloud
+service, follow the guide mentioned below thoroughly to create a new project instance.
 
 ```
+https://cloud.google.com/appengine/docs/standard/nodejs/building-app/deploying-web-service
+```
+
+Once a new project is fully configured with an app engine, it's now time to set up what the app engine
+will read once the application is deployed; the app.yaml.
+
+Let's first create an app.yaml by issuing ```bash touch app.yaml``` in the root directory of the repository.
+
+Inside of the app.yaml, insert the following code below:
+
+```yaml
+runtime: nodejs
+env: flex
+
+env_variables:
+  CLIENT_ID: ...
+  CLIENT_SECRET: ...
+  SERPWOW_KEY: ...
+  GOOGLE_MAPS_KEY: ...
+  TWILIO_SID: ...
+  TWILIO_TOKEN: ...
+  FOUR_SQUARE_CLIENT_ID: ...
+  FOUR_SQUARE_CLIENT_SECRET: ...
+  CLOUDINARY_UPLOAD_PRESET: ...
+  CLOUDINARY_UPLOAD_URL: ...
+```
+
+Now, bare in mind that there are environmental variables being declared within the scope of this file. To ensure
+security, check the .gitignore previously generated and search for the name "app.yaml", if the name does not exist
+inject the name inside the file.
+
+Once the app.yaml is finished, what will be needed next is a .gcloudignore file to ensure that the node modules
+directory does not accidentally pass on as data during the deployment stage. Issue the command ```bash touch .gcloudignore```
+in the bash terminal and inside the file add **node_modules/** as well as **bower_components**.
+
+Now that the two files mentioned above are configured, it's time to deploy this repository. This task can be done on the
+local machine by using google cloud's deployment-ready shell known as **cloud-SDK**.
+
+To install cloudSDK, follow the installation guide on the official site here - https://cloud.google.com/sdk/docs/install
+
+Once cloudSDK is officially installed onto the machine, be sure to shell into the right project by issuing the command below:
+
+```bash gcloud config set project my-project ```
+
+When the project is then selected, be sure that the latest dependencies are installed, and the latest pull has been made.
+
+Lastly, enter the command below to deploy the application:
+
+```bash gcloud app deploy ```
+
+A prompt will then pop up in the middle of the deployment staging. Be sure to issue **Y** to ensure that the file path is
+correct for app deployment.
