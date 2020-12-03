@@ -1,20 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-/**
- * address is written as a street address
- * ex: "420 Vape St, New Orleans, LA 70119"
- */
 const parkSchema = new Schema({
   name: String,
-  address: String,
+  lat: Number,
+  long: Number,
   comment: String,
 });
 
 const Park = model('Park', parkSchema);
 
-const addPark = (name, address, comment) => Park.create({
+const addPark = (name, lat, long, comment) => Park.create({
   name,
-  address,
+  lat,
+  long,
   comment,
 })
   .then((data) => data);
