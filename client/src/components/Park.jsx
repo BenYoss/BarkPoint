@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {
   useState, useCallback, useRef, useEffect,
@@ -10,6 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import PropTypes from 'prop-types';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import IconButton from '@material-ui/core/IconButton';
 import mapStyles from './ParkStyles';
 import SideBar from './SideBar';
 
@@ -39,8 +43,10 @@ const Park = () => {
   const [form, setForm] = useState({
     name: '', lat: 1, long: 1, comments: '',
   });
+  const [isClicked, setIsClicked] = useState({});
 
   const [parkData, setParkData] = useState([]);
+  const [favParks, setFavParks] = useState([]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -57,19 +63,25 @@ const Park = () => {
       },
     });
     const { data: parks } = await axios.get('/data/park');
+    const { data: userid } = await axios.get('session');
+    const { id } = userid;
+    const { data: faveparks } = await axios.get('/data/favpark', { params: { id } });
     setVenues(data.response.groups[0].items);
     setParkData(parks);
+    setFavParks(faveparks);
   };
   useEffect(() => {
     getVenues();
   }, [location]);
 
   const mapRef = useRef();
+
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(12);
     setLocation(`${lat}, ${lng}`);
   });
+
   const onMapClick = useCallback((e) => {
     setMarkers((current) => [...current, {
       lat: e.latLng.lat(),
@@ -77,8 +89,10 @@ const Park = () => {
       time: new Date(),
     },
     ]);
+
     setForm({ ...form, lat: e.latLng.lat(), long: e.latLng.lng() });
   }, []);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
     libraries,
@@ -95,9 +109,24 @@ const Park = () => {
     return 'Loading maps';
   }
 
+  const handleLike = async (park) => {
+    const { data } = await axios.get('session');
+    // console.log(data);
+    const { sub } = data;
+    await axios.put(`/data/favpark/${sub}`, park);
+  };
+
+  const handleDelete = async (park) => {
+    const { data } = await axios.get('session');
+    const { sub } = data;
+    await axios.delete(`/data/unfavpark/${sub}`, park);
+  };
+
   return (
     <div>
-      <SideBar />
+      <SideBar
+        favParks={favParks}
+      />
       <div className="container">
         <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
       </div>
@@ -158,7 +187,7 @@ const Park = () => {
               setSelected(marker);
             }}
           />
-        ))}
+        )) }
         { selected && (
           <InfoWindow
             // eslint-disable-next-line no-nested-ternary
@@ -175,14 +204,40 @@ const Park = () => {
             <div>
               { selected.venue || selected.name
                 ? (
-                  <div>
-                    <h1>{selected.venue ? selected.venue.name : selected.name }</h1>
-                    <br />
-                    <p>
-                      {' '}
-                      {/* { selected.venue.location.formattedAddress[0] || selected.comments } */}
-                      {' '}
+                  <div className="popup">
+                    <h1 className="popup-text">
+                      { selected.venue ? selected.venue.name : selected.name }
+                    </h1>
+                    <hr />
+                    <p className="popup-comment">
+                      { selected.venue ? selected.venue.location.formattedAddress[0]
+                        : selected.comments }
                     </p>
+                    <IconButton
+                      onClick={() => {
+                        setIsClicked({
+                          [selected.venue ? selected.venue.id : selected._id]:
+                            // eslint-disable-next-line no-unneeded-ternary
+                            isClicked[selected.venue
+                              ? selected.venue.id : selected._id] ? false : true,
+                        });
+                        if (isClicked) { handleLike(selected); } else { handleDelete(selected); }
+                      }}
+                    >
+                      {!isClicked[selected.venue ? selected.venue.id : selected._id]
+                        ? (
+                          <FavoriteBorderIcon
+                            fontSize="small"
+                            style={{ color: '#e55812' }}
+                          />
+                        )
+                        : (
+                          <FavoriteIcon
+                            fontSize="small"
+                            style={{ color: '#e55812' }}
+                          />
+                        ) }
+                    </IconButton>
                   </div>
                 )
                 : (
