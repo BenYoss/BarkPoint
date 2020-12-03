@@ -148,7 +148,7 @@ dbRouter.put('/data/park', (req, res) => {
  * @body is equal to an object with the to be added park's info
  */
 dbRouter.put('/data/favpark', (req, res) => {
-  const { id } = req.params;
+  const { id } = req.query;
   const { body } = req; // you only need the park name
   console.warn('id in db router for park', id);
   return User.favPark(id, body)
@@ -160,6 +160,13 @@ dbRouter.put('/data/favpark', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+/**
+ * Below is the getter for favorite parks. This request is made to
+ * retrieve the favorite parks from a specific user id @param {string} id .
+ *
+ * The request outputs the park object data in the form of an @array .
+ */
 dbRouter.get('/data/favpark', (req, res) => {
   const { id } = req.query;
   User.getFavParks(id)
@@ -172,7 +179,7 @@ dbRouter.get('/data/favpark', (req, res) => {
     });
 });
 /**
- * Removes a specific park from the barkPoint database
+ * Removes a specific park from the barkPoint database based on @name .
  */
 dbRouter.delete('/data/park', (req, res) => {
   const { name } = req.query;
