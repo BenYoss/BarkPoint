@@ -51,7 +51,6 @@ const deleteDog = (dogName) => Dog.deleteOne({ name: dogName });
  * serpwow's API generates.
  */
 const addToy = (id, body) => {
-  console.log('this is in addtoy', id);
   const newToy = {
     name: body.title,
     price: body.price,
