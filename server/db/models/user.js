@@ -33,16 +33,19 @@ const findUser = (email) => User.findOne({ email }).exec();
  * $addToSet will add the value provided into an array if it doesn't already exist there.
  * $pull will remove the value provided from an array if it exists there.
  */
-const favPark = (id, park) => User.findByIdAndUpdate(
-  id,
+const favPark = (email, park) => User.findOneAndUpdate(
+  { email },
   { $addToSet: { parks: park } },
 );
-const unFavPark = (id, park) => User.findByIdAndUpdate(
-  id,
+const unFavPark = (email, park) => User.findOneAndDelete(
+  { email },
   { $pull: { parks: park } },
 );
-const getFavParks = (id) => User.findById(id)
-  .then((userData) => userData.parks)
+const getFavParks = (email) => User.findOne(email)
+  .then((userData) => {
+    // userData.parks;
+    console.warn(userData);
+  })
   .catch((err) => console.error(err));
 
 module.exports = {

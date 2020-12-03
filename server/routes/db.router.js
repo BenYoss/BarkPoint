@@ -151,11 +151,11 @@ dbRouter.put('/data/park', (req, res) => {
  * specified park.
  */
 
-dbRouter.put('/data/unfavpark', (req, res) => {
-  const { id } = req.query;
+dbRouter.put('/data/unfavpark/:email', (req, res) => {
+  const { email } = req.params;
   const { body } = req; // you only need the park name
-  console.warn('id in db router for park', id);
-  return User.unfavPark(id, body)
+  console.warn('id in db router for park', email);
+  return User.unfavPark(email, body)
     .then(() => {
       res.sendStatus(200);
     })
@@ -170,11 +170,11 @@ dbRouter.put('/data/unfavpark', (req, res) => {
  * @id is equal to the current user's mongo-provided ObjectId
  * @body is equal to an object with the to be added park's info
  */
-dbRouter.put('/data/favpark', (req, res) => {
-  const { id } = req.query;
+dbRouter.put('/data/favpark/:email', (req, res) => {
+  const { email } = req.params;
   const { body } = req; // you only need the park name
-  console.warn('id in db router for park', id);
-  return User.favPark(id, body)
+  console.warn('id in db router for park', email);
+  return User.favPark(email, body)
     .then(() => {
       res.sendStatus(200);
     })
@@ -204,8 +204,8 @@ dbRouter.get('/data/favpark', (req, res) => {
 /**
  * Removes a specific park from the barkPoint database based on @name .
  */
-dbRouter.delete('/data/park', (req, res) => {
-  const { name } = req.query;
+dbRouter.delete('/data/park/:id', (req, res) => {
+  const { name } = req.params;
   return Park.deletePark(name)
     .then(() => {
       res.sendStatus(200);

@@ -59,7 +59,7 @@ authRouter.get('/logout', (req, res) => {
 authRouter.get('/session', ({ user }, res) => {
   const { _json } = user;
   if (user) {
-    res.status(200).send(_json.email);
+    res.status(200).send(_json);
   } else {
     res.sendStatus(500);
   }
