@@ -24,7 +24,7 @@ authRouter.get('/auth/google/callback', passport.authenticate('google'),
     User.findUser(_json.email)
       .then((result) => {
         if (result) {
-          res.redirect('/toybox');
+          res.redirect('/profile');
         }
         User.createUser(_json)
           .then(() => {
