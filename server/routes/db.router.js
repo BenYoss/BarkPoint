@@ -2,7 +2,6 @@ const { Router } = require('express');
 const { Dog, User, Park } = require('../db/models/models');
 
 const dbRouter = Router();
-
 /**
  * Adds a new user into the barkPoint database
  */
@@ -14,7 +13,6 @@ dbRouter.post('/data/user', (req, res) => User(req.body)
     console.error(err);
     res.sendStatus(500);
   }));
-
 /**
  * Finds all dogs whose user_email field matches the current sessions user's email
  */
@@ -33,7 +31,6 @@ dbRouter.get('/data/dog', ({ user }, res) => {
       res.sendStatus(500);
     });
 });
-
 /**
  * Adds a new dog into the barkPoint database.
  *
@@ -56,7 +53,6 @@ dbRouter.post('/data/dog', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 /**
  * Adds a new toy into a the currently selected dog's toy field (an array)
  *
@@ -66,7 +62,6 @@ dbRouter.post('/data/dog', (req, res) => {
 dbRouter.put('/data/dog/:id', (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  console.warn('AHHHH or somethign', id);
   return Dog.addToy(id, body)
     .then(() => {
       res.sendStatus(200);
@@ -76,7 +71,6 @@ dbRouter.put('/data/dog/:id', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 /**
  * Removes a toy from the currently selected dog's toy field (an array)
  *
@@ -94,7 +88,6 @@ dbRouter.delete('/data/toy', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 /**
  * Removes a dog from the barkPoint database
  *
@@ -111,13 +104,11 @@ dbRouter.delete('/data/dog', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 dbRouter.get('/data/park', async (req, res) => {
   const allDogs = await Park.getParks();
   console.warn(allDogs);
   res.status(200).send(allDogs);
 });
-
 /**
  * Adds a park into the barkPoint database
  */
@@ -134,7 +125,6 @@ dbRouter.post('/data/park', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 /**
  * Updates the comment field of the selected park
  *
@@ -151,7 +141,36 @@ dbRouter.put('/data/park', (req, res) => {
       res.sendStatus(500);
     });
 });
-
+/**
+ * Adds a park into a the current users parks field (an array)
+ *
+ * @id is equal to the current user's mongo-provided ObjectId
+ * @body is equal to an object with the to be added park's info
+ */
+dbRouter.put('/data/favpark', (req, res) => {
+  const { id } = req.params;
+  const { body } = req; // you only need the park name
+  console.warn('id in db router for park', id);
+  return User.favPark(id, body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+dbRouter.get('/data/favpark', (req, res) => {
+  const { id } = req.query;
+  User.getFavParks(id)
+    .then((parkData) => {
+      res.status(200).send(parkData);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 /**
  * Removes a specific park from the barkPoint database
  */
@@ -166,5 +185,4 @@ dbRouter.delete('/data/park', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 module.exports = dbRouter;
