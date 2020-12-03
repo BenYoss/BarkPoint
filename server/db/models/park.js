@@ -4,16 +4,18 @@ const parkSchema = new Schema({
   name: String,
   lat: Number,
   long: Number,
-  comment: String,
+  comments: String,
 });
 
 const Park = model('Park', parkSchema);
 
-const addPark = (name, lat, long, comment) => Park.create({
+const getParks = () => Park.find();
+
+const addPark = (name, lat, long, comments) => Park.create({
   name,
   lat,
   long,
-  comment,
+  comments,
 })
   .then((data) => data);
 
@@ -27,6 +29,7 @@ const updatePark = (name, comment) => Park.update({ name }, { comment });
 const deletePark = (name) => Park.deleteOne({ name });
 
 module.exports = {
+  getParks,
   addPark,
   updatePark,
   deletePark,

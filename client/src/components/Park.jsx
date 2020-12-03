@@ -6,7 +6,8 @@ import axios from 'axios';
 import {
   GoogleMap, useLoadScript, Marker, InfoWindow,
 } from '@react-google-maps/api';
-import { formatRelative } from 'date-fns';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import PropTypes from 'prop-types';
 import mapStyles from './ParkStyles';
@@ -35,22 +36,31 @@ const Park = () => {
   const [selected, setSelected] = useState(null);
   const [venues, setVenues] = useState([]);
   const [location, setLocation] = useState('29.951065, -90.071533');
+  const [form, setForm] = useState({
+    name: '', lat: 1, long: 1, comments: '',
+  });
 
+  const [parkData, setParkData] = useState([]);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const getVenues = async () => {
+    const { data } = await axios.get('https://api.foursquare.com/v2/venues/explore', {
+      params: {
+        client_id: process.env.FOUR_SQUARE_CLIENT_ID,
+        client_secret: process.env.FOUR_SQUARE_CLIENT_SECRET,
+        query: 'dog park',
+        ll: location,
+        v: '20180323',
+        limit: 100,
+        radius: 100000,
+      },
+    });
+    const { data: parks } = await axios.get('/data/park');
+    setVenues(data.response.groups[0].items);
+    setParkData(parks);
+  };
   useEffect(() => {
-    const getVenues = async () => {
-      const { data } = await axios.get('https://api.foursquare.com/v2/venues/explore', {
-        params: {
-          client_id: process.env.FOUR_SQUARE_CLIENT_ID,
-          client_secret: process.env.FOUR_SQUARE_CLIENT_SECRET,
-          query: 'dog park',
-          ll: location,
-          v: '20180323',
-          limit: 100,
-          radius: 100000,
-        },
-      });
-      setVenues(data.response.groups[0].items);
-    };
     getVenues();
   }, [location]);
 
@@ -67,6 +77,7 @@ const Park = () => {
       time: new Date(),
     },
     ]);
+    setForm({ ...form, lat: e.latLng.lat(), long: e.latLng.lng() });
   }, []);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
@@ -87,8 +98,9 @@ const Park = () => {
   return (
     <div>
       <SideBar />
-
-      <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
+      <div className="container">
+        <img src="https://i.imgur.com/NOS6OVz.png" alt="logo" className="logo-container" />
+      </div>
 
       <Search panTo={panTo} setLocation={setLocation} />
       <Locate panTo={panTo} setLocation={setLocation} />
@@ -131,42 +143,85 @@ const Park = () => {
             }}
           />
         ))}
+        { parkData.map((marker) => (
+          <Marker
+            // eslint-disable-next-line no-underscore-dangle
+            key={marker._id}
+            position={{ lat: Number(marker.lat), lng: Number(marker.long) }}
+            icon={{
+              url: 'https://i.imgur.com/T1JV3Qy.png',
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+            }}
+            onClick={() => {
+              setSelected(marker);
+            }}
+          />
+        ))}
         { selected && (
           <InfoWindow
-            position={{
-              lat: selected.lat || selected.venue.location.lat,
-              lng: selected.lng || selected.venue.location.lng,
+            // eslint-disable-next-line no-nested-ternary
+            position={selected.venue ? {
+              lat: selected.venue.location.lat,
+              lng: selected.venue.location.lng,
+            } : selected.long
+              ? { lat: selected.lat, lng: selected.long }
+              : { lat: selected.lat, lng: selected.lng }}
+            onCloseClick={() => {
+              setSelected(null);
             }}
-            onCloseClick={() => setSelected(null)}
           >
             <div>
-              { selected.venue
+              { selected.venue || selected.name
                 ? (
                   <div>
-                    <h1>{ selected.venue.name }</h1>
+                    <h1>{selected.venue ? selected.venue.name : selected.name }</h1>
                     <br />
                     <p>
                       {' '}
-                      { selected.venue.location.formattedAddress[0] }
+                      {/* { selected.venue.location.formattedAddress[0] || selected.comments } */}
                       {' '}
                     </p>
                   </div>
                 )
                 : (
-                  <div>
-                    <form action="" style={{ marginRight: '0.5rem', width: '100%' }}>
-                      <label htmlFor="title">Title</label>
+                  <div className="form">
+                    <form>
+                      <TextField
+                        label="Park Name"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginTop: '10px' }}
+                        onChange={handleChange}
+                        name="name"
+                      />
                       <br />
-                      <input type="text" id="title" name="title" placeholder="Title" />
+                      <TextField
+                        label="Comments"
+                        multiline
+                        rows={4}
+                        variant="outlined"
+                        style={{ marginTop: '5px' }}
+                        onChange={handleChange}
+                        name="comments"
+                      />
                       <br />
-                      <label htmlFor="comments">Comments</label>
-                      <br />
-                      <textarea type="text" rows={3} id="text" name="text" placeholder="Comments" />
+                      <Button
+                        variant="contained"
+                        style={{
+                          backgroundColor: '#e55812', color: '#002626', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px',
+                        }}
+                        onClick={async () => {
+                          console.warn(form);
+                          await axios.post('/data/park', form);
+                          await getVenues();
+                          setSelected(null);
+                        }}
+                      >
+                        Submit
+                      </Button>
                     </form>
-                    {' '}
-                    {selected.time && <small>{formatRelative(selected.time, new Date())}</small> }
-                    <br />
-                    <button type="submit">Submit</button>
                   </div>
                 )}
 

@@ -8,23 +8,24 @@ import sideBarData from './SideBarData';
 
 const SideBar = () => (
   <div className="Sidebar">
-
     <List
       component="nav"
       aria-labelledby="side navigation"
       className="sideBarList"
     >
-      {sideBarData.map(({
+      { sideBarData.map(({
         title, icon, link, id,
       }) => (
-        <Link className="sideBarRow" to={link} key={id}>
-          <ListItem button>
-            {icon}
+        <Link to={link} key={id}>
+          <ListItem className="sideBarRow" button>
+            <div className="icon">{ icon }</div>
             <ListItemText primary={title} />
           </ListItem>
         </Link>
-      ))}
+      )) }
     </List>
+
+    <h2 className="form-title">My Favorite Parks</h2>
   </div>
 );
 
