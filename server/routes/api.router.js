@@ -5,9 +5,10 @@ const personalityVerbs = require('./personalityTypes.json');
 
 const apiRouter = Router();
 
-let toysByVerb;
+const toysByVerb = [];
 
 apiRouter.get('/get/toys', (req, res) => {
+  let count = 1;
   /**
    * @verbs is an algorithm that finds dog personality types and outputs key verbs pertaining to
    * the type
@@ -36,6 +37,7 @@ apiRouter.get('/get/toys', (req, res) => {
         toyFilter.push(toy);
       }
     }));
+    toyFilter.slice(0, 20);
     res.status(200).send(toyFilter);
   };
 
@@ -43,6 +45,7 @@ apiRouter.get('/get/toys', (req, res) => {
     q: 'dog toy',
     engine: 'amazon',
     amazon_domain: 'amazon.com',
+    page: count,
     include_html: 'false',
   };
 
@@ -52,18 +55,23 @@ apiRouter.get('/get/toys', (req, res) => {
    * If data does exist, then the block of code executes the previously
    * mentioned @filterToys method
    */
-  if (!toysByVerb) {
-    serpwow.json(params)
-      .then((result) => {
-        toysByVerb = result.amazon_results;
-        filterToys();
-      })
-      .catch((error) => {
-        res.status(500).end(error);
-      });
-  } else {
-    filterToys();
-  }
+
+  const callSerp = () => {
+    if (toysByVerb.length < 200) {
+      serpwow.json(params)
+        .then((result) => {
+          toysByVerb.push(...result.amazon_results);
+          count += 1;
+          return callSerp();
+        })
+        .catch((error) => {
+          res.status(500).end(error);
+        });
+    } else {
+      filterToys();
+    }
+  };
+  callSerp();
 });
 
 apiRouter.post('/api/twilio', (req, res) => {
