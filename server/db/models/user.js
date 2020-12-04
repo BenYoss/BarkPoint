@@ -41,11 +41,8 @@ const unFavPark = (email, park) => User.findOneAndDelete(
   { email },
   { $pull: { parks: park } },
 );
-const getFavParks = (email) => User.findOne(email)
-  .then((userData) => {
-    // userData.parks;
-    console.warn(userData);
-  })
+const getFavParks = (email) => User.findOne({ email })
+  .then((userData) => userData.parks)
   .catch((err) => console.error(err));
 
 module.exports = {
