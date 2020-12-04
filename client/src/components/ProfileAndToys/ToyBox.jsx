@@ -55,6 +55,7 @@ const ToyBox = ({ dogs, getDogs }) => {
   const classes = useStyles();
   const [toys, setToys] = useState([]);
   const [hide, setHide] = useState(true);
+  const [theCurrentDog, settheCurrentDog] = useState({});
 
   const getToy = () => {
     axios.get('session')
@@ -84,42 +85,60 @@ const ToyBox = ({ dogs, getDogs }) => {
   };
 
   const refresh = () => {
-    if (toys.length > 10) {
-      setToys(toys.slice(10));
+    if (toys.length > 6) {
+      setToys(toys.slice(6));
     }
 
-    if (toys.length < 10) {
+    if (toys.length < 6) {
       getToy();
     }
   };
 
   const saveToy = (image, title, link, rating, price) => {
-    const toy = {
-      image,
-      title,
-      link,
-      rating,
-      price,
-    };
+    if (!theCurrentDog) {
+      const toy = {
+        image,
+        title,
+        link,
+        rating,
+        price,
+      };
 
-    axios.get('session')
-      .then((response) => {
-        axios.get('/data/dog', { params: response.data })
-          .then(({ data }) => {
+      axios.get('session')
+        .then((response) => {
+          axios.get('/data/dog', { params: response.data })
+            .then(({ data }) => {
             // eslint-disable-next-line no-underscore-dangle
-            const id = data.slice(data.length - 1)[0]._id;
-            axios.put(`/data/dog/${id}`, toy)
-              .then((resp) => {
-                console.info(resp);
-              }).catch((error) => {
-                console.warn(error);
-              });
-          }).catch((error) => {
-            console.warn(error);
-          });
-      }).catch((error) => {
-        console.warn(error);
-      });
+              const id = data.slice(data.length - 1)[0]._id;
+              axios.put(`/data/dog/${id}`, toy)
+                .then((resp) => {
+                  console.info(resp);
+                }).catch((error) => {
+                  console.warn(error);
+                });
+            }).catch((error) => {
+              console.warn(error);
+            });
+        }).catch((error) => {
+          console.warn(error);
+        });
+    } else {
+      const toy = {
+        image,
+        title,
+        link,
+        rating,
+        price,
+      };
+      // eslint-disable-next-line no-underscore-dangle
+      const id = theCurrentDog._id;
+      axios.put(`/data/dog/${id}`, toy)
+        .then((resp) => {
+          console.info(resp);
+        }).catch((error) => {
+          console.warn(error);
+        });
+    }
   };
 
   const getDogToy = (searchDog) => {
@@ -141,6 +160,8 @@ const ToyBox = ({ dogs, getDogs }) => {
       .catch((error) => {
         console.warn(error);
       });
+
+    settheCurrentDog(ourDog);
   };
 
   const MyButton = styled(Button)({
@@ -197,7 +218,7 @@ const ToyBox = ({ dogs, getDogs }) => {
               }}
               onChange={(event) => { getDogToy(event.target.value); }}
             >
-              {dogs && dogs.map((dog) => (
+              {dogs && dogs.reverse().map((dog) => (
                 <option value={dog.name}>{dog.name}</option>
               ))}
             </select>

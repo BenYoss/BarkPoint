@@ -141,7 +141,8 @@ const Profile = ({ dogs, getDogs }) => {
                 <CardContent>
                   {dog.toys && dog.toys.map((toys) => (
                     <div>
-                      <p>{toys.name}</p>
+                      <h3><a href={toys.link}>{toys.name}</a></h3>
+                      <p>{toys.link}</p>
                       <IconButton aria-label="add to favorites">
                         <FavoriteIcon onClick={() => {
                           deleteToy(dog, toys);

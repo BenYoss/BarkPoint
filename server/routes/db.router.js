@@ -42,9 +42,9 @@ dbRouter.get('/data/dog', ({ user }, res) => {
  */
 dbRouter.post('/data/dog', (req, res) => {
   const {
-    size, breed, number, dogname, image, personalitytypes, data,
+    size, breed, number, email, dogname, image, personalitytypes,
   } = req.body;
-  return Dog.addDog(dogname, breed, size, number, data, image, personalitytypes)
+  return Dog.addDog(dogname, breed, size, number, email, image, personalitytypes)
     .then(() => {
       res.sendStatus(201);
     })

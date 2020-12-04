@@ -37,9 +37,9 @@ const favPark = (email, park) => User.findOneAndUpdate(
   { email },
   { $addToSet: { parks: park } },
 );
-const unFavPark = (email, park) => User.findOneAndDelete(
+const unFavPark = (email, park) => User.findOneAndUpdate(
   { email },
-  { $pull: { parks: { $in: [park.id] } } },
+  { $pull: { parks: park } },
 );
 const getFavParks = (email) => User.findOne({ email })
   .then((userData) => (userData.parks ? userData.parks : []))
