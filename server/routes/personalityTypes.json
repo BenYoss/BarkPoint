@@ -1,8 +1,8 @@
 [
     {
-        "outgoingY": [ "Playful", "Outdoor"],
-        "agressiveY": [ "Rough", "Aggressive", "Tough", "Extreme" ],
-        "activeY": [ "Fitness", "Hyper", "Fast" ]
+        "outgoingY": [ "Playful", "Outdoor", "Plush", "Fluffy", "Ball", "IQ"],
+        "agressiveY": [ "Rough", "Aggressive", "Tough", "Extreme", "Ball" ],
+        "activeY": [ "Fitness", "Hyper", "Fast", "Plush", "Fluffy", "Ball" ]
     },
     {
         "outgoingN": [ "Treat", "Indoor", "Fuzzy" ],
