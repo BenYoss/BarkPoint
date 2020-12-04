@@ -13,13 +13,16 @@ apiRouter.get('/get/toys', (req, res) => {
    * the type
    */
   const verbs = [];
+  const antiVerbs = [];
   Object.values(req.query).forEach((personalityType, i) => {
     const pverbsTrue = Object.values(personalityVerbs[0])[i];
     const pverbsFalse = Object.values(personalityVerbs[1])[i];
     if (JSON.parse(personalityType)) {
       verbs.push(...pverbsTrue);
+      antiVerbs.push(...pverbsFalse);
     } else {
       verbs.push(...pverbsFalse);
+      antiVerbs.push(...pverbsTrue);
     }
   });
   /**
@@ -31,8 +34,16 @@ apiRouter.get('/get/toys', (req, res) => {
   const filterToys = () => {
     const toyFilter = [];
     toysByVerb.forEach((toy) => verbs.forEach((verb) => {
-      if (toy.title.includes(verb)
-      && !toyFilter.includes(toy)) {
+      let isValid = false;
+      antiVerbs.forEach((antiVerb) => {
+        if (toy.title.includes(verb)
+        && !toy.title.includes(antiVerb)
+        && !toyFilter.includes(toy)) {
+          isValid = true;
+        }
+      });
+
+      if (isValid) {
         toyFilter.push(toy);
       }
     }));
