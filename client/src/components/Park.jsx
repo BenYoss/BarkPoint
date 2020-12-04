@@ -64,8 +64,8 @@ const Park = () => {
     });
     const { data: parks } = await axios.get('/data/park');
     const { data: userid } = await axios.get('session');
-    const { id } = userid;
-    const { data: faveparks } = await axios.get('/data/favpark', { params: { id } });
+    const { email } = userid;
+    const { data: faveparks } = await axios.get('/data/favpark', { params: { id: email } });
     setVenues(data.response.groups[0].items);
     setParkData(parks);
     setFavParks(faveparks);
@@ -112,14 +112,14 @@ const Park = () => {
   const handleLike = async (park) => {
     const { data } = await axios.get('session');
     // console.log(data);
-    const { sub } = data;
-    await axios.put(`/data/favpark/${sub}`, park);
+    const { email } = data;
+    await axios.put(`/data/favpark/${email}`, park);
   };
 
   const handleDelete = async (park) => {
     const { data } = await axios.get('session');
-    const { sub } = data;
-    await axios.delete(`/data/unfavpark/${sub}`, park);
+    const { email } = data;
+    await axios.delete(`/data/unfavpark/${email}`, park);
   };
 
   return (
