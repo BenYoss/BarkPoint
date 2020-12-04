@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import GoogleLogin from './GoogleLogin';
-import PersonalityAssessment from './PersonalityAssessment';
-import Profile from './Profile';
-import ToyBox from './ToyBox';
-import LogOut from './LogOut';
+import GoogleLogin from './LoginLogout/GoogleLogin';
+import PersonalityAssessment from './AboutDog/PersonalityAssessment';
+import Profile from './ProfileAndToys/Profile';
+import ToyBox from './ProfileAndToys/ToyBox';
+import LogOut from './LoginLogout/LogOut';
 import './App.css';
-import NotFound from './FourOhFour';
+import NotFound from './LoginLogout/FourOhFour';
 
-import Park from './Park';
-import Form from './Form';
+import Park from './Park/Park';
+import Form from './AboutDog/Form';
 
 const App = () => {
   const [active, setActive] = useState(false);

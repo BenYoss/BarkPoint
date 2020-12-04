@@ -2,7 +2,6 @@ import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PetsIcon from '@material-ui/icons/Pets';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 const SideBarData = [
   {
@@ -22,12 +21,6 @@ const SideBarData = [
     icon: <PetsIcon />,
     link: '/form',
     id: 3,
-  },
-  {
-    title: 'Notifications',
-    icon: <NotificationsActiveIcon />,
-    link: '/home',
-    id: 4,
   },
 ];
 

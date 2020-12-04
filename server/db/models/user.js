@@ -39,10 +39,10 @@ const favPark = (email, park) => User.findOneAndUpdate(
 );
 const unFavPark = (email, park) => User.findOneAndDelete(
   { email },
-  { $pull: { parks: park } },
+  { $pull: { parks: { $in: [park.id] } } },
 );
 const getFavParks = (email) => User.findOne({ email })
-  .then((userData) => userData.parks)
+  .then((userData) => (userData.parks ? userData.parks : []))
   .catch((err) => console.error(err));
 
 module.exports = {

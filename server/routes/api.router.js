@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const serpwow = require('../api/serpwow.api.js');
-const sendMessage = require('../api/twilio.api.js');
 const personalityVerbs = require('./personalityTypes.json');
 
 const apiRouter = Router();
@@ -72,12 +71,6 @@ apiRouter.get('/get/toys', (req, res) => {
     }
   };
   callSerp();
-});
-
-apiRouter.post('/api/twilio', (req, res) => {
-  const { phoneNumber } = req.body;
-  res.sendStatus(201);
-  sendMessage(phoneNumber);
 });
 
 module.exports = apiRouter;

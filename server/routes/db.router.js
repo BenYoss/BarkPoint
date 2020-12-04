@@ -155,7 +155,8 @@ dbRouter.put('/data/unfavpark/:email', (req, res) => {
   const { email } = req.params;
   const { body } = req; // you only need the park name
   console.warn('id in db router for park', email);
-  return User.unfavPark(email, body)
+  console.warn(body);
+  return User.unFavPark(email, body)
     .then(() => {
       res.sendStatus(200);
     })

@@ -25,11 +25,12 @@ authRouter.get('/auth/google/callback', passport.authenticate('google'),
       .then((result) => {
         if (result) {
           res.redirect('/profile');
+        } else {
+          User.createUser(_json)
+            .then(() => {
+              res.redirect('/form');
+            });
         }
-        User.createUser(_json)
-          .then(() => {
-            res.redirect('/form');
-          });
       }).catch((err) => {
         console.error(err);
         res.sendStatus(500);

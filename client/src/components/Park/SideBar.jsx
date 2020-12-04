@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import './SideBar.css';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -27,9 +28,20 @@ const SideBar = ({ favParks }) => (
     </List>
 
     <h2 className="form-title">My Favorite Parks</h2>
-    {favParks.length && favParks.map((park) => (
-      <p>{ park.venue ? park.venue.name : park.name }</p>
-    ))}
+    <hr />
+
+    <div className="fave-parks">
+      {favParks.length && favParks.map((park) => (
+        <div className="flex park-text">
+          <ExploreIcon
+            fontSize="small"
+            style={{ color: '#e55812', marginRight: '2px' }}
+          />
+          {park.venue ? park.venue.name : park.name }
+        </div>
+      )) }
+
+    </div>
   </div>
 );
 

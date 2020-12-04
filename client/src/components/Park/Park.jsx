@@ -10,7 +10,6 @@ import {
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import PropTypes from 'prop-types';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,6 +17,8 @@ import mapStyles from './ParkStyles';
 import SideBar from './SideBar';
 
 import Search from './Search';
+import Locate from './Locate';
+import './Park.css';
 
 const libraries = ['places'];
 
@@ -62,10 +63,11 @@ const Park = () => {
         radius: 100000,
       },
     });
+
     const { data: parks } = await axios.get('/data/park');
     const { data: userid } = await axios.get('session');
-    const { id } = userid;
-    const { data: faveparks } = await axios.get('/data/favpark', { params: { id } });
+    const { email } = userid;
+    const { data: faveparks } = await axios.get('/data/favpark', { params: { id: email } });
     setVenues(data.response.groups[0].items);
     setParkData(parks);
     setFavParks(faveparks);
@@ -112,14 +114,18 @@ const Park = () => {
   const handleLike = async (park) => {
     const { data } = await axios.get('session');
     // console.log(data);
-    const { sub } = data;
-    await axios.put(`/data/favpark/${sub}`, park);
+    const { email } = data;
+    await axios.put(`/data/favpark/${email}`, park);
+    getVenues();
+    setSelected(null);
   };
 
   const handleDelete = async (park) => {
     const { data } = await axios.get('session');
-    const { sub } = data;
-    await axios.delete(`/data/unfavpark/${sub}`, park);
+    const { email } = data;
+    await axios.put(`/data/unfavpark/${email}`, park);
+    getVenues();
+    setSelected(null);
   };
 
   return (
@@ -216,12 +222,15 @@ const Park = () => {
                     <IconButton
                       onClick={() => {
                         setIsClicked({
+                          ...isClicked,
                           [selected.venue ? selected.venue.id : selected._id]:
                             // eslint-disable-next-line no-unneeded-ternary
                             isClicked[selected.venue
                               ? selected.venue.id : selected._id] ? false : true,
                         });
-                        if (isClicked) { handleLike(selected); } else { handleDelete(selected); }
+                        if (!isClicked[selected.venue ? selected.venue.id : selected._id]) {
+                          handleLike(selected);
+                        } else { handleDelete(selected); }
                       }}
                     >
                       {!isClicked[selected.venue ? selected.venue.id : selected._id]
@@ -287,28 +296,6 @@ const Park = () => {
       </GoogleMap>
     </div>
   );
-};
-
-const Locate = ({ panTo }) => (
-  <button
-    className="locate"
-    type="submit"
-    onClick={() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => panTo({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        }),
-        () => null,
-      );
-    }}
-  >
-    <img src="https://cdn.shopify.com/s/files/1/0082/3142/0009/products/Dog_Paw_Compass_SKU-02949-L_Black_800x.png?v=1549382505" alt="compass" />
-  </button>
-);
-
-Locate.propTypes = {
-  panTo: PropTypes.func.isRequired,
 };
 
 export default Park;
