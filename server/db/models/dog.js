@@ -4,62 +4,80 @@ const dogSchema = new Schema({
   name: String,
   breed: String,
   size: String,
-  image: String,
-  id_user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-<<<<<<< HEAD
+  number: String,
+  email_user: String,
   toys: [],
-=======
-  toys: [{ type: Schema.Types.ObjectId, ref: 'Toy' }],
->>>>>>> (fix) format in model files
+  image: String,
+  /**
+   * @personalitytypes contains the persisted results from the personality assessment.
+   * The order in which personality types are read are as follows:
+   * ------------------------------------------------------------
+   * Index: @param {0} = outgoing @param {1} = aggressive @param {2} = active
+   */
+  personalitytypes: [],
 });
 
 const Dog = model('Dog', dogSchema);
 
-<<<<<<< HEAD
-const addDog = (body) => {
-  Dog.create({
-    name: body.name,
-    breed: body.breed,
-    size: body.size,
-    image: body.image,
-    toys: [],
-  });
-};
+/**
+ * Adds a new dog instance depending on what options a user sets in the form.
+ */
 
-const deleteDog = (dogName) => {
-  Dog.deleteOne({ name: dogName });
-};
+const addDog = (name, breed, size, number, emailUser, image, personalitytypes) => Dog.create({
+  name,
+  breed,
+  size,
+  number,
+  email_user: emailUser,
+  toys: [],
+  image,
+  personalitytypes,
+})
+  .then((data) => data);
 
-const addToy = ({ dogId, body }) => {
+/**
+ * Takes in @param {*} emailUser which is the Id of the recorded user session.
+ */
+
+const findDogs = (emailUser) => Dog.find({ email_user: emailUser });
+
+const deleteDog = (id) => Dog.deleteOne({ _id: id });
+
+/**
+ *
+ * Takes in @param {*} dogId & @param {*} body
+ * addToy creates a new toy instances which is then bound to a dog
+ * based on Id properties. The @param {*} body is the toy data in which
+ * serpwow's API generates.
+ */
+const addToy = (id, body) => {
   const newToy = {
     name: body.title,
-    price: body.prices.raw,
+    price: body.price,
     image: body.image,
     url: body.link,
     rating: body.rating,
   };
-  Dog.findByIdAndUpdate(
-    { dogId },
+  // console.log(newToy);
+  return Dog.findByIdAndUpdate(
+    id,
     { $addToSet: { toys: newToy } },
   );
 };
 
-const removeToy = ({ dogId, body }) => {
-  Dog.findByIdAndUpdate(
-    { dogId },
-    { $pull: { toys: { name: body.title } } },
-  );
-};
+/**
+ * Takes in a @param {*} dogId and @param {*} body.
+ * should remove a toy from a specific dog depending on id.
+ */
+const removeToy = (id, body) => Dog.findByIdAndUpdate(
+  { _id: id },
+  { $pull: { toys: { title: body.title } } },
+);
 
 module.exports = {
   addDog,
   deleteDog,
   addToy,
   removeToy,
+  findDogs,
 };
-=======
-module.exports = Dog;
->>>>>>> (fix) format in model files

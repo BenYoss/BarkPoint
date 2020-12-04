@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Piedra&display=swap');
+
+/* Describe in a brief sentence what each style component is used for in the react component. */
+.image-container{
+  display: flex;
+  justify-content: center;
+}
+
+.google-button{
+ display: flex;
+ justify-content: center;
+ margin-top: 25px;
+}
+
+.logo{
+  text-align: center;
+  font-family: 'Piedra', cursive;
+  letter-spacing: 5px;
+   background: linear-gradient(to right, #2CDA9D 50%, #0e4749 50%);
+   -webkit-text-stroke: 0.5px #e55812;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 60px;
+}
+

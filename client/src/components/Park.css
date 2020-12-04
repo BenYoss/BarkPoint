@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Sansita+Swashed:wght@300&display=swap');
+
+.logo-container{
+  bottom: 0rem;
+  left: -0.5rem;
+  position: absolute;
+  z-index: 10;
+  margin: 10;
+  padding: 20;
+  width: 25vh;
+  height: 7vh;
+  background-color: rgba(207, 255, 204, 0.8);
+}
+
+.search{
+  position: absolute;
+  top:  1rem;
+  left: 38%;
+  transform: translatex(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+}
+
+.search input{
+  padding: 0.5 rem;
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.locate{
+  position: absolute;
+  top: 0.05rem;
+  right: 18rem;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+
+.locate img{
+  width: 10vh;
+  cursor: pointer;
+}
+
+.container{
+background-color: rgba(207, 255, 204, 1);
+ width: auto;
+ height: auto;
+}
+
+.popup{
+ background-color: #FEFDFF;
+ max-width: 15vw;
+ max-height: 20vh;
+}
+
+.popup-text{
+  font-family: 'Sansita Swashed', cursive;
+  color: #2CDA9D;
+  font-size: 20px;
+}
+
+.popup-comment{
+  font-family: 'Montserrat', sans-serif;
+  color: #E55812;
+  font-size: 12px;
+}
