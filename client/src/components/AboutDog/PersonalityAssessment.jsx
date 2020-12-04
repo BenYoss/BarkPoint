@@ -157,7 +157,7 @@ const PersonalityAssessment = ({
         >
           <CancelIcon
             fontSize="large"
-            style={{ color: '#e55812', width: '60', height: '60' }}
+            style={{ color: '#e55812', width: '5vw', height: '8vh' }}
           />
         </IconButton>
         <IconButton
@@ -165,7 +165,7 @@ const PersonalityAssessment = ({
         >
           <CheckCircleIcon
             fontSize="large"
-            style={{ color: '#2CDA9D', width: '60', height: '60' }}
+            style={{ color: '#2CDA9D', width: '5vw', height: '8vh' }}
           />
         </IconButton>
 
