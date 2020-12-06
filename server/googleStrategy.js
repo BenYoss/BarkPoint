@@ -17,10 +17,10 @@ passport.serializeUser((user, done) => {
 /**
  * Destroys Req.user instance.
  */
-// passport.deserializeUser((user, done) => {
-//   console.warn(user, 'deserialize');
-//   done(null, user);
-// });
+passport.deserializeUser((user, done) => {
+  console.warn(user, 'deserialize');
+  done(null, user);
+});
 
 /**
  * Below is the @GoogleStrategy which retrieves user information from the google authentication.
