@@ -58,7 +58,6 @@ authRouter.get('/logout', (req, res) => {
  * sends the user session data from request.
  */
 authRouter.get('/session', (req, res) => {
-  console.warn(req);
   try {
     const { _json } = req.user;
     res.status(200).send(_json);

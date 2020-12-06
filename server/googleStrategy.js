@@ -10,6 +10,7 @@ const secret = process.env.CLIENT_SECRET;
  */
 
 passport.serializeUser((user, done) => {
+  console.warn(user, 'serialize');
   done(null, user);
 });
 
@@ -17,6 +18,7 @@ passport.serializeUser((user, done) => {
  * Destroys Req.user instance.
  */
 passport.deserializeUser((user, done) => {
+  console.warn(user, 'deserialize');
   done(null, user);
 });
 
