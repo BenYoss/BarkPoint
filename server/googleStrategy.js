@@ -31,6 +31,7 @@ passport.use(
     clientID: clientId,
     clientSecret: secret,
   }, (accessToken, refreshToken, profile, done) => {
+    console.warn(profile);
     done(null, profile);
   }),
 );

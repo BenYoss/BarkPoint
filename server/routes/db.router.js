@@ -5,7 +5,7 @@ const dbRouter = Router();
 /**
  * Adds a new user into the barkPoint database
  */
-dbRouter.post('/data/user', (req, res) => User(req.body)
+dbRouter.post('/data/user', (req, res) => User.createUser(req.body)
   .then(() => {
     res.sendStatus(201);
   })
