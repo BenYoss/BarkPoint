@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 const navLinks = [
   { title: 'Profile', path: '/profile' },
   { title: 'ToyBox', path: '/toybox' },
-  { title: 'ParkMap', path: '/park' },
+  { title: 'BarkPark', path: '/park' },
   { title: 'LogOut', path: '/logout' },
 ];
 

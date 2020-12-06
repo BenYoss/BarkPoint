@@ -3,3 +3,18 @@
   justify-content: 'center';
   align-items: 'center';
 }
+
+.background{
+   background-image: url(https://i.ibb.co/GkSs7N0/12820755.jpg);
+  background-repeat: no-repeat;
+    height: 2000px;
+    width: 100vw;
+    background-size: cover;
+    background-position: bottom;
+}
+
+.filter{
+  margin-left: 5px;
+  height: 5vh;
+  border-radius: 10%;
+}

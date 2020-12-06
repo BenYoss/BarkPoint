@@ -6,6 +6,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+// sidebardata includes all of the links and icons for sidebarnav
 import sideBarData from './SideBarData';
 
 const SideBar = ({ favParks }) => (

@@ -1,5 +1,7 @@
-# BarkPoint
+# BarkPoint <a href="https://possible-dream-296716.uc.r.appspot.com"><img src="https://i.ibb.co/zRR5Nd4/barkpoint.png" width=35 height=35></img><a>
 Entertain your pet by either finding a toy or park to play.
+    
+<a href="https://circleci.com/"><img src="https://avatars0.githubusercontent.com/u/1231870?s=400&v=4" width=2% height=2%></img><a> [![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 
 ## Description
 Bark Point is an app designed to help dog owners find the perfect toys suited to their dog's
@@ -74,7 +76,7 @@ Users can access their dog's profiles and add/remove toys on the **profile** pag
     "style-loader": "^2.0.0"
   },
 ```
-## Installation and Startup
+## Installation and Startup <a href="https://www.npmjs.com/get-npm"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/1200px-Npm-logo.svg.png" width=5% height=5%></img><a>
 
 1. Fork the **Bajamen/BarkPoint** repo
 
@@ -111,21 +113,52 @@ DB_HOST |
 DB_DB |
 
 4. Use **npm run prod** to build webpack and render the client side
-5. If mongo is installed, start mongodb server
+
+## Database <a href="https://docs.mongodb.com/manual/installation/"><img src="https://img.icons8.com/color/452/mongodb.png" width=5% height=5%></img><a>
+If mongo is installed, start mongodb server
 
 ```bash
   sudo service mongodb start
 ```
 
-  If mongo is not installed follow the steps on the official website:
-  https://docs.mongodb.com/manual/installation/
-
+   If mongo is not installed follow the steps on the official website:
+   https://docs.mongodb.com/manual/installation/
+  
+   For creating a publically accessible database, a mongoDB cluster will need to be incorporated.
+  
+   A great tutorial to follow for creating MongoDB Atlas clusters can be found here: https://medium.com/@bretcameron/mongodb-a-beginners-guide-8fca0c7787a4.
 6. Use **npm run start** to start local server
 
-## Serpwow
+## API's
+Once dependencies are installed and database is configured accordingly, it's time to fill in the missing spaces in the .env file created earlier.
+## Serpwow <a href="https://app.serpwow.com/login"><img src="https://serpwow.com/images/android-chrome-256x256.png" width=2% height=2%></img><a>
 
+First on the list of API keys is serpwow. To obtain the API key, be sure to fill out the account creation form on their dev site:
+https://app.serpwow.com/signup
 
-## Deployment
+An email verification is required in order to create the serpwow account.
+
+Once an account is created, the user will directly be redirected to the dashboard. On the very top right of the dashboard there is a censor-block
+which blurs the key from screen view. When the box is clicked, the key is exposed for the key owner's personal use.
+
+## Google Oauth <a href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAndroid&hl=en"><img src="https://cdn1.iconfinder.com/data/icons/logos-brands-1/24/logo_brand_brands_logos_Google_Authenticator-512.png" width=5% height=5%></img><a>
+
+In order to obtain google Oauth, a google cloud account must first be created. Direct to the **#deployment** section of the README and follow the google cloud installation instructions.
+
+When the google cloud account is created, navigate to the developer console. Once in the console, on the left side-bar find the **API's and services** category
+and click on **Oauth consent screen**. From there fill out the consent form **WARNING: DO NOT PROVIDE COMPANY ICON IMG**  and once the form is filled in, 
+click on credentials. Inside, click on **new credentials** and select **Oauth client ID** from the dropdown. Fill out the creation form and a clientID/secret key
+will be provided afterwards.
+
+## Google maps  <a href="https://developers.google.com/maps/documentation"><img src="https://cdn.iconscout.com/icon/free/png-512/google-maps-1-555382.png" width=5% height=5%></img><a>
+
+Obtaining google maps will require a google cloud account in order to proceed. Refer to the **#deployment** section of the README and follow the installation instructions for google cloud.
+
+Once a google cloud account is created, navigate to the cloud developer console. In the console dashboard, there will be a search engine block on the center of the screen. Search for **Google Maps** and the maps API will show up in the suggestion dropdown. When on the API's page, click **Use API** to configure the API to the cloud application.
+
+Under the credentials dashboard for the maps API, the key will be provided.
+
+## Deployment <a href="https://cloud.google.com/gcp/?utm_source=google&utm_medium=cpc&utm_campaign=na-US-all-en-dr-skws-all-all-trial-b-dr-1009135&utm_content=text-ad-none-any-DEV_c-CRE_109860918967-ADGP_Hybrid%20%7C%20AW%20SEM%20%7C%20SKWS%20%7C%20US%20%7C%20en%20%7C%20Multi%20~%20Cloud-KWID_43700009609890930-kwd-19383198255&utm_term=KW_%2Bcloud-ST_%2Bcloud&gclid=Cj0KCQiA2af-BRDzARIsAIVQUOcUsgxkrXgaTbVAuk2HgDCeece8qtsCL7UevNtrJFKgzGtsKqtY37oaAvYlEALw_wcB"><img src="https://www.gstatic.com/devrel-devsite/prod/vf2803d8fceba443283ee4e8627acfcc1365957a4f42d24f2965d2cb7faab19ba/cloud/images/favicons/onecloud/apple-icon.png" width=2% height=2%></img><a>
 
 Once the application is configured with the appropriate environmental variables and installations, a
 deployment strategy will now be implemented.

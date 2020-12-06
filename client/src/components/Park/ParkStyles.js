@@ -1,3 +1,4 @@
+// sets the styles for maps
 export default [
   {
     featureType: 'administrative.country',

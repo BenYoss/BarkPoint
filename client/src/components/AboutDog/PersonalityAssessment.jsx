@@ -36,6 +36,9 @@ const PersonalityAssessment = ({
   const [dogs, setDogs] = useState(dogData);
   const [lastDirection, setLastDirection] = useState();
 
+  // lifecycle useMemo will keep a references using createRef from react. It will
+  // reference every item in the dog array since we have filled an array from the length of dog data
+
   const childRefs = useMemo(() => Array(dogData.length).fill(0).map(() => React.createRef()), []);
 
   const swiped = (direction, trait) => {
@@ -54,6 +57,8 @@ const PersonalityAssessment = ({
   };
 
   const outOfFrame = (trait) => {
+    // when the trait swiped is out of the screenview
+    // the dogstate will be filtered to no longer show that trait
     dogsState = dogsState.filter((dog) => dog.trait !== trait);
     setDogs(dogsState);
   };
@@ -157,7 +162,7 @@ const PersonalityAssessment = ({
         >
           <CancelIcon
             fontSize="large"
-            style={{ color: '#e55812', width: '60', height: '60' }}
+            style={{ color: '#e55812', width: '5vw', height: '8vh' }}
           />
         </IconButton>
         <IconButton
@@ -165,7 +170,7 @@ const PersonalityAssessment = ({
         >
           <CheckCircleIcon
             fontSize="large"
-            style={{ color: '#2CDA9D', width: '60', height: '60' }}
+            style={{ color: '#2CDA9D', width: '5vw', height: '8vh' }}
           />
         </IconButton>
 

@@ -70,8 +70,8 @@ const addToy = (id, body) => {
  * should remove a toy from a specific dog depending on id.
  */
 const removeToy = (id, body) => Dog.findByIdAndUpdate(
-  { _id: id },
-  { $pull: { toys: { title: body.title } } },
+  id,
+  { $pull: { toys: body } },
 );
 
 module.exports = {

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -5,7 +6,6 @@ import PropTypes from 'prop-types';
 // Import materialui info
 import { makeStyles, styled } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
@@ -16,6 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ClearIcon from '@material-ui/icons/Clear';
 // import { borders } from '@material-ui/system';
 
 // Import components & css
@@ -46,11 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     height: 'auto',
-    maxWidth: '345px',
+    maxWidth: '30vw',
     flexDirection: 'row',
     backgroundColor: '#FEFDFF',
     breakInside: 'avoid',
-    fontFamily: 'Roboto',
     marginBottom: '20px',
   },
 }));
@@ -60,10 +60,6 @@ const Profile = ({ dogs, getDogs }) => {
 
   const history = useHistory();
   const classes = useStyles();
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const deleteDog = (dog) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -77,6 +73,10 @@ const Profile = ({ dogs, getDogs }) => {
       });
   };
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   const deleteToy = (dog, toy) => {
     // eslint-disable-next-line no-underscore-dangle
     axios.delete(`data/toy${dog._id}`, { data: { data: toy } })
@@ -88,13 +88,13 @@ const Profile = ({ dogs, getDogs }) => {
   };
 
   const MyButton = styled(Button)({
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: '#0e4749',
     border: 0,
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
-    height: 48,
-    width: 300,
+    height: '5vh',
+    width: '10vw',
     padding: '0 30px',
   });
 
@@ -106,62 +106,64 @@ const Profile = ({ dogs, getDogs }) => {
   return (
     <div className="Profile">
       <Navbar />
-      <div className="dogs">
-        {dogs.map((dog) => (
-          <div className="header">
-            <Card
-              className={classes.card}
-            >
-              <CardHeader
-                title={dog.name}
-                action={(
-                  <IconButton aria-label="delete dogs">
-                    <DeleteIcon onClick={() => deleteDog(dog)} />
-                  </IconButton>
-              )}
-              />
-              <CardMedia
-                className={classes.media}
-                image={dog.image}
-              />
-              <CardActions disableSpacing>
-                <h3>{`${dog.name}'s Toys`}</h3>
-                <IconButton
-                  className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded,
-                  })}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </IconButton>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  {dog.toys && dog.toys.map((toys) => (
-                    <div>
-                      <h3><a href={toys.link}>{toys.name}</a></h3>
-                      <p>{toys.link}</p>
-                      <IconButton aria-label="add to favorites">
-                        <FavoriteIcon onClick={() => {
-                          deleteToy(dog, toys);
-                        }}
-                        />
-                      </IconButton>
-                    </div>
-                  ))}
-                </CardContent>
-              </Collapse>
-            </Card>
-          </div>
-        ))}
-      </div>
       <div
-        style={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh',
-        }}
+        className="dogProfile"
       >
+        {dogs.map((dog) => (
+          <Card
+            className={classes.card}
+            style={{ border: '10px solid #0e4749' }}
+          >
+            <CardHeader
+              title={dog.name}
+              style={{ color: '#e55812', fontFamily: 'Fredoka One' }}
+              action={(
+                <IconButton aria-label="delete dogs">
+                  <DeleteIcon style={{ color: '#2CDA9D' }} onClick={() => deleteDog(dog)} />
+                </IconButton>
+              )}
+            />
+            <CardMedia
+              className={classes.media}
+              image={dog.image}
+            />
+            <CardActions disableSpacing>
+              <h3 style={{ color: '#2CDA9D', fontFamily: 'Lato', letterSpacing: '2' }}>{`${dog.name}'s Toys`}</h3>
+              <IconButton
+                id={dog._id}
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                {dog.toys && dog.toys.map((toys) => (
+                  <div className="">
+                    <IconButton
+                      onClick={() => {
+                        deleteToy(dog, toys);
+                      }}
+                    >
+                      <ClearIcon
+                        style={{ color: '#e55812' }}
+                      />
+                    </IconButton>
+                    <img className="toy-image" src={toys.image} alt="toy" />
+                  </div>
+                ))}
+              </CardContent>
+            </Collapse>
+          </Card>
+        ))}
+
+      </div>
+      <div style={{ margin: 'auto', width: '50%', marginTop: '2rem' }}>
         <MyButton onClick={() => { history.push('/form'); }}>Add Dog</MyButton>
       </div>
     </div>

@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 
+// required when using async & await
 require('regenerator-runtime');
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ setName, form, setForm }) {
+  // use history is for browserhistory to pass data along on click
   const history = useHistory();
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -53,6 +55,8 @@ export default function Form({ setName, form, setForm }) {
   const URL = process.env.CLOUDINARY_UPLOAD_URL;
 
   const handleImageUpload = (file) => {
+    // presets from cloudinary takes an image
+    // url that is uploaded and stores it in cloudinary storage
     const upload = request.post(URL)
       .field('upload_preset', preset)
       .field('file', file);
@@ -64,6 +68,7 @@ export default function Form({ setName, form, setForm }) {
       }
 
       if (response.body.secure_url !== '') {
+        // this is the url received from upload
         setForm({ ...form, image: response.body.secure_url });
       }
     });
@@ -84,6 +89,7 @@ export default function Form({ setName, form, setForm }) {
           Tell us about your pup🐾
         </Typography>
         <form
+          // the form for the new dog being created
           onSubmit={(e) => {
             e.preventDefault();
             console.warn(form);
@@ -93,7 +99,7 @@ export default function Form({ setName, form, setForm }) {
           className={classes.form}
           noValidate
         >
-          {/* What are these textfields for? */}
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -131,7 +137,7 @@ export default function Form({ setName, form, setForm }) {
             autoFocus
             onChange={handleChange}
           />
-          {/* What does this block of code used for? Maybe add some class names? */}
+          {/* for the radio buttons for size */}
           <FormControl component="fieldset">
             <FormLabel component="legend">Size</FormLabel>
             <RadioGroup aria-label="size" name="size" value={form.size} onChange={handleChange}>
@@ -141,6 +147,7 @@ export default function Form({ setName, form, setForm }) {
             </RadioGroup>
           </FormControl>
 
+          {/* from the dropzone npm package gives the image preview */}
           <Dropzone
             onDrop={onImageDrop}
             accept="image/*"

@@ -4,33 +4,41 @@ import React, {
   useState, useCallback, useRef, useEffect,
 } from 'react';
 import axios from 'axios';
+// imports from GoogleMapsAPI package
 import {
   GoogleMap, useLoadScript, Marker, InfoWindow,
 } from '@react-google-maps/api';
+
+// imports from Material Ui for styling
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import mapStyles from './ParkStyles';
 import SideBar from './SideBar';
 
+// component imports
 import Search from './Search';
 import Locate from './Locate';
 import './Park.css';
 
+// allows for the use of googleplaces in the googlemaps
 const libraries = ['places'];
 
+// sets the dimensions of the map
 const mapContainerStyle = {
   width: '85vw',
   height: '100vh',
 };
+
+// on initial render will set where the map pans to
 const center = {
   lat: 29.951065,
   lng: -90.071533,
 };
 
+// options for the google map
 const options = {
   styles: mapStyles,
   zoomControl: true,
@@ -76,14 +84,19 @@ const Park = () => {
     getVenues();
   }, [location]);
 
+  // lifecylce useRef will reference the map made above
+
   const mapRef = useRef();
 
+  // function panTo will use lifecycle useCallback to go to a specified location on the map
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(12);
     setLocation(`${lat}, ${lng}`);
   });
 
+  // whenver the map is clicked markers will be set and the lat
+  // and long will be set in the form for those points
   const onMapClick = useCallback((e) => {
     setMarkers((current) => [...current, {
       lat: e.latLng.lat(),
@@ -95,11 +108,14 @@ const Park = () => {
     setForm({ ...form, lat: e.latLng.lat(), long: e.latLng.lng() });
   }, []);
 
+  // checks if the map is loaded using the useLoadScript function from googlemapsapi npm package
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
     libraries,
   });
 
+  // when the map loads...
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
@@ -111,6 +127,7 @@ const Park = () => {
     return 'Loading maps';
   }
 
+  // handles when a park is liked and will reset by getting the venues
   const handleLike = async (park) => {
     const { data } = await axios.get('session');
     // console.log(data);
@@ -120,6 +137,7 @@ const Park = () => {
     setSelected(null);
   };
 
+  // the same as like except for it deletes a park
   const handleDelete = async (park) => {
     const { data } = await axios.get('session');
     const { email } = data;
@@ -139,6 +157,7 @@ const Park = () => {
 
       <Search panTo={panTo} setLocation={setLocation} />
       <Locate panTo={panTo} setLocation={setLocation} />
+
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={12}
@@ -146,12 +165,13 @@ const Park = () => {
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
-        streetViewControl
+        streetViewControl // enables streetview control within park
       >
         { markers.map((marker) => (
           <Marker
             key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
+            // custom icon for the markers being set
             icon={{
               url: 'https://i.imgur.com/T1JV3Qy.png',
               scaledSize: new window.google.maps.Size(30, 30),
@@ -196,7 +216,8 @@ const Park = () => {
         )) }
         { selected && (
           <InfoWindow
-            // eslint-disable-next-line no-nested-ternary
+          // sets the position of the info window over the point of the marker
+          // eslint-disable-next-line no-nested-ternary
             position={selected.venue ? {
               lat: selected.venue.location.lat,
               lng: selected.venue.location.lng,
@@ -221,6 +242,7 @@ const Park = () => {
                     </p>
                     <IconButton
                       onClick={() => {
+                        // sets state for favoriting or unfavorting parks
                         setIsClicked({
                           ...isClicked,
                           [selected.venue ? selected.venue.id : selected._id]:
@@ -250,7 +272,9 @@ const Park = () => {
                   </div>
                 )
                 : (
+                  // for the form when a new park is created
                   <div className="form">
+
                     <form>
                       <TextField
                         label="Park Name"
@@ -277,7 +301,6 @@ const Park = () => {
                           backgroundColor: '#e55812', color: '#002626', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px',
                         }}
                         onClick={async () => {
-                          console.warn(form);
                           await axios.post('/data/park', form);
                           await getVenues();
                           setSelected(null);
