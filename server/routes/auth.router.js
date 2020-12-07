@@ -4,13 +4,6 @@ const { User } = require('../db/models/models');
 
 const authRouter = Router();
 
-const isLoggedIn = (req, res, next) => {
-  if (req.user) {
-    next();
-  }
-  res.status(200).send('not logged in');
-};
-
 authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 /**
@@ -19,29 +12,18 @@ authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profil
  */
 authRouter.get('/auth/google/callback', passport.authenticate('google'),
   (req, res) => {
-    const { _json } = req.user;
-
-    User.findUser(_json.email)
-      .then((result) => {
-        if (result) {
-          res.redirect('/profile');
-        } else {
-          User.createUser(_json)
-            .then(() => {
-              res.redirect('/form');
-            });
-        }
-      }).catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
+    if (req.user.isNewUser) {
+      res.redirect('/form');
+    } else {
+      res.redirect('/profile');
+    }
   });
 
 /**
  * If the user is already logged in, don't send them to the form page
  */
-authRouter.get('/', isLoggedIn, (req, res) => {
-  res.send('this is the profile');
+authRouter.get('/redirect', (req, res) => {
+  res.redirect('/form');
 });
 
 /**
@@ -57,12 +39,11 @@ authRouter.get('/logout', (req, res) => {
  * Once a session is registered, a user is then recorded as an instance.
  * sends the user session data from request.
  */
-authRouter.get('/session', (req, res) => {
+authRouter.get('/session', async ({ user }, res) => {
   try {
-    const { _json } = req.user;
-    res.status(200).send(_json);
+    const userData = await User.findUser(user.id_google);
+    res.status(200).send(userData);
   } catch (err) {
-    console.warn('hfsjsfksfanj', err);
     res.sendStatus(500);
   }
 });

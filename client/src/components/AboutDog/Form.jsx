@@ -92,7 +92,6 @@ export default function Form({ setName, form, setForm }) {
           // the form for the new dog being created
           onSubmit={(e) => {
             e.preventDefault();
-            console.warn(form);
             setName(form.dogname);
             history.push('/assessment');
           }}

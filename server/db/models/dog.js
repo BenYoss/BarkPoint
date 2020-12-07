@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { Schema, model } = require('mongoose');
 
 const dogSchema = new Schema({
@@ -5,7 +6,7 @@ const dogSchema = new Schema({
   breed: String,
   size: String,
   number: String,
-  email_user: String,
+  id_user: String,
   toys: [],
   image: String,
   /**
@@ -23,12 +24,12 @@ const Dog = model('Dog', dogSchema);
  * Adds a new dog instance depending on what options a user sets in the form.
  */
 
-const addDog = (name, breed, size, number, emailUser, image, personalitytypes) => Dog.create({
+const addDog = (name, breed, size, number, id_google, image, personalitytypes) => Dog.create({
   name,
   breed,
   size,
   number,
-  email_user: emailUser,
+  id_user: id_google,
   toys: [],
   image,
   personalitytypes,
@@ -36,10 +37,10 @@ const addDog = (name, breed, size, number, emailUser, image, personalitytypes) =
   .then((data) => data);
 
 /**
- * Takes in @param {*} emailUser which is the Id of the recorded user session.
+ * Takes in @param {*} idUser which is the Id of the recorded user session.
  */
 
-const findDogs = (emailUser) => Dog.find({ email_user: emailUser });
+const findDogs = (idUser) => Dog.find({ id_user: idUser });
 
 const deleteDog = (id) => Dog.deleteOne({ _id: id });
 
@@ -58,7 +59,6 @@ const addToy = (id, body) => {
     url: body.link,
     rating: body.rating,
   };
-  // console.log(newToy);
   return Dog.findByIdAndUpdate(
     id,
     { $addToSet: { toys: newToy } },

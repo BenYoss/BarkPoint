@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, {
@@ -74,8 +75,8 @@ const Park = () => {
 
     const { data: parks } = await axios.get('/data/park');
     const { data: userid } = await axios.get('session');
-    const { email } = userid;
-    const { data: faveparks } = await axios.get('/data/favpark', { params: { id: email } });
+    const { id_google } = userid;
+    const { data: faveparks } = await axios.get('/data/favpark', { params: { id: id_google } });
     setVenues(data.response.groups[0].items);
     setParkData(parks);
     setFavParks(faveparks);
@@ -130,9 +131,8 @@ const Park = () => {
   // handles when a park is liked and will reset by getting the venues
   const handleLike = async (park) => {
     const { data } = await axios.get('session');
-    // console.log(data);
-    const { email } = data;
-    await axios.put(`/data/favpark/${email}`, park);
+    const { id_google } = data;
+    await axios.put(`/data/favpark/${id_google}`, park);
     getVenues();
     setSelected(null);
   };
@@ -140,8 +140,8 @@ const Park = () => {
   // the same as like except for it deletes a park
   const handleDelete = async (park) => {
     const { data } = await axios.get('session');
-    const { email } = data;
-    await axios.put(`/data/unfavpark/${email}`, park);
+    const { id_google } = data;
+    await axios.put(`/data/unfavpark/${id_google}`, park);
     getVenues();
     setSelected(null);
   };

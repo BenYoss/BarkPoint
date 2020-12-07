@@ -1,6 +1,7 @@
 require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { User } = require('./db/models/models');
 
 const clientId = process.env.CLIENT_ID;
 const secret = process.env.CLIENT_SECRET;
@@ -10,16 +11,16 @@ const secret = process.env.CLIENT_SECRET;
  */
 
 passport.serializeUser((user, done) => {
-  console.warn(user, 'serialize');
-  done(null, user);
+  done(null, user.id);
 });
 
 /**
  * Destroys Req.user instance.
  */
-passport.deserializeUser((user, done) => {
-  console.warn(user, 'deserialize');
-  done(null, user);
+passport.deserializeUser((id, done) => {
+  User.findUser(id).then((user) => {
+    done(null, user);
+  }).catch((err) => console.error(err));
 });
 
 /**
@@ -33,6 +34,23 @@ passport.use(
     clientID: clientId,
     clientSecret: secret,
   }, (accessToken, refreshToken, profile, done) => {
-    done(null, profile);
+    User.findUser(profile.id)
+      .then((result) => {
+        if (result) {
+          // eslint-disable-next-line no-param-reassign
+          profile.isNewUser = false;
+          done(null, profile);
+        } else {
+          User.createUser(profile)
+            .then(() => {
+              // eslint-disable-next-line no-param-reassign
+              profile.isNewUser = true;
+              done(null, profile);
+            });
+        }
+      }).catch((err) => {
+        console.error(err);
+        done(null, err);
+      });
   }),
 );

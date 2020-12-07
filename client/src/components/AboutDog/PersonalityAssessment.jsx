@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { useState, useMemo } from 'react';
 import TinderCard from 'react-tinder-card';
@@ -137,9 +138,8 @@ const PersonalityAssessment = ({
           style={{ width: '250px', height: '60px', fontSize: '20px' }}
           startIcon={<PetsIcon />}
           onClick={async () => {
-            console.warn(form);
-            const { data: { email } } = await axios.get('/session');
-            await axios.post('/data/dog', { ...form, email });
+            const { data: { id_google } } = await axios.get('/session');
+            await axios.post('/data/dog', { ...form, id_google });
             history.push('/toybox');
           }}
         >

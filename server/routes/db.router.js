@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { Router } = require('express');
 const { Dog, User, Park } = require('../db/models/models');
 
@@ -14,17 +15,13 @@ dbRouter.post('/data/user', (req, res) => User.createUser(req.body)
     res.sendStatus(500);
   }));
 /**
- * Finds all dogs whose user_email field matches the current sessions user's email
+ * Finds all dogs whose user_id field matches the current sessions user's id
  */
 dbRouter.get('/data/dog', ({ user }, res) => {
-  const { _json } = user;
-  Dog.findDogs(_json.email)
+  const { id_google } = user;
+  Dog.findDogs(id_google)
     .then((dogs) => {
-      if (dogs.length) {
-        res.status(200).send(dogs);
-      } else {
-        res.sendStatus(404);
-      }
+      res.status(200).send(dogs);
     })
     .catch((err) => {
       console.error(err);
@@ -34,7 +31,7 @@ dbRouter.get('/data/dog', ({ user }, res) => {
 /**
  * Adds a new dog into the barkPoint database.
  *
- * @data is equal to the current sessions user's email
+ * @data is equal to the current sessions user's id
  *
  * @personalitytypes is an array of length 3. It's values are booleans with
  * each value correlating to a personality type. Swiping left equaling false
@@ -42,9 +39,9 @@ dbRouter.get('/data/dog', ({ user }, res) => {
  */
 dbRouter.post('/data/dog', (req, res) => {
   const {
-    size, breed, number, email, dogname, image, personalitytypes,
+    size, breed, number, id_google, dogname, image, personalitytypes,
   } = req.body;
-  return Dog.addDog(dogname, breed, size, number, email, image, personalitytypes)
+  return Dog.addDog(dogname, breed, size, number, id_google, image, personalitytypes)
     .then(() => {
       res.sendStatus(201);
     })
@@ -64,14 +61,12 @@ dbRouter.put('/data/dog/:id', (req, res) => {
   const { body } = req;
   return Dog.addToy(id, body)
     .then(() => {
-      // console.log('aanythinh');
       res.sendStatus(200);
     })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
     });
-  // return dog.then(console.log('inside dog', dog));
 });
 /**
  * Removes a toy from the currently selected dog's toy field (an array)
@@ -109,7 +104,6 @@ dbRouter.delete('/data/dog:id', (req, res) => {
 });
 dbRouter.get('/data/park', async (req, res) => {
   const allDogs = await Park.getParks();
-  console.warn(allDogs);
   res.status(200).send(allDogs);
 });
 /**
@@ -151,12 +145,10 @@ dbRouter.put('/data/park', (req, res) => {
  * specified park.
  */
 
-dbRouter.put('/data/unfavpark/:email', (req, res) => {
-  const { email } = req.params;
+dbRouter.put('/data/unfavpark/:id', (req, res) => {
+  const { id } = req.params;
   const { body } = req; // you only need the park name
-  console.warn('id in db router for park', email);
-  console.warn(body);
-  return User.unFavPark(email, body)
+  return User.unFavPark(id, body)
     .then(() => {
       res.sendStatus(200);
     })
@@ -171,11 +163,10 @@ dbRouter.put('/data/unfavpark/:email', (req, res) => {
  * @id is equal to the current user's mongo-provided ObjectId
  * @body is equal to an object with the to be added park's info
  */
-dbRouter.put('/data/favpark/:email', (req, res) => {
-  const { email } = req.params;
+dbRouter.put('/data/favpark/:id', (req, res) => {
+  const { id } = req.params;
   const { body } = req; // you only need the park name
-  console.warn('id in db router for park', email);
-  return User.favPark(email, body)
+  return User.favPark(id, body)
     .then(() => {
       res.sendStatus(200);
     })
@@ -205,7 +196,7 @@ dbRouter.get('/data/favpark', (req, res) => {
 /**
  * Removes a specific park from the barkPoint database based on @name .
  */
-dbRouter.delete('/data/park/:id', (req, res) => {
+dbRouter.delete('/data/park/:name', (req, res) => {
   const { name } = req.params;
   return Park.deletePark(name)
     .then(() => {

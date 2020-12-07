@@ -17,10 +17,8 @@ app.use(express.json());
 app.use(cookieParser('dog'));
 app.use(session({
   secret: 'dog',
-  resave: 'false',
   cookie: {
     expires: false,
-    domain: 'https://possible-dream-296716.uc.r.appspot.com',
   },
   keys: ['key1', 'key2'],
   maxAge: 3600000,

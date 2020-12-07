@@ -100,7 +100,6 @@ const Profile = ({ dogs, getDogs }) => {
 
   useEffect(() => {
     getDogs();
-    // console.log(dogs);
   }, []);
 
   return (
