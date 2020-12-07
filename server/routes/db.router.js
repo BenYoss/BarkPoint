@@ -17,9 +17,9 @@ dbRouter.post('/data/user', (req, res) => User.createUser(req.body)
 /**
  * Finds all dogs whose user_id field matches the current sessions user's id
  */
-dbRouter.get('/data/dog', ({ user }, res) => {
-  const { id_google } = user;
-  Dog.findDogs(id_google)
+dbRouter.get('/data/dog', ({ cookies }, res) => {
+  const { dog } = cookies;
+  Dog.findDogs(dog)
     .then((dogs) => {
       res.status(200).send(dogs);
     })

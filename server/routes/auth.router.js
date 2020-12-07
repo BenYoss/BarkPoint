@@ -12,6 +12,7 @@ authRouter.get('/auth/google', passport.authenticate('google', { scope: ['profil
  */
 authRouter.get('/auth/google/callback', passport.authenticate('google'),
   (req, res) => {
+    res.cookie('dog', req.user.id);
     if (req.user.isNewUser) {
       res.redirect('/form');
     } else {
@@ -32,16 +33,16 @@ authRouter.get('/redirect', (req, res) => {
 authRouter.get('/logout', (req, res) => {
   req.session.destroy();
   req.logOut();
-  res.redirect('/logout');
+  res.clearCookie('dog').redirect('/logout');
 });
 
 /**
  * Once a session is registered, a user is then recorded as an instance.
  * sends the user session data from request.
  */
-authRouter.get('/session', async ({ user }, res) => {
+authRouter.get('/session', async ({ cookies }, res) => {
   try {
-    const userData = await User.findUser(user.id_google);
+    const userData = await User.findUser(cookies.dog);
     res.status(200).send(userData);
   } catch (err) {
     res.sendStatus(500);
